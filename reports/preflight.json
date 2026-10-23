@@ -1,0 +1,60 @@
+{
+  "measured_at": "2026-10-23T09:25:20+0000",
+  "env": {
+    "python": "3.13.16",
+    "platform": "Linux-6.18.44-fc-v153-x86_64-with-glibc2.39",
+    "cpu_model": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+    "cpu_count": 4,
+    "ram_total_gb": 15.71,
+    "disk_free_gb": 21.46,
+    "cuda_available": false,
+    "gpu": null,
+    "torch": "2.14.1+cu130",
+    "torch_threads": 4,
+    "torchvision": "0.29.1+cu130",
+    "numpy": "2.5.4",
+    "pillow": "13.0.0",
+    "nvidia_smi": "unavailable: FileNotFoundError"
+  },
+  "host_reachability": {
+    "official_project_page": {
+      "url": "https://mmlab.ie.cuhk.edu.hk/projects/DeepFashion/InShopRetrieval.html",
+      "status": null,
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "google_drive (official In-shop files)": {
+      "url": "https://drive.google.com/",
+      "status": null,
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "google_drive_download": {
+      "url": "https://drive.usercontent.google.com/",
+      "status": null,
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "openai_clip_checkpoint_cdn": {
+      "url": "https://openaipublic.azureedge.net/",
+      "status": null,
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "huggingface": {
+      "url": "https://huggingface.co/",
+      "status": null,
+      "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "pypi": {
+      "url": "https://pypi.org/simple/",
+      "status": 200
+    },
+    "github": {
+      "url": "https://github.com/",
+      "status": 400,
+      "error": "HTTPError: HTTP Error 400: Bad Request"
+    }
+  },
+  "clip_checkpoint": {
+    "url": "https://openaipublic.azureedge.net/clip/models/40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af/ViT-B-32.pt",
+    "official_sha256": "40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af",
+    "present_locally": false
+  }
+}

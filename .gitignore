@@ -18,3 +18,4 @@ __pycache__/
 *.gz
 .claude/settings.local.json
 
+artifacts/
