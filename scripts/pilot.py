@@ -91,9 +91,10 @@ def cmd_benchmark(a):
     from torchvision.transforms import InterpolationMode
 
     torch.manual_seed(0)
+    device = "cuda" if torch.cuda.is_available() else "cpu"
     model = CLIP(embed_dim=512, image_resolution=224, vision_layers=12, vision_width=768, vision_patch_size=32,
                  context_length=77, vocab_size=49408, transformer_width=512, transformer_heads=8, transformer_layers=12)
-    model.eval()
+    model.visual.to(device).eval()
     nparams = sum(p.numel() for p in model.visual.parameters())
     pre = Compose([Resize(224, interpolation=InterpolationMode.BICUBIC), CenterCrop(224),
                    lambda im: im.convert("RGB"), ToTensor(),
@@ -101,12 +102,15 @@ def cmd_benchmark(a):
     rng = np.random.default_rng(0)
     imgs = [Image.fromarray(rng.integers(0, 255, (256, 176, 3), dtype=np.uint8)) for _ in range(a.n)]
     t0 = time.perf_counter()
-    x = torch.stack([pre(im) for im in imgs])
+    x = torch.stack([pre(im) for im in imgs]).to(device)
     t_pre = time.perf_counter() - t0
     res = {}
+    if device == "cuda":
+        torch.cuda.reset_peak_memory_stats()
+    batch_sizes = (8, 16) if device == "cuda" else (32, 64)
     with torch.inference_mode():
         model.visual(x[:4])  # warm-up
-        for bs in (32, 64):
+        for bs in batch_sizes:
             t0 = time.perf_counter()
             for s in range(0, a.n, bs):
                 model.visual(x[s:s + bs])
@@ -115,11 +119,12 @@ def cmd_benchmark(a):
     best = max(v["images_per_second"] for v in res.values())
     pre_ips = a.n / t_pre
     eff = 1 / (1 / best + 1 / (pre_ips * min(4, torch.get_num_threads())))  # rough: preprocessing in 4 workers
-    dump("benchmark_cpu.json", {
+    dump("benchmark_local.json", {
         "what": "ViT-B/32 image tower, random weights, synthetic 256x176 RGB inputs (compute cost only, NOT a quality result)",
-        "env": env_info.collect(str(ROOT)), "visual_params": nparams,
+        "env": env_info.collect(str(ROOT)), "device": device, "visual_params": nparams,
         "preprocess_single_thread_images_per_second": round(pre_ips, 2),
         "forward": res, "peak_rss_mb": round(env_info.peak_rss_mb(), 1),
+        "peak_vram_mb": round(torch.cuda.max_memory_allocated() / 2**20, 1) if device == "cuda" else None,
         "extrapolation_note": "seconds_for_N = N / images_per_second; an extrapolation, not a measurement",
         "estimated_end_to_end_images_per_second": round(eff, 2),
     })

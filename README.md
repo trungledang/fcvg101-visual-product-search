@@ -1,14 +1,35 @@
 # FCVG101: Visual Product Search feasibility pilot
 
-**Status (2026-10-23): code and tests ready; the retrieval experiment has NOT run.** The cloud
-environment's network policy blocks the dataset host (Google Drive / CUHK) and the OpenAI CLIP
-checkpoint host, so no Recall@K exists yet. See `reports/BAO_CAO_PILOT.md` (Vietnamese report).
+**Status (2026-10-23): local GPU preflight complete; retrieval has NOT run.** The Windows
+machine reaches CUHK and the official CLIP checkpoint, but the encrypted image release still
+requires the dataset owner's approved agreement/password. No Recall@K exists yet. See
+`reports/BAO_CAO_PILOT.md` (Vietnamese report).
 
 Purpose: decide whether Visual Product Search is worth pursuing for FCVG101 — not the coursework itself.
 Baseline: frozen OpenAI CLIP ViT-B/32, image→image cosine retrieval, DeepFashion In-shop official splits.
 No fine-tuning, no extra model, no web UI.
 
 ## Setup
+
+### Windows (the local FCVG101 machine)
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install torch==2.14.1 torchvision==0.29.1 --index-url https://download.pytorch.org/whl/cu130
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -c "import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU')"
+```
+
+The PowerShell runner uses batch size 8 for a 4 GB GPU:
+
+```powershell
+scripts\run_all.ps1
+```
+
+Keep the dataset and all generated images, embeddings, and caches out of Git. The Windows `DataLoader` uses a top-level, picklable dataset class for worker processes.
+
+### Linux/macOS
 
 ```bash
 python3 -m venv .venv
@@ -52,7 +73,7 @@ runtime already has torch), put the data under `data/inshop/` (e.g. unzip from y
 
 | Path | Committed | Content |
 |---|---|---|
-| `reports/preflight.json`, `reports/benchmark_cpu.json` | yes | hardware/software, host reachability, measured throughput |
+| `reports/preflight.json`, `reports/benchmark_cpu.json`, `reports/benchmark_local.json` | yes | hardware/software, host reachability, measured throughput |
 | `reports/audit.json` | yes | counts, split checks, exact/pixel/pHash duplicate audit |
 | `reports/metrics.json`, `reports/per_query_results.csv` | yes | Recall@1/5, sensitivity eval, per-query top-5 paths/IDs/scores/rank |
 | `reports/examples_manifest.json` | yes | selected example query paths + selection policy |

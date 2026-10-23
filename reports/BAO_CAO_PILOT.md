@@ -5,27 +5,45 @@ Ngày: 2026-10-23 · Nhánh: `claude/zealous-euler-g8hncc`
 ## Kết luận ngắn
 
 **Chưa xác lập được tính khả thi.** Thí nghiệm truy hồi chưa chạy, nên **chưa có Recall@1/Recall@5**,
-chưa có kiểm toán bộ dữ liệu thật và chưa có ví dụ thành công/thất bại nào. Nguyên nhân: chính sách mạng
-của môi trường cloud chặn máy chủ chứa dữ liệu và checkpoint (đo được, xem bên dưới). Không thay bộ dữ liệu khác.
+chưa có kiểm toán bộ dữ liệu thật và chưa có ví dụ thành công/thất bại nào. Môi trường cloud bị chặn mạng,
+nhưng máy local truy cập được CUHK và checkpoint CLIP; blocker hiện tại là cần quyền/mật khẩu tải ảnh.
 
-Khuyến nghị có điều kiện: **Go (có điều kiện)** — nếu bạn mở được quyền truy cập dữ liệu thì phần tính toán
-đã chứng minh là đủ trên CPU. Nếu không lấy được DeepFashion In-shop bằng đường hợp lệ nào → **Change Dataset**,
+Khuyến nghị có điều kiện: **Go (có điều kiện)** — nếu lấy được dữ liệu hợp lệ thì phần tính toán
+đã chạy thử được trên GPU local. Nếu không lấy được DeepFashion In-shop bằng đường hợp lệ nào → **Change Dataset**,
 không phải Change Topic. Không có bằng chứng nào hiện tại ủng hộ việc bỏ chủ đề.
+
+### Cập nhật preflight trên máy local (2026-10-23)
+
+Máy Windows 11 truy cập được trang CUHK, Google Drive và tải được checkpoint OpenAI CLIP chính thức.
+Checkpoint đã được loader kiểm SHA-256 (`40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af`)
+và nạp lên RTX 3050 Ti Laptop GPU (4 GB). Môi trường local: Core i7-12700H, 15.68 GB RAM,
+Python 3.12, còn 161 GB trên ổ E. Bộ kiểm tra chạy trên Windows: 17/17 pass.
+
+Đo với tháp ảnh ViT-B/32 và **trọng số ngẫu nhiên** trên ảnh tổng hợp: forward 202.55 ảnh/giây ở batch 8
+(cấu hình dự kiến chạy) và 444.43 ảnh/giây ở batch 16; peak VRAM ghi nhận 530 MB, peak RSS 1.68 GB.
+Đây chỉ là đo chi phí tính toán, không phải kết quả retrieval. Phép chia thô 26.8 nghìn ảnh / 202.55
+cho khoảng 2 phút 13 giây forward; thời gian đọc/giải mã ảnh và kiểm toán dữ liệu chưa đo. Chi tiết ở
+`reports/benchmark_local.json`; preflight host/máy ở `reports/preflight.json`.
+
+**Vẫn chưa có dataset ảnh.** CUHK ghi rõ In-shop dành cho nghiên cứu phi thương mại và cấm phân phối lại;
+file ảnh được mã hóa, cần tải, hoàn tất/ký form thỏa thuận rồi gửi bằng email cơ quan để xin mật khẩu giải nén
+([hướng dẫn và điều khoản chính thức](https://mmlab.ie.cuhk.edu.hk/projects/DeepFashion.html)). Đến khi có ảnh đã giải nén
+vào `data/inshop/`, chưa thể chạy audit split, Recall hay chọn ví dụ.
 
 ## 1. Việc bạn cần làm (chính xác)
 
-1. Mở cài đặt môi trường cloud (menu môi trường ở thanh tiêu đề phiên → **Edit** → **Network access**),
-   thêm vào *Allowed domains* (giữ nguyên ô *Allow package managers*):
-   `drive.google.com`, `drive.usercontent.google.com`, `docs.google.com`, `mmlab.ie.cuhk.edu.hk`,
-   `openaipublic.azureedge.net`. Hướng dẫn: https://code.claude.com/docs/en/cloud-environments#network-access
-2. Tự đọc và chấp nhận điều khoản DeepFashion trên trang chính thức (tôi không chấp nhận thay bạn). Nếu file
-   zip yêu cầu mật khẩu, làm theo quy trình xin mật khẩu/agreement trên trang chính thức rồi cung cấp cho phiên.
-3. Báo lại để tôi chạy `scripts/run_all.sh`. **Phương án khác:** chạy cùng lệnh trên Colab/Kaggle của bạn
-   (hướng dẫn trong `README.md`) và đẩy `reports/` lên nhánh này.
+1. Nếu chưa có quyền, tải và đọc thỏa thuận DeepFashion trên trang chính thức, hoàn tất/ký rồi gửi bằng email cơ quan theo hướng dẫn CUHK. Chia sẻ mật khẩu giải nén với phiên local khi CUHK cấp.
+2. Đặt annotation tại `data/inshop/Eval/list_eval_partition.txt` và giải nén `Img/img.zip` vào `data/inshop/img/`.
+3. Chạy `scripts/run_all.ps1` trên Windows để audit, embed, evaluate và tạo ví dụ. Không đẩy ảnh dataset lên GitHub.
 
-## 2. Đã quan sát được (thực đo)
+## 2. Kết quả đo khác
 
-### Truy cập (`reports/preflight.json`)
+### Snapshot môi trường Claude Cloud ban đầu
+
+Các kết quả cloud bên dưới chỉ mô tả lần chạy Claude Cloud đầu tiên. Chúng không mô tả máy local;
+`reports/preflight.json` hiện được cập nhật từ máy local.
+
+### Cloud: truy cập lúc chạy ban đầu (snapshot trong báo cáo Claude)
 
 | Máy chủ | Kết quả |
 |---|---|
@@ -43,14 +61,14 @@ mirror công khai không thể coi là nguồn hợp lệ. **Không commit ảnh
 Checkpoint: SHA-256 chính thức của ViT-B/32 lấy từ package `openai/CLIP` (commit `d05afc4`):
 `40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af`. Loader từ chối mọi file không khớp.
 
-### Phần cứng / phần mềm
+### Cloud: phần cứng / phần mềm
 
 - CPU Intel Xeon 2.10 GHz, **4 nhân**, RAM **15.7 GB**, **không có GPU** (`torch.cuda.is_available() == False`, không có `nvidia-smi`).
 - Đĩa trống ~21 GB sau khi cài môi trường (venv 5.7 GB vì wheel torch trên PyPI kèm thư viện CUDA).
 - Python 3.13.16, torch 2.14.1, torchvision 0.29.1, numpy 2.5.4, Pillow 13.0.0 (đầy đủ: `requirements.lock.txt`).
 - Cài đặt môi trường: 2 phút 19 giây (đo).
 
-### Chi phí tính toán (`reports/benchmark_cpu.json`)
+### Cloud: chi phí tính toán (`reports/benchmark_cpu.json`)
 
 Đo trên **đúng kiến trúc tháp ảnh ViT-B/32 (87.8 triệu tham số) với trọng số ngẫu nhiên** và ảnh tổng hợp —
 FLOPs không phụ thuộc giá trị trọng số nên đây là phép đo chi phí hợp lệ, **không nói gì về chất lượng truy hồi**.

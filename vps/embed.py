@@ -11,6 +11,22 @@ MODEL_NAME = "ViT-B/32"
 CACHE_VERSION = 1
 
 
+class _ImageDataset:
+    """Top-level so PyTorch DataLoader workers can pickle it on Windows."""
+
+    def __init__(self, paths: list[Path], preprocess):
+        self.paths = paths
+        self.preprocess = preprocess
+
+    def __len__(self):
+        return len(self.paths)
+
+    def __getitem__(self, i):
+        from PIL import Image
+        with Image.open(self.paths[i]) as im:
+            return self.preprocess(im.convert("RGB"))
+
+
 def official_checkpoint() -> tuple[str, str]:
     """(url, sha256) for ViT-B/32 as published in the pinned openai/CLIP package."""
     import clip
@@ -51,17 +67,9 @@ def load_model(weights_dir: Path, device: str = "cpu"):
 def encode_images(model, preprocess, paths: list[Path], device="cpu", batch_size=64, workers=4,
                   log_every=20) -> tuple[np.ndarray, dict]:
     import torch
-    from PIL import Image
 
-    class DS(torch.utils.data.Dataset):
-        def __len__(self):
-            return len(paths)
-
-        def __getitem__(self, i):
-            with Image.open(paths[i]) as im:
-                return preprocess(im.convert("RGB"))
-
-    dl = torch.utils.data.DataLoader(DS(), batch_size=batch_size, num_workers=workers, shuffle=False)
+    dl = torch.utils.data.DataLoader(_ImageDataset(paths, preprocess), batch_size=batch_size,
+                                     num_workers=workers, shuffle=False)
     out = []
     t0 = time.perf_counter()
     with torch.inference_mode():

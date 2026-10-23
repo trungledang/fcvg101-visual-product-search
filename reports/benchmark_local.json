@@ -1,0 +1,38 @@
+{
+  "what": "ViT-B/32 image tower, random weights, synthetic 256x176 RGB inputs (compute cost only, NOT a quality result)",
+  "env": {
+    "python": "3.12.0",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpu_model": "12th Gen Intel(R) Core(TM) i7-12700H",
+    "cpu_count": 20,
+    "ram_total_gb": 15.68,
+    "disk_free_gb": 161.32,
+    "cuda_available": true,
+    "gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+    "torch": "2.14.1+cu130",
+    "torch_threads": 14,
+    "torchvision": "0.29.1+cu130",
+    "numpy": "2.5.4",
+    "pillow": "13.0.0",
+    "nvidia_smi": "NVIDIA GeForce RTX 3050 Ti Laptop GPU, 4096 MiB"
+  },
+  "device": "cuda",
+  "visual_params": 87849216,
+  "preprocess_single_thread_images_per_second": 154.6,
+  "forward": {
+    "batch_8": {
+      "images": 256,
+      "seconds": 1.264,
+      "images_per_second": 202.55
+    },
+    "batch_16": {
+      "images": 256,
+      "seconds": 0.576,
+      "images_per_second": 444.43
+    }
+  },
+  "peak_rss_mb": 1682.2,
+  "peak_vram_mb": 530.1,
+  "extrapolation_note": "seconds_for_N = N / images_per_second; an extrapolation, not a measurement",
+  "estimated_end_to_end_images_per_second": 258.59
+}
