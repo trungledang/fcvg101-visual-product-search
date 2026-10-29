@@ -44,7 +44,13 @@ def partition(data_root: Path):
     f = data_root / "Eval" / "list_eval_partition.txt"
     if not f.is_file():
         sys.exit(f"missing {f}. Download the official In-shop release first (see README).")
-    return ann.parse_partition(f.read_text()), ann.file_sha256(f)
+    recs = ann.parse_partition(f.read_text())
+    facts = ann.validate_splits(recs)
+    if facts["query_items_without_gallery_positive"]:
+        sys.exit("invalid evaluation partition: query products have no gallery positive")
+    if any(not any(r.split == split for r in recs) for split in ("query", "gallery")):
+        sys.exit("query and gallery must both be nonempty")
+    return recs, ann.file_sha256(f)
 
 
 # ---------------------------------------------------------------- preflight
@@ -143,11 +149,11 @@ def cmd_audit(a):
     errors = [(evalrecs[i].path, r["error"]) for i, r in enumerate(rows) if "error" in r]
     split_of = [r.split for r in evalrecs]
 
-    def cross(groups):
+    def cross(groups, train_eval=False):
         out = []
         for g in groups:
             sp = {split_of[i] for i in g}
-            if "query" in sp and "gallery" in sp:
+            if (("train" in sp and len(sp) > 1) if train_eval else ("query" in sp and "gallery" in sp)):
                 out.append([{"path": evalrecs[i].path, "split": split_of[i], "item_id": evalrecs[i].item_id} for i in g])
         return out
 
@@ -178,18 +184,25 @@ def cmd_audit(a):
         "exact_file_duplicate_groups_cross_query_gallery": cross(file_dups),
         "exact_pixel_duplicate_groups_total": len(pix_dups),
         "exact_pixel_duplicate_groups_cross_query_gallery": cross(pix_dups),
+        "exact_file_duplicate_groups_cross_train_eval": cross(file_dups, train_eval=True),
+        "exact_pixel_duplicate_groups_cross_train_eval": cross(pix_dups, train_eval=True),
+        "cross_split_duplicate_scope": "all train/query/gallery if --include-train, else query/gallery",
         "phash_threshold_hamming": a.phash_threshold,
         "phash_near_duplicate_query_gallery_pairs": len(near),
         "phash_near_duplicate_pairs_same_item": sum(p["same_item"] for p in near),
         "phash_near_duplicate_pairs_sample": near[:100],
         "note": "pHash pairs are candidates for manual review only; same-item pairs across query/gallery are intended positives unless pixel-identical.",
     })
+    if errors:
+        sys.exit("audit failed: missing/corrupt images; see audit.json")
 
 
 # ---------------------------------------------------------------- query sampling
 def sample_queries(qrecs, fraction: float, seed: str):
-    """Deterministic, outcome-independent: keep >=1 query per item id, then hash-ordered fill per category."""
-    if fraction >= 1:
+    """Deterministic, outcome-independent: >=1 query per item, then hash-ordered fill."""
+    if not 0 < fraction <= 1:
+        raise ValueError("query fraction must be in (0, 1]")
+    if fraction == 1:
         return qrecs
     key = lambda r: hashlib.sha256(f"{seed}:{r.path}".encode()).hexdigest()  # noqa: E731
     by_item = defaultdict(list)
@@ -206,17 +219,20 @@ def sample_queries(qrecs, fraction: float, seed: str):
 # ---------------------------------------------------------------- embed
 def cmd_embed(a):
     import torch
-    from vps.embed import cache_meta, encode_images, load_cache, load_model, save_cache
+    from vps.embed import cache_meta, encode_images, load_cache, load_model, save_cache, source_fingerprint
     recs, ann_sha = partition(a.data_root)
     torch.set_num_threads(a.threads or torch.get_num_threads())
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    torch.manual_seed(0)
+    if device == "cuda":
+        torch.cuda.reset_peak_memory_stats()
     t0 = time.perf_counter()
     model, pre, meta = load_model(a.weights_dir, device)
     t_load = time.perf_counter() - t0
     timings = {"model_load_seconds": round(t_load, 2)}
     for split in ("gallery", "query"):
         paths = [r.path for r in recs if r.split == split]
-        cm = cache_meta(paths, ann_sha, meta)
+        cm = cache_meta(paths, ann_sha, meta, source_fingerprint(a.data_root, paths))
         if load_cache(a.cache_dir, split, paths, cm) is not None:
             print(f"{split}: cache valid, skipping")
             continue
@@ -231,15 +247,21 @@ def cmd_embed(a):
 
 # ---------------------------------------------------------------- evaluate
 def cmd_evaluate(a):
-    from vps.embed import cache_meta, load_cache, official_checkpoint
+    from vps.embed import cache_meta, load_cache, official_checkpoint, source_fingerprint
     from vps.metrics import recall_at, retrieve
     recs, ann_sha = partition(a.data_root)
     meta = json.loads((a.cache_dir / "gallery.meta.json").read_text())
-    model_meta = {"checkpoint_sha256": official_checkpoint()[1], "preprocess": meta["preprocess"]}
+    model_meta = {"checkpoint_sha256": official_checkpoint()[1], "preprocess": meta["preprocess"],
+                  "preprocess_versions": meta.get("preprocess_versions"), "encoder_dtype": meta.get("encoder_dtype")}
     q_all = [r for r in recs if r.split == "query"]
     g = [r for r in recs if r.split == "gallery"]
-    G = load_cache(a.cache_dir, "gallery", [r.path for r in g], cache_meta([r.path for r in g], ann_sha, model_meta))
-    Qall = load_cache(a.cache_dir, "query", [r.path for r in q_all], cache_meta([r.path for r in q_all], ann_sha, model_meta))
+    def get_cache(split, records):
+        paths = [r.path for r in records]
+        # Legacy synthetic fixtures have no source fingerprint; real runs always do.
+        expected_source = source_fingerprint(a.data_root, paths) if meta.get("source_fingerprint") else None
+        return load_cache(a.cache_dir, split, paths, cache_meta(paths, ann_sha, model_meta, expected_source))
+    G = get_cache("gallery", g)
+    Qall = get_cache("query", q_all)
     if G is None or Qall is None:
         sys.exit("embedding cache missing or incompatible; run `embed` first")
     q = sample_queries(q_all, a.query_fraction, a.seed)
@@ -255,10 +277,18 @@ def cmd_evaluate(a):
     # sensitivity: mask gallery images byte- or pixel-identical to the query
     hashes = {}
     hp = ART / "image_hashes.csv"
+    audit_path = REPORTS / 'audit.json'
+    if not hp.is_file() or not audit_path.is_file():
+        sys.exit('run audit before evaluate: image leakage checks are required')
+    audit = json.loads(audit_path.read_text())
+    if audit['annotation_sha256'] != ann_sha or audit['missing_or_corrupt']:
+        sys.exit('audit does not match the current valid partition; rerun audit')
     if hp.exists():
         with open(hp) as f:
             for row in csv.DictReader(f):
                 hashes[row["path"]] = (row["file_sha256"], row["pixel_sha256"])
+    if any(r.path not in hashes or not all(hashes[r.path]) for r in q_all + g):
+        sys.exit('incomplete image hash audit; rerun audit')
     sens = None
     if hashes:
         g_by_hash = defaultdict(set)
@@ -311,7 +341,12 @@ def cmd_evaluate(a):
     macro_item = {f"R@{k}": float(np.mean([np.mean([0 < x <= k for x in v]) for v in by_item.values()])) for k in (1, 5)}
     ranks = res["first_pos_rank"][res["first_pos_rank"] > 0]
     dump("metrics.json", {
-        "status": "full official query set" if a.query_fraction >= 1 else f"PARTIAL estimate: {a.query_fraction:.0%} seeded query sample",
+        "status": ("full official query set" if ann.split_summary(recs) == {
+            "train": {"images": 25882, "unique_items": 3997},
+            "query": {"images": 14218, "unique_items": 3985},
+            "gallery": {"images": 12612, "unique_items": 3985}} and a.query_fraction == 1
+            else "PARTIAL estimate: see actual query/gallery counts and sampling"),
+        "annotation_sha256": ann_sha,
         "query_sampling": {"fraction": a.query_fraction, "seed": a.seed, "queries": len(q), "of_official_queries": len(q_all),
                            "items_covered": len(set(q_ids)), "of_query_items": len({r.item_id for r in q_all}),
                            "categories_covered": len(by_cat)},
@@ -320,7 +355,8 @@ def cmd_evaluate(a):
         "median_first_positive_rank": float(np.median(ranks)) if len(ranks) else None,
         "mean_reciprocal_rank": float(np.mean(1 / ranks)) if len(ranks) else None,
         "macro_over_items": macro_item, "per_category": per_cat,
-        "retrieval_seconds": round(t_ret, 2), "retrieval": "exact brute-force cosine (dot product of L2-normalised float32 embeddings)",
+        "retrieval_seconds": round(t_ret, 2), "peak_rss_mb": env_info.peak_rss_mb(),
+        "retrieval": "exact brute-force cosine (dot product of L2-normalised float32 embeddings)",
     })
 
 

@@ -23,6 +23,13 @@ def retrieve(q: np.ndarray, g: np.ndarray, q_ids, g_ids, k: int = 5, batch: int 
     """
     q_ids = np.asarray(q_ids)
     g_ids = np.asarray(g_ids)
+    if q.ndim != 2 or g.ndim != 2 or q.shape[1] != g.shape[1] or not len(g):
+        raise ValueError("compatible 2D embeddings and a nonempty gallery required")
+    if len(q_ids) != len(q) or len(g_ids) != len(g) or k < 1 or batch < 1:
+        raise ValueError("invalid IDs, k or batch size")
+    for emb in (q, g):
+        if not np.isfinite(emb).all() or not np.allclose(np.linalg.norm(emb, axis=1), 1, atol=1e-4):
+            raise ValueError("finite L2-normalised embeddings required for cosine retrieval")
     nq = len(q)
     k = min(k, len(g))
     top_idx = np.zeros((nq, k), dtype=np.int64)

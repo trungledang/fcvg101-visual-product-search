@@ -1,0 +1,23 @@
+{
+  "id": "dangtrung2005/fcvg101-deepfashion-frozen-clip-baseline",
+  "id_no": 140404683,
+  "title": "FCVG101 DeepFashion frozen CLIP baseline",
+  "code_file": "fcvg101-deepfashion-frozen-clip-baseline.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "keywords": [
+    "gpu"
+  ],
+  "dataset_sources": [
+    "dangtrung2005/fcvg101-inshop-private-inputs"
+  ],
+  "kernel_sources": [],
+  "competition_sources": [],
+  "model_sources": [],
+  "docker_image": "gcr.io/kaggle-private-byod/python@sha256:9a6bcfda6d03b2cd9aa347ee8c1bae62043328ed0f4afe9bda014e4f8bbf9435",
+  "machine_shape": "NvidiaTeslaT4"
+}

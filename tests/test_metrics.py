@@ -45,3 +45,10 @@ def test_cosine_equals_dot_after_normalisation():
     np.testing.assert_allclose(np.linalg.norm(x, axis=1), 1, rtol=1e-6)
     with pytest.raises(ValueError):
         l2_normalize(np.zeros((1, 3)))
+
+
+def test_rejects_unnormalised_or_nonfinite_embeddings():
+    with pytest.raises(ValueError, match='L2-normalised'):
+        retrieve(np.array([[2, 0, 0]], dtype=np.float32), G, ['a'], G_IDS)
+    with pytest.raises(ValueError, match='L2-normalised'):
+        retrieve(np.array([[np.nan, 0, 0]], dtype=np.float32), G, ['a'], G_IDS)

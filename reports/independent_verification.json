@@ -1,0 +1,87 @@
+{
+  "method": "all queries: independently count scores better than best positive; no sorting or retrieval helper",
+  "queries": 14218,
+  "gallery": 12612,
+  "metrics": {
+    "R@1": 0.45505697003798,
+    "R@5": 0.6724574483049656
+  },
+  "rank_mismatches": 14,
+  "per_query_hit_classification_changes": {
+    "K=1": 0,
+    "K=5": 0
+  },
+  "rank_difference_examples": [
+    {
+      "query": "img/WOMEN/Shorts/id_00000214/01_2_side.jpg",
+      "cloud_rank": 278,
+      "independent_rank": 277
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00001080/01_3_back.jpg",
+      "cloud_rank": 4932,
+      "independent_rank": 4933
+    },
+    {
+      "query": "img/WOMEN/Rompers_Jumpsuits/id_00001736/01_7_additional.jpg",
+      "cloud_rank": 4,
+      "independent_rank": 5
+    },
+    {
+      "query": "img/WOMEN/Graphic_Tees/id_00002221/01_3_back.jpg",
+      "cloud_rank": 5896,
+      "independent_rank": 5895
+    },
+    {
+      "query": "img/WOMEN/Graphic_Tees/id_00002490/01_3_back.jpg",
+      "cloud_rank": 2321,
+      "independent_rank": 2320
+    },
+    {
+      "query": "img/WOMEN/Sweaters/id_00002726/03_3_back.jpg",
+      "cloud_rank": 64,
+      "independent_rank": 63
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00002974/02_7_additional.jpg",
+      "cloud_rank": 187,
+      "independent_rank": 188
+    },
+    {
+      "query": "img/WOMEN/Graphic_Tees/id_00003407/01_7_additional.jpg",
+      "cloud_rank": 2151,
+      "independent_rank": 2150
+    },
+    {
+      "query": "img/WOMEN/Jackets_Coats/id_00003438/01_7_additional.jpg",
+      "cloud_rank": 591,
+      "independent_rank": 590
+    },
+    {
+      "query": "img/WOMEN/Shorts/id_00003526/01_3_back.jpg",
+      "cloud_rank": 322,
+      "independent_rank": 323
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00005364/07_3_back.jpg",
+      "cloud_rank": 301,
+      "independent_rank": 302
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00007082/05_7_additional.jpg",
+      "cloud_rank": 204,
+      "independent_rank": 203
+    },
+    {
+      "query": "img/WOMEN/Graphic_Tees/id_00007232/01_4_full.jpg",
+      "cloud_rank": 1915,
+      "independent_rank": 1916
+    },
+    {
+      "query": "img/WOMEN/Rompers_Jumpsuits/id_00007597/01_7_additional.jpg",
+      "cloud_rank": 26,
+      "independent_rank": 25
+    }
+  ],
+  "headline_metrics_match": true
+}

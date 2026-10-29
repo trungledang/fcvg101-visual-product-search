@@ -1,0 +1,68 @@
+{
+  "platform": "Kaggle free GPU",
+  "kernel": "dangtrung2005/fcvg101-deepfashion-frozen-clip-baseline",
+  "version": 3,
+  "status": "COMPLETE",
+  "dataset": "dangtrung2005/fcvg101-inshop-private-inputs",
+  "dataset_version": 2,
+  "paid_compute_provisioned": false,
+  "last_log_event_seconds": 346.556543938,
+  "events": [
+    {
+      "seconds": 58.338536655,
+      "message": "GPU: Tesla T4"
+    },
+    {
+      "seconds": 111.111143563,
+      "message": "19 passed in 31.16s"
+    },
+    {
+      "seconds": 111.314199214,
+      "message": "19 passed in 31.16s"
+    },
+    {
+      "seconds": 117.24805608,
+      "message": "wrote /kaggle/working/inshop-baseline/reports/preflight.json"
+    },
+    {
+      "seconds": 117.450715166,
+      "message": "wrote /kaggle/working/inshop-baseline/reports/preflight.json"
+    },
+    {
+      "seconds": 205.947294004,
+      "message": "wrote /kaggle/working/inshop-baseline/reports/audit.json"
+    },
+    {
+      "seconds": 206.159237711,
+      "message": "wrote /kaggle/working/inshop-baseline/reports/audit.json"
+    },
+    {
+      "seconds": 275.616190277,
+      "message": "wrote /kaggle/working/inshop-baseline/reports/embed_timing.json"
+    },
+    {
+      "seconds": 275.818686009,
+      "message": "wrote /kaggle/working/inshop-baseline/reports/embed_timing.json"
+    },
+    {
+      "seconds": 315.032962356,
+      "message": "wrote /kaggle/working/inshop-baseline/reports/metrics.json"
+    },
+    {
+      "seconds": 315.239029978,
+      "message": "wrote /kaggle/working/inshop-baseline/reports/metrics.json"
+    },
+    {
+      "seconds": 329.000050658,
+      "message": "wrote /kaggle/working/inshop-baseline/reports/examples_manifest.json"
+    },
+    {
+      "seconds": 329.202747919,
+      "message": "wrote /kaggle/working/inshop-baseline/reports/examples_manifest.json"
+    },
+    {
+      "seconds": 335.835480547,
+      "message": "Saved results to /kaggle/working/inshop-baseline-results.zip"
+    }
+  ]
+}

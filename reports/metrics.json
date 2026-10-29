@@ -1,0 +1,152 @@
+{
+  "status": "full official query set",
+  "annotation_sha256": "cfada103c44df866db5e2ee9ecc2301ca691a4d0cdb3c875fe4051b62570894c",
+  "query_sampling": {
+    "fraction": 1.0,
+    "seed": "fcvg101",
+    "queries": 14218,
+    "of_official_queries": 14218,
+    "items_covered": 3985,
+    "of_query_items": 3985,
+    "categories_covered": 23
+  },
+  "gallery_images": 12612,
+  "gallery_items": 3985,
+  "main_official_split": {
+    "eligible_queries": 14218,
+    "excluded_no_positive": 0,
+    "R@1": 0.45505697003798,
+    "hits@1": 6470,
+    "R@5": 0.6724574483049656,
+    "hits@5": 9561
+  },
+  "sensitivity_identical_images_masked": {
+    "note": "no query had a byte- or pixel-identical gallery image; sensitivity eval equals main eval"
+  },
+  "median_first_positive_rank": 2.0,
+  "mean_reciprocal_rank": 0.5550891186924278,
+  "macro_over_items": {
+    "R@1": 0.42701641055599754,
+    "R@5": 0.6303239446070196
+  },
+  "per_category": {
+    "MEN/Denim": {
+      "queries": 109,
+      "R@1": 0.3853,
+      "R@5": 0.5505
+    },
+    "MEN/Jackets_Vests": {
+      "queries": 90,
+      "R@1": 0.5222,
+      "R@5": 0.7778
+    },
+    "MEN/Pants": {
+      "queries": 310,
+      "R@1": 0.4548,
+      "R@5": 0.7065
+    },
+    "MEN/Shirts_Polos": {
+      "queries": 218,
+      "R@1": 0.4266,
+      "R@5": 0.7523
+    },
+    "MEN/Shorts": {
+      "queries": 261,
+      "R@1": 0.567,
+      "R@5": 0.7625
+    },
+    "MEN/Suiting": {
+      "queries": 14,
+      "R@1": 0.5,
+      "R@5": 0.7143
+    },
+    "MEN/Sweaters": {
+      "queries": 197,
+      "R@1": 0.4518,
+      "R@5": 0.7107
+    },
+    "MEN/Sweatshirts_Hoodies": {
+      "queries": 202,
+      "R@1": 0.6238,
+      "R@5": 0.8069
+    },
+    "MEN/Tees_Tanks": {
+      "queries": 842,
+      "R@1": 0.4513,
+      "R@5": 0.7577
+    },
+    "WOMEN/Blouses_Shirts": {
+      "queries": 2094,
+      "R@1": 0.4131,
+      "R@5": 0.6218
+    },
+    "WOMEN/Cardigans": {
+      "queries": 398,
+      "R@1": 0.4422,
+      "R@5": 0.6658
+    },
+    "WOMEN/Denim": {
+      "queries": 82,
+      "R@1": 0.3902,
+      "R@5": 0.5732
+    },
+    "WOMEN/Dresses": {
+      "queries": 1901,
+      "R@1": 0.5313,
+      "R@5": 0.7454
+    },
+    "WOMEN/Graphic_Tees": {
+      "queries": 365,
+      "R@1": 0.189,
+      "R@5": 0.326
+    },
+    "WOMEN/Jackets_Coats": {
+      "queries": 545,
+      "R@1": 0.4826,
+      "R@5": 0.6899
+    },
+    "WOMEN/Leggings": {
+      "queries": 68,
+      "R@1": 0.6029,
+      "R@5": 0.7353
+    },
+    "WOMEN/Pants": {
+      "queries": 505,
+      "R@1": 0.5129,
+      "R@5": 0.7109
+    },
+    "WOMEN/Rompers_Jumpsuits": {
+      "queries": 486,
+      "R@1": 0.4671,
+      "R@5": 0.6914
+    },
+    "WOMEN/Shorts": {
+      "queries": 988,
+      "R@1": 0.4231,
+      "R@5": 0.6255
+    },
+    "WOMEN/Skirts": {
+      "queries": 614,
+      "R@1": 0.6319,
+      "R@5": 0.8143
+    },
+    "WOMEN/Sweaters": {
+      "queries": 735,
+      "R@1": 0.419,
+      "R@5": 0.6054
+    },
+    "WOMEN/Sweatshirts_Hoodies": {
+      "queries": 239,
+      "R@1": 0.3682,
+      "R@5": 0.5439
+    },
+    "WOMEN/Tees_Tanks": {
+      "queries": 2955,
+      "R@1": 0.424,
+      "R@5": 0.6545
+    }
+  },
+  "retrieval_seconds": 31.51,
+  "peak_rss_mb": 1506.30859375,
+  "retrieval": "exact brute-force cosine (dot product of L2-normalised float32 embeddings)"
+}

@@ -8,7 +8,17 @@ from pathlib import Path
 import numpy as np
 
 MODEL_NAME = "ViT-B/32"
-CACHE_VERSION = 1
+CACHE_VERSION = 2
+
+
+def source_fingerprint(root: Path, paths: list[str]) -> str:
+    """Invalidate after replacing an input file; the audit holds its content hashes."""
+    import hashlib
+    h = hashlib.sha256()
+    for path in paths:
+        stat = (root / path).stat()
+        h.update(f"{path}\t{stat.st_size}\t{stat.st_mtime_ns}\n".encode())
+    return h.hexdigest()
 
 
 class _ImageDataset:
@@ -48,6 +58,7 @@ def load_model(weights_dir: Path, device: str = "cpu"):
     url, sha = official_checkpoint()
     weights_dir.mkdir(parents=True, exist_ok=True)
     local = weights_dir / Path(url).name
+    download_seconds = 0.0
     if local.exists():
         got = file_sha256(local)
         if got != sha:
@@ -55,13 +66,26 @@ def load_model(weights_dir: Path, device: str = "cpu"):
         model, preprocess = clip.load(str(local), device=device, jit=False)
     else:
         # clip._download verifies the SHA-256 itself
-        model, preprocess = clip.load(MODEL_NAME, device=device, jit=False, download_root=str(weights_dir))
+        t_download = time.perf_counter()
+        clip.clip._download(url, str(weights_dir))
+        download_seconds = time.perf_counter() - t_download
+        model, preprocess = clip.load(str(local), device=device, jit=False)
     model.eval()
     for p in model.parameters():
         p.requires_grad_(False)
+    import re
+    import PIL
+    import torchvision
+    # Compose repr includes a Python function address, which changes each process.
+    transform = re.sub(r" at 0x[0-9a-fA-F]+", "", repr(preprocess))
     return model, preprocess, {"model": f"openai/CLIP {MODEL_NAME}", "checkpoint_url": url,
                                "checkpoint_sha256": sha, "checkpoint_file": str(local),
-                               "preprocess": repr(preprocess)}
+                               "checkpoint_download_seconds": download_seconds,
+                               "preprocess": transform,
+                               "preprocess_versions": {"torchvision": torchvision.__version__, "pillow": PIL.__version__},
+                               "encoder_dtype": str(model.dtype),
+                               "frozen": all(not p.requires_grad for p in model.parameters()),
+                               "training": model.training}
 
 
 def encode_images(model, preprocess, paths: list[Path], device="cpu", batch_size=64, workers=4,
@@ -87,17 +111,21 @@ def encode_images(model, preprocess, paths: list[Path], device="cpu", batch_size
                  "batch_size": batch_size, "workers": workers, "device": device}
 
 
-def cache_meta(paths: list[str], annotation_sha256: str, model_meta: dict) -> dict:
+def cache_meta(paths: list[str], annotation_sha256: str, model_meta: dict, source_sha256=None) -> dict:
     import hashlib
     order = hashlib.sha256("\n".join(paths).encode()).hexdigest()
     return {"cache_version": CACHE_VERSION, "n": len(paths), "order_sha256": order,
             "annotation_sha256": annotation_sha256, "checkpoint_sha256": model_meta["checkpoint_sha256"],
-            "preprocess": model_meta["preprocess"]}
+            "preprocess": model_meta["preprocess"],
+            "preprocess_versions": model_meta.get("preprocess_versions"), "source_fingerprint": source_sha256,
+            "encoder_dtype": model_meta.get("encoder_dtype")}
 
 
 def save_cache(cache_dir: Path, name: str, emb: np.ndarray, paths: list[str], meta: dict) -> None:
     cache_dir.mkdir(parents=True, exist_ok=True)
     np.save(cache_dir / f"{name}.npy", emb.astype(np.float32))
+    from .annotations import file_sha256
+    (cache_dir / f"{name}.npy.sha256").write_text(file_sha256(cache_dir / f"{name}.npy"))
     (cache_dir / f"{name}.paths.txt").write_text("\n".join(paths) + "\n")
     (cache_dir / f"{name}.meta.json").write_text(json.dumps(meta, indent=2))
 
@@ -110,7 +138,13 @@ def load_cache(cache_dir: Path, name: str, paths: list[str], meta: dict) -> np.n
     if json.loads(m.read_text()) != meta or p.read_text().splitlines() != paths:
         print(f"cache {name} incompatible; recomputing")
         return None
-    emb = np.load(f)
-    if emb.shape[0] != len(paths):
+    from .annotations import file_sha256
+    checksum = cache_dir / f"{name}.npy.sha256"
+    if not checksum.exists() or checksum.read_text().strip() != file_sha256(f):
+        return None
+    emb = np.load(f, allow_pickle=False)
+    if emb.shape != (len(paths), 512) or not np.isfinite(emb).all():
+        return None
+    if len(emb) and not np.allclose(np.linalg.norm(emb, axis=1), 1, atol=1e-4):
         return None
     return emb

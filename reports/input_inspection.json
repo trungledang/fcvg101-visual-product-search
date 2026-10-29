@@ -1,0 +1,63 @@
+{
+  "archive": {
+    "entries": 60820,
+    "images": 52712,
+    "encrypted": false,
+    "uncompressed_bytes": 842962844,
+    "extracted_files_matching_archive_crc32": 52712,
+    "readme_in_archive": false,
+    "source": "E:\\Downloads\\Chua phan loai\\img.zip",
+    "sha256": "57b4974d629bfd5e539381ccd339d281706dc4369cb370e0b0a1a63a2f8c4dde"
+  },
+  "partition": {
+    "source": "..\\Eval\\list_eval_partition.txt",
+    "sha256": "cfada103c44df866db5e2ee9ecc2301ca691a4d0cdb3c875fe4051b62570894c",
+    "splits": {
+      "train": {
+        "images": 25882,
+        "unique_items": 3997
+      },
+      "query": {
+        "images": 14218,
+        "unique_items": 3985
+      },
+      "gallery": {
+        "images": 12612,
+        "unique_items": 3985
+      }
+    },
+    "checks": {
+      "query_gallery_path_overlap": 0,
+      "train_eval_identity_overlap": 0,
+      "query_items_without_gallery_positive": 0,
+      "query_items_without_gallery_positive_examples": [],
+      "gallery_items_without_query": 0
+    }
+  },
+  "bbox": {
+    "source": "..\\list_bbox_inshop.txt",
+    "sha256": "b1a67bf2b1bb22ce57b63238dfabfd987f21ef85e93448f01735148f5848f440",
+    "rows": 52712,
+    "paths_equal_partition": true,
+    "clothes_types": {
+      "1": 33487,
+      "3": 8731,
+      "2": 10494
+    },
+    "pose_types": {
+      "1": 12861,
+      "2": 10923,
+      "3": 10661,
+      "4": 6670,
+      "5": 10914,
+      "6": 683
+    },
+    "used_for_baseline_cropping": false
+  },
+  "readme": {
+    "url": "https://drive.google.com/file/d/0B7EVK8r0v71pSXp5b2R0UUg3U0E/view",
+    "local_snapshot": "reports/sources/README.inshop.official.txt",
+    "access": "direct download from official project-linked Drive release",
+    "retrieved": "2026-10-23"
+  }
+}

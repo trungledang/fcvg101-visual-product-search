@@ -1,0 +1,15 @@
+{
+  "id": "dangtrung2005/fcvg101-deepfashion-frozen-clip-baseline",
+  "title": "FCVG101 DeepFashion frozen CLIP baseline",
+  "code_file": "deepfashion_clip_baseline.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "dangtrung2005/fcvg101-inshop-private-inputs"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}

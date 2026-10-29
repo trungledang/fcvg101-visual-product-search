@@ -7,7 +7,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 from pilot import sample_queries  # noqa: E402
 from vps.annotations import Record  # noqa: E402
-from vps.embed import cache_meta, load_cache, save_cache  # noqa: E402
+from vps.embed import cache_meta, load_cache, save_cache, source_fingerprint  # noqa: E402
 from vps.examples import select_examples  # noqa: E402
 
 MM = {"checkpoint_sha256": "abc", "preprocess": "Compose(...)"}
@@ -22,6 +22,16 @@ def test_cache_roundtrip_and_invalidation(tmp_path):
     assert load_cache(tmp_path, "gallery", paths[::-1], cache_meta(paths[::-1], "annsha", MM)) is None  # order
     assert load_cache(tmp_path, "gallery", paths, cache_meta(paths, "other", MM)) is None  # annotation
     assert load_cache(tmp_path, "gallery", paths, cache_meta(paths, "annsha", {**MM, "checkpoint_sha256": "x"})) is None
+    # Same shape but damaged payload must not be accepted as embeddings.
+    (tmp_path / 'gallery.npy').write_bytes(b'corrupt')
+    assert load_cache(tmp_path, 'gallery', paths, meta) is None
+
+
+def test_changed_image_invalidates_source_fingerprint(tmp_path):
+    (tmp_path / 'image.jpg').write_bytes(b'old')
+    before = source_fingerprint(tmp_path, ['image.jpg'])
+    (tmp_path / 'image.jpg').write_bytes(b'new pixels')
+    assert source_fingerprint(tmp_path, ['image.jpg']) != before
 
 
 def test_query_sampling_keeps_every_identity_and_is_deterministic():
