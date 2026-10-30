@@ -63,6 +63,13 @@ def test_bbox_crop_pad_transform():
     img = Image.new("RGB", (256, 256), (0, 0, 255))
     out = BBoxCropPad({P: BBox("3", "1", 50, 20, 150, 220)}, margin=0.0, min_side=0)(img, P)
     assert out.size == (200, 200)
+    white = BBoxCropPad({P: BBox("3", "1", 50, 20, 150, 220)}, margin=0.0, min_side=0, fill=(255, 255, 255))(img, P)
+    assert white.getpixel((0, 100)) == (255, 255, 255)
+
+
+def test_bbox_crop_pad_falls_back_to_full_image_for_narrow_box():
+    img = Image.new("RGB", (256, 256))
+    assert BBoxCropPad({P: BBox("3", "2", 120, 40, 136, 230)}, full_if_narrower=32)(img, P) is img
 
 
 def _records():

@@ -91,12 +91,16 @@ def pad_to_square(image, fill=CLIP_MEAN_RGB):
 class BBoxCropPad:
     """PIL transform: crop to the (expanded) product bbox, then pad to square."""
 
-    def __init__(self, boxes: dict[str, BBox], margin: float = 0.1, min_side: int = 64):
+    def __init__(self, boxes: dict[str, BBox], margin: float = 0.1, min_side: int = 64,
+                 fill=CLIP_MEAN_RGB, full_if_narrower: int = 0):
         self.boxes, self.margin, self.min_side = boxes, margin, min_side
+        self.fill, self.full_if_narrower = fill, full_if_narrower
 
     def __call__(self, image, path: str):
+        if self.boxes[path].width < self.full_if_narrower:
+            return image  # unreliable (side-view) box: keep the full image
         box = crop_box(self.boxes[path], image.width, image.height, self.margin, self.min_side)
-        return pad_to_square(image.crop(box))
+        return pad_to_square(image.crop(box), self.fill)
 
 
 def train_augment(size: int = 224):
@@ -111,13 +115,14 @@ def train_augment(size: int = 224):
 
 
 def make_transform(config: str, clip_preprocess, boxes: dict[str, BBox] | None = None,
-                   train: bool = False):
-    """Return f(PIL image, path) -> CLIP input tensor for a named configuration."""
+                   train: bool = False, **crop_args):
+    """Return f(PIL image, path) -> CLIP input tensor for a named configuration.
+    crop_args (margin, min_side, fill, full_if_narrower) go to BBoxCropPad for val ablations."""
     from torchvision import transforms as T
     cfg = CONFIGS[config]
     if cfg["representation"] != "clip":
         raise ValueError(f"{config} is not a CLIP-input configuration")
-    crop = BBoxCropPad(boxes) if cfg["crop"] else None
+    crop = BBoxCropPad(boxes, **crop_args) if cfg["crop"] else None
     if cfg["crop"] and boxes is None:
         raise ValueError(f"{config} needs bbox annotations")
     # RandomErasing works on tensors, so it is appended after CLIP's ToTensor/Normalize.
