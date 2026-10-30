@@ -225,6 +225,7 @@ fig.tight_layout(); plt.show()
 2. **Crop theo bbox** (C1, C2): nới **10% mỗi cạnh** để giữ viền/cổ áo, nới cạnh tối thiểu **64 px** cho box nghiêng quá hẹp, rồi dịch box vào trong ảnh nếu tràn biên.
 3. **Pad về hình vuông** bằng màu trung bình của CLIP: bbox thường cao hơn rộng, nếu đưa thẳng vào `Resize(224) + CenterCrop(224)` của CLIP sẽ cắt mất phần trên/dưới (cột 3).
    Màu pad bằng mean nên sau normalize gần bằng 0; nhưng nó khác nền trắng của studio, nên màu pad (mean / trắng) là tham số so trên val.
+   **Kết quả val** (`reports/val_crop_ablation.json`): pad trắng 65,8% R@1 so với pad mean 53,6%; ảnh đầy đủ (C0) vẫn cao nhất 71,1% → Task 2 giữ C0.
 4. **Resize 224 bicubic + center crop 224**: giữ đúng preprocessing CLIP đã học khi pretrain; với ảnh đã vuông bước crop không bỏ mất gì.
 5. **ToTensor + Normalize** theo mean/std của CLIP.
 6. **Batch** bằng `DataLoader` (ô 7). Embedding đầu ra được L2-normalize để cosine = tích vô hướng.
