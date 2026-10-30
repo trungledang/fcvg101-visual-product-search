@@ -30,6 +30,14 @@ Notebook tự nhận thư mục dự án khi mở từ project, `notebooks/` ho�
 Cache và checkpoint được dùng lại, không ghi đè. [Bản có output chạy thử](artifacts/learning/learn_clip_retrieval.executed.ipynb)
 được lưu riêng trong `artifacts/` (chứa ảnh dataset, không đưa vào Git).
 
+## Task 1 coursework — pipeline dữ liệu và biểu diễn ảnh
+
+[notebooks/task1_data_pipeline.ipynb](notebooks/task1_data_pipeline.ipynb), cùng kernel `.venv`, chạy từ trên xuống (~2 phút).
+Gồm phân bố dữ liệu, chất lượng bbox, split train/val theo item_id (official test không bị chạm), pipeline
+crop bbox → pad vuông → CLIP, augmentation chỉ khi train, HSV histogram so với CLIP, và 4 cấu hình C0–C3 cho Task 2.
+Code ở `vps/preprocess.py` (test: `tests/test_preprocess.py`); notebook được sinh bởi `scripts/build_task1_notebook.py`.
+Bản có output ảnh nằm ở `artifacts/task1/` (không đưa vào Git).
+
 ## Run or inspect on Kaggle
 
 The completed **private** [Kaggle notebook](https://www.kaggle.com/code/dangtrung2005/fcvg101-deepfashion-frozen-clip-baseline)
