@@ -75,16 +75,19 @@ def main():
         print(f"  {name:20s} R@1 {results[name]['R@1']:.2%}  R@5 {results[name]['R@5']:.2%}  "
               f"side R@1 {results[name]['side_view_R@1']:.2%}  ({why})", flush=True)
 
-    ci, idx = bootstrap(hits1)
-    vs_c0 = {n: [float(np.percentile((h - hits1["C0_full"])[idx].mean(1), q)) for q in (2.5, 50, 97.5)]
-             for n, h in hits1.items() if n != "C0_full"}
+    ci, idx = bootstrap(hits1, groups=q_ids)
+    vs_c0 = {}
+    for n, h in hits1.items():
+        if n != "C0_full":
+            d = np.array([(h - hits1["C0_full"])[i].mean() for i in idx])
+            vs_c0[n] = [float(np.percentile(d, q)) for q in (2.5, 50, 97.5)]
     out = {"split": "validation (train item_ids); official test not used", "official_test_used": False,
            "partition_sha256": file_sha256(partition_file), "bbox_sha256": file_sha256(bbox_file),
            "val_query_images": len(vq), "val_gallery_images": len(vg),
            "model": meta["model"], "checkpoint_sha256": meta["checkpoint_sha256"], "device": device,
            "narrow_box_share_val_query": float(np.mean([boxes[r.path].width < 32 for r in vq])),
            "side_view_queries": sum(boxes[r.path].pose_type == "2" for r in vq),
-           "results": results, "R@1_bootstrap95": ci,
+           "results": results, "R@1_bootstrap95_by_item": ci,
            "R@1_minus_C0_bootstrap_2.5_50_97.5": vs_c0, "pose_names": POSE_TYPES}
     a.out.write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print("wrote", a.out)

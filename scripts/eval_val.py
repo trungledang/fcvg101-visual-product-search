@@ -35,7 +35,7 @@ class _Split:
             return self.transform(im.convert("RGB"), r.path)
 
 
-def encode(model, ds, device, batch_size=64):
+def encode(model, ds, device, batch_size=32):
     import torch
     out = []
     with torch.inference_mode():
@@ -45,12 +45,22 @@ def encode(model, ds, device, batch_size=64):
     return np.concatenate(out)
 
 
-def bootstrap(hits: dict, n_boot=2000, seed=0):
-    """95% CI over queries (paired: the same resampled queries for every config)."""
+def bootstrap(hits: dict, groups=None, n_boot=2000, seed=0):
+    """Paired 95% CI (the same resample for every config). With `groups` (item_id per query)
+    whole items are resampled, since queries of one item are not independent."""
     rng = np.random.default_rng(seed)
     n = len(next(iter(hits.values())))
-    idx = rng.integers(0, n, size=(n_boot, n))
-    return {name: [float(np.percentile(h[idx].mean(1), q)) for q in (2.5, 97.5)] for name, h in hits.items()}, idx
+    if groups is None:
+        idx = rng.integers(0, n, size=(n_boot, n))
+    else:
+        members = {}
+        for i, g in enumerate(groups):
+            members.setdefault(g, []).append(i)
+        clusters = list(members.values())
+        picks = rng.integers(0, len(clusters), size=(n_boot, len(clusters)))
+        idx = [np.concatenate([clusters[c] for c in row]) for row in picks]
+    mean = lambda h: np.array([h[i].mean() for i in idx])  # noqa: E731
+    return {name: [float(np.percentile(mean(h), q)) for q in (2.5, 97.5)] for name, h in hits.items()}, idx
 
 
 def main():
@@ -94,8 +104,9 @@ def main():
         print(f"  {name:12s} R@1 {results[name]['R@1']:.2%}  R@5 {results[name]['R@5']:.2%}  ({timing[name]:.1f}s)")
 
     hits1 = {n: (rk == 1).astype(float) for n, rk in ranks.items()}
-    ci, idx = bootstrap(hits1)
-    diff = (hits1["C1_bbox_pad"] - hits1["C0_full"])[idx].mean(1)
+    ci, idx = bootstrap(hits1, groups=q_ids)
+    d = hits1["C1_bbox_pad"] - hits1["C0_full"]
+    diff = np.array([d[i].mean() for i in idx])
     poses = [boxes[r.path].pose_type for r in vq]
     by_pose = {POSE_TYPES[pt]: {"queries": n, **{name: float(np.mean([ranks[name][i] == 1 for i in range(len(vq))
                                                                     if poses[i] == pt])) for name in ranks}}
@@ -110,7 +121,7 @@ def main():
         "torch": torch.__version__, "python": platform.python_version(),
         "configs": {n: CONFIGS[n] for n in results},
         "results": results,
-        "R@1_bootstrap95": ci,
+        "R@1_bootstrap95_by_item": ci,
         "C1_minus_C0_R@1": {"mean": float(diff.mean()), "ci95": [float(np.percentile(diff, 2.5)),
                                                                  float(np.percentile(diff, 97.5))]},
         "R@1_by_query_pose": by_pose,
