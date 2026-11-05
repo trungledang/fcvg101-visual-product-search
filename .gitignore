@@ -19,3 +19,6 @@ __pycache__/
 .claude/settings.local.json
 
 artifacts/
+
+# DeepFashion-derived doc figures (regenerate: scripts/generate_docs_images.py)
+docs/images/dataset/
