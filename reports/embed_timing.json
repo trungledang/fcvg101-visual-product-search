@@ -1,0 +1,41 @@
+{
+  "model": {
+    "model": "openai/CLIP ViT-B/32",
+    "checkpoint_url": "https://openaipublic.azureedge.net/clip/models/40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af/ViT-B-32.pt",
+    "checkpoint_sha256": "40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af",
+    "checkpoint_file": "/kaggle/working/inshop-baseline/.cache/clip/ViT-B-32.pt",
+    "checkpoint_download_seconds": 4.403178786000012,
+    "preprocess": "Compose(\n    Resize(size=224, interpolation=bicubic, max_size=None, antialias=True)\n    CenterCrop(size=(224, 224))\n    <function _convert_image_to_rgb>\n    ToTensor()\n    Normalize(mean=(0.48145466, 0.4578275, 0.40821073), std=(0.26862954, 0.26130258, 0.27577711))\n)",
+    "preprocess_versions": {
+      "torchvision": "0.26.0+cu128",
+      "pillow": "13.0.0"
+    },
+    "encoder_dtype": "torch.float16",
+    "frozen": true,
+    "training": false
+  },
+  "device": "cuda",
+  "torch_threads": 2,
+  "timings": {
+    "model_load_seconds": 9.81,
+    "gallery": {
+      "images": 12612,
+      "seconds": 27.29764933900003,
+      "images_per_second": 462.01780392794814,
+      "batch_size": 64,
+      "workers": 2,
+      "device": "cuda"
+    },
+    "query": {
+      "images": 14218,
+      "seconds": 28.896909988000004,
+      "images_per_second": 492.0249260527959,
+      "batch_size": 64,
+      "workers": 2,
+      "device": "cuda"
+    }
+  },
+  "peak_rss_mb": 2059.8,
+  "peak_vram_mb": 482.68896484375,
+  "cache_bytes": 56238261
+}

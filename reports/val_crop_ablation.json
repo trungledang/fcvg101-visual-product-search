@@ -1,0 +1,169 @@
+{
+  "split": "validation (train item_ids); official test not used",
+  "official_test_used": false,
+  "partition_sha256": "cfada103c44df866db5e2ee9ecc2301ca691a4d0cdb3c875fe4051b62570894c",
+  "bbox_sha256": "b1a67bf2b1bb22ce57b63238dfabfd987f21ef85e93448f01735148f5848f440",
+  "val_query_images": 1232,
+  "val_gallery_images": 1384,
+  "model": "openai/CLIP ViT-B/32",
+  "checkpoint_sha256": "40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af",
+  "device": "cuda",
+  "narrow_box_share_val_query": 0.0633116883116883,
+  "side_view_queries": 264,
+  "results": {
+    "C0_full": {
+      "change": "reference: full image",
+      "eligible_queries": 1232,
+      "excluded_no_positive": 0,
+      "R@1": 0.711038961038961,
+      "hits@1": 876,
+      "R@5": 0.872564935064935,
+      "hits@5": 1075,
+      "mrr": 0.782907770825999,
+      "side_view_R@1": 0.7613636363636364,
+      "seconds": 29.9
+    },
+    "C1_bbox_pad": {
+      "change": "reference: margin 0.1, mean-colour pad",
+      "eligible_queries": 1232,
+      "excluded_no_positive": 0,
+      "R@1": 0.5357142857142857,
+      "hits@1": 660,
+      "R@5": 0.6948051948051948,
+      "hits@5": 856,
+      "mrr": 0.6114906194412106,
+      "side_view_R@1": 0.3787878787878788,
+      "seconds": 28.9
+    },
+    "A1_white_pad": {
+      "change": "pad colour white",
+      "eligible_queries": 1232,
+      "excluded_no_positive": 0,
+      "R@1": 0.6574675324675324,
+      "hits@1": 810,
+      "R@5": 0.8409090909090909,
+      "hits@5": 1036,
+      "mrr": 0.7397735919657547,
+      "side_view_R@1": 0.5833333333333334,
+      "seconds": 28.6
+    },
+    "A2_margin_0.3": {
+      "change": "margin 0.3",
+      "eligible_queries": 1232,
+      "excluded_no_positive": 0,
+      "R@1": 0.5487012987012987,
+      "hits@1": 676,
+      "R@5": 0.702922077922078,
+      "hits@5": 866,
+      "mrr": 0.6206913056520558,
+      "side_view_R@1": 0.36363636363636365,
+      "seconds": 29.7
+    },
+    "A2_margin_0.5": {
+      "change": "margin 0.5",
+      "eligible_queries": 1232,
+      "excluded_no_positive": 0,
+      "R@1": 0.547077922077922,
+      "hits@1": 674,
+      "R@5": 0.7142857142857143,
+      "hits@5": 880,
+      "mrr": 0.6210149919352795,
+      "side_view_R@1": 0.3787878787878788,
+      "seconds": 30.0
+    },
+    "A3_full_if_narrow32": {
+      "change": "full image when bbox width < 32 px",
+      "eligible_queries": 1232,
+      "excluded_no_positive": 0,
+      "R@1": 0.5422077922077922,
+      "hits@1": 668,
+      "R@5": 0.7069805194805194,
+      "hits@5": 871,
+      "mrr": 0.6209357595912821,
+      "side_view_R@1": 0.4015151515151515,
+      "seconds": 29.1
+    },
+    "X_context_only": {
+      "change": "probe: product bbox hidden, context kept",
+      "eligible_queries": 1232,
+      "excluded_no_positive": 0,
+      "R@1": 0.22727272727272727,
+      "hits@1": 280,
+      "R@5": 0.38311688311688313,
+      "hits@5": 472,
+      "mrr": 0.3074055847722542,
+      "side_view_R@1": 0.20075757575757575,
+      "seconds": 30.1
+    }
+  },
+  "R@1_bootstrap95_by_item": {
+    "C0_full": [
+      0.6801048387096774,
+      0.7437042670046473
+    ],
+    "C1_bbox_pad": [
+      0.49783483387777866,
+      0.5725266336943237
+    ],
+    "A1_white_pad": [
+      0.6228045276947829,
+      0.6903633155405379
+    ],
+    "A2_margin_0.3": [
+      0.5060763888888888,
+      0.5860795663952303
+    ],
+    "A2_margin_0.5": [
+      0.5051246600181324,
+      0.5883223618935871
+    ],
+    "A3_full_if_narrow32": [
+      0.5035159752126389,
+      0.5791437319942703
+    ],
+    "X_context_only": [
+      0.19645700483091788,
+      0.25856959795653195
+    ]
+  },
+  "R@1_minus_C0_bootstrap_2.5_50_97.5": {
+    "C1_bbox_pad": [
+      -0.2108407012195122,
+      -0.17602234368709546,
+      -0.14096344989732698
+    ],
+    "A1_white_pad": [
+      -0.08393158585529667,
+      -0.05473895278804616,
+      -0.023618242569581515
+    ],
+    "A2_margin_0.3": [
+      -0.1985534146270311,
+      -0.16289219073509592,
+      -0.13042646406388647
+    ],
+    "A2_margin_0.5": [
+      -0.199488545325859,
+      -0.16431389439228186,
+      -0.13069439161690316
+    ],
+    "A3_full_if_narrow32": [
+      -0.20447066315998083,
+      -0.16928961129941905,
+      -0.13456583357998328
+    ],
+    "X_context_only": [
+      -0.5229789406118497,
+      -0.48457205250073676,
+      -0.44434525702172767
+    ]
+  },
+  "pose_names": {
+    "1": "front",
+    "2": "side",
+    "3": "back",
+    "4": "zoom-out",
+    "5": "zoom-in",
+    "6": "stand-alone"
+  }
+}

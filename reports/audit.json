@@ -1,0 +1,769 @@
+{
+  "annotation_file": "Eval/list_eval_partition.txt",
+  "annotation_sha256": "cfada103c44df866db5e2ee9ecc2301ca691a4d0cdb3c875fe4051b62570894c",
+  "parsed_rows": 52712,
+  "split_summary": {
+    "train": {
+      "images": 25882,
+      "unique_items": 3997
+    },
+    "query": {
+      "images": 14218,
+      "unique_items": 3985
+    },
+    "gallery": {
+      "images": 12612,
+      "unique_items": 3985
+    }
+  },
+  "split_checks": {
+    "query_gallery_path_overlap": 0,
+    "train_eval_identity_overlap": 0,
+    "query_items_without_gallery_positive": 0,
+    "query_items_without_gallery_positive_examples": [],
+    "gallery_items_without_query": 0
+  },
+  "per_category_images": {
+    "MEN/Denim": {
+      "train": 206,
+      "query": 109,
+      "gallery": 96
+    },
+    "MEN/Jackets_Vests": {
+      "train": 253,
+      "gallery": 81,
+      "query": 90
+    },
+    "MEN/Pants": {
+      "train": 423,
+      "gallery": 284,
+      "query": 310
+    },
+    "MEN/Shirts_Polos": {
+      "train": 298,
+      "gallery": 206,
+      "query": 218
+    },
+    "MEN/Shorts": {
+      "train": 510,
+      "gallery": 229,
+      "query": 261
+    },
+    "MEN/Suiting": {
+      "train": 15,
+      "query": 14,
+      "gallery": 10
+    },
+    "MEN/Sweaters": {
+      "train": 248,
+      "gallery": 160,
+      "query": 197
+    },
+    "MEN/Sweatshirts_Hoodies": {
+      "train": 398,
+      "gallery": 175,
+      "query": 202
+    },
+    "MEN/Tees_Tanks": {
+      "train": 1244,
+      "gallery": 759,
+      "query": 842
+    },
+    "WOMEN/Blouses_Shirts": {
+      "train": 4027,
+      "gallery": 1843,
+      "query": 2094
+    },
+    "WOMEN/Cardigans": {
+      "train": 684,
+      "gallery": 354,
+      "query": 398
+    },
+    "WOMEN/Denim": {
+      "train": 225,
+      "query": 82,
+      "gallery": 86
+    },
+    "WOMEN/Dresses": {
+      "train": 3451,
+      "gallery": 1647,
+      "query": 1901
+    },
+    "WOMEN/Graphic_Tees": {
+      "train": 656,
+      "gallery": 276,
+      "query": 365
+    },
+    "WOMEN/Jackets_Coats": {
+      "train": 870,
+      "gallery": 480,
+      "query": 545
+    },
+    "WOMEN/Leggings": {
+      "train": 205,
+      "gallery": 62,
+      "query": 68
+    },
+    "WOMEN/Pants": {
+      "train": 809,
+      "gallery": 490,
+      "query": 505
+    },
+    "WOMEN/Rompers_Jumpsuits": {
+      "train": 804,
+      "gallery": 406,
+      "query": 486
+    },
+    "WOMEN/Shorts": {
+      "train": 1631,
+      "query": 988,
+      "gallery": 857
+    },
+    "WOMEN/Skirts": {
+      "train": 886,
+      "query": 614,
+      "gallery": 545
+    },
+    "WOMEN/Sweaters": {
+      "train": 1642,
+      "query": 735,
+      "gallery": 659
+    },
+    "WOMEN/Sweatshirts_Hoodies": {
+      "train": 414,
+      "query": 239,
+      "gallery": 203
+    },
+    "WOMEN/Tees_Tanks": {
+      "train": 5983,
+      "gallery": 2704,
+      "query": 2955
+    }
+  },
+  "images_checked": 52712,
+  "hash_seconds": 68.3,
+  "missing_or_corrupt": 0,
+  "missing_or_corrupt_examples": [],
+  "image_sizes_top": [
+    [
+      [
+        256,
+        256
+      ],
+      52712
+    ]
+  ],
+  "exact_file_duplicate_groups_total": 0,
+  "exact_file_duplicate_groups_cross_query_gallery": [],
+  "exact_pixel_duplicate_groups_total": 0,
+  "exact_pixel_duplicate_groups_cross_query_gallery": [],
+  "exact_file_duplicate_groups_cross_train_eval": [],
+  "exact_pixel_duplicate_groups_cross_train_eval": [],
+  "cross_split_duplicate_scope": "all train/query/gallery if --include-train, else query/gallery",
+  "phash_threshold_hamming": 4,
+  "phash_near_duplicate_query_gallery_pairs": 1357,
+  "phash_near_duplicate_pairs_same_item": 134,
+  "phash_near_duplicate_pairs_sample": [
+    {
+      "query": "img/WOMEN/Blouses_Shirts/id_00000015/02_3_back.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00004467/02_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Jackets_Coats/id_00000054/01_7_additional.jpg",
+      "gallery": "img/WOMEN/Skirts/id_00004318/02_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Blouses_Shirts/id_00000065/02_2_side.jpg",
+      "gallery": "img/WOMEN/Pants/id_00000065/02_2_side.jpg",
+      "hamming": 0,
+      "same_item": true
+    },
+    {
+      "query": "img/WOMEN/Blouses_Shirts/id_00000072/01_7_additional.jpg",
+      "gallery": "img/WOMEN/Shorts/id_00002706/01_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00000079/09_3_back.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00004868/02_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/MEN/Jackets_Vests/id_00000084/04_4_full.jpg",
+      "gallery": "img/MEN/Tees_Tanks/id_00007414/01_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/MEN/Jackets_Vests/id_00000094/01_4_full.jpg",
+      "gallery": "img/WOMEN/Jackets_Coats/id_00000261/02_1_front.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00000135/06_3_back.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00007701/02_7_additional.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00000135/08_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00000135/07_7_additional.jpg",
+      "hamming": 4,
+      "same_item": true
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00000135/08_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00005610/02_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00000135/08_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00007191/06_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Shorts/id_00000144/02_3_back.jpg",
+      "gallery": "img/WOMEN/Shorts/id_00004549/02_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Shorts/id_00000144/02_3_back.jpg",
+      "gallery": "img/WOMEN/Shorts/id_00007647/02_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Shorts/id_00000144/03_7_additional.jpg",
+      "gallery": "img/WOMEN/Shorts/id_00004549/02_2_side.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/MEN/Sweatshirts_Hoodies/id_00000146/02_2_side.jpg",
+      "gallery": "img/MEN/Jackets_Vests/id_00000084/07_2_side.jpg",
+      "hamming": 2,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Shorts/id_00000148/02_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00000278/01_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Shorts/id_00000148/02_4_full.jpg",
+      "gallery": "img/WOMEN/Shorts/id_00004731/04_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Jackets_Coats/id_00000181/03_3_back.jpg",
+      "gallery": "img/WOMEN/Blouses_Shirts/id_00000181/03_3_back.jpg",
+      "hamming": 0,
+      "same_item": true
+    },
+    {
+      "query": "img/WOMEN/Blouses_Shirts/id_00000181/03_7_additional.jpg",
+      "gallery": "img/WOMEN/Jackets_Coats/id_00000181/03_7_additional.jpg",
+      "hamming": 0,
+      "same_item": true
+    },
+    {
+      "query": "img/MEN/Denim/id_00000182/01_7_additional.jpg",
+      "gallery": "img/MEN/Denim/id_00000313/01_1_front.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Jackets_Coats/id_00000187/06_1_front.jpg",
+      "gallery": "img/WOMEN/Sweatshirts_Hoodies/id_00001326/03_1_front.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/MEN/Shirts_Polos/id_00000193/08_1_front.jpg",
+      "gallery": "img/WOMEN/Sweatshirts_Hoodies/id_00004317/01_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000224/09_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00005361/04_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000244/01_1_front.jpg",
+      "gallery": "img/WOMEN/Blouses_Shirts/id_00003820/02_1_front.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Jackets_Coats/id_00000260/02_4_full.jpg",
+      "gallery": "img/WOMEN/Cardigans/id_00002121/30_7_additional.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Jackets_Coats/id_00000260/02_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00002415/04_1_front.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Jackets_Coats/id_00000260/02_4_full.jpg",
+      "gallery": "img/WOMEN/Jackets_Coats/id_00005611/01_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Jackets_Coats/id_00000260/02_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00007318/03_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Leggings/id_00000286/05_7_additional.jpg",
+      "gallery": "img/WOMEN/Leggings/id_00000286/05_3_back.jpg",
+      "hamming": 2,
+      "same_item": true
+    },
+    {
+      "query": "img/WOMEN/Leggings/id_00000286/06_3_back.jpg",
+      "gallery": "img/WOMEN/Leggings/id_00000286/05_3_back.jpg",
+      "hamming": 2,
+      "same_item": true
+    },
+    {
+      "query": "img/WOMEN/Leggings/id_00000286/06_7_additional.jpg",
+      "gallery": "img/WOMEN/Leggings/id_00000286/05_3_back.jpg",
+      "hamming": 4,
+      "same_item": true
+    },
+    {
+      "query": "img/WOMEN/Sweaters/id_00000303/03_7_additional.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00003925/01_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/MEN/Tees_Tanks/id_00000305/01_7_additional.jpg",
+      "gallery": "img/MEN/Shirts_Polos/id_00001985/01_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/MEN/Sweaters/id_00000321/01_4_full.jpg",
+      "gallery": "img/MEN/Jackets_Vests/id_00007569/01_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Sweatshirts_Hoodies/id_00000332/01_4_full.jpg",
+      "gallery": "img/WOMEN/Pants/id_00001936/02_1_front.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Rompers_Jumpsuits/id_00000344/07_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00002128/03_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Rompers_Jumpsuits/id_00000344/07_4_full.jpg",
+      "gallery": "img/WOMEN/Skirts/id_00004318/02_4_full.jpg",
+      "hamming": 2,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Rompers_Jumpsuits/id_00000344/07_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00005014/01_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Rompers_Jumpsuits/id_00000344/07_4_full.jpg",
+      "gallery": "img/WOMEN/Shorts/id_00005345/04_4_full.jpg",
+      "hamming": 2,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Rompers_Jumpsuits/id_00000344/07_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00007054/05_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Rompers_Jumpsuits/id_00000344/07_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00007054/06_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Rompers_Jumpsuits/id_00000344/07_4_full.jpg",
+      "gallery": "img/WOMEN/Shorts/id_00007107/07_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Graphic_Tees/id_00000349/01_4_full.jpg",
+      "gallery": "img/WOMEN/Pants/id_00007682/06_1_front.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Denim/id_00000361/01_1_front.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00006940/01_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00000371/09_7_additional.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00007191/06_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Rompers_Jumpsuits/id_00000373/06_7_additional.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00001997/02_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Rompers_Jumpsuits/id_00000373/06_7_additional.jpg",
+      "gallery": "img/WOMEN/Rompers_Jumpsuits/id_00006598/02_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000374/02_3_back.jpg",
+      "gallery": "img/MEN/Tees_Tanks/id_00000242/01_2_side.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000374/02_3_back.jpg",
+      "gallery": "img/MEN/Tees_Tanks/id_00006287/01_2_side.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Blouses_Shirts/id_00000380/05_7_additional.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00003580/08_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000403/02_7_additional.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00007022/09_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Blouses_Shirts/id_00000438/02_3_back.jpg",
+      "gallery": "img/WOMEN/Blouses_Shirts/id_00000397/02_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Blouses_Shirts/id_00000442/01_7_additional.jpg",
+      "gallery": "img/WOMEN/Blouses_Shirts/id_00003120/01_4_full.jpg",
+      "hamming": 0,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Blouses_Shirts/id_00000442/01_7_additional.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00003884/02_4_full.jpg",
+      "hamming": 2,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Blouses_Shirts/id_00000442/01_7_additional.jpg",
+      "gallery": "img/WOMEN/Shorts/id_00007714/05_4_full.jpg",
+      "hamming": 2,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Blouses_Shirts/id_00000442/02_7_additional.jpg",
+      "gallery": "img/WOMEN/Shorts/id_00005573/05_1_front.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Shorts/id_00000466/01_4_full.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00005968/02_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000476/04_1_front.jpg",
+      "gallery": "img/WOMEN/Skirts/id_00004719/13_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Rompers_Jumpsuits/id_00000483/02_4_full.jpg",
+      "gallery": "img/WOMEN/Blouses_Shirts/id_00003265/01_1_front.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00000488/04_4_full.jpg",
+      "gallery": "img/WOMEN/Rompers_Jumpsuits/id_00007669/04_2_side.jpg",
+      "hamming": 2,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Blouses_Shirts/id_00000497/02_4_full.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00002057/03_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00000505/01_7_additional.jpg",
+      "gallery": "img/WOMEN/Blouses_Shirts/id_00001658/03_7_additional.jpg",
+      "hamming": 2,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00000505/01_7_additional.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00002353/02_2_side.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/MEN/Shorts/id_00000524/01_7_additional.jpg",
+      "gallery": "img/MEN/Shorts/id_00000524/01_4_full.jpg",
+      "hamming": 0,
+      "same_item": true
+    },
+    {
+      "query": "img/MEN/Shorts/id_00000524/03_7_additional.jpg",
+      "gallery": "img/MEN/Shorts/id_00000524/03_4_full.jpg",
+      "hamming": 0,
+      "same_item": true
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000534/05_1_front.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00004584/03_1_front.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00000552/02_7_additional.jpg",
+      "gallery": "img/WOMEN/Pants/id_00002633/01_1_front.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00000552/02_7_additional.jpg",
+      "gallery": "img/WOMEN/Sweatshirts_Hoodies/id_00005123/01_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000585/01_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00006602/17_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000585/01_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00006863/25_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000610/02_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00007164/01_2_side.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/MEN/Tees_Tanks/id_00000615/01_2_side.jpg",
+      "gallery": "img/MEN/Sweaters/id_00001462/03_2_side.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/MEN/Tees_Tanks/id_00000615/02_7_additional.jpg",
+      "gallery": "img/WOMEN/Sweatshirts_Hoodies/id_00003524/01_2_side.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00000619/05_7_additional.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00003629/03_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00000619/05_7_additional.jpg",
+      "gallery": "img/WOMEN/Pants/id_00007188/01_1_front.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Sweaters/id_00000628/03_3_back.jpg",
+      "gallery": "img/WOMEN/Blouses_Shirts/id_00002244/01_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Skirts/id_00000631/01_4_full.jpg",
+      "gallery": "img/WOMEN/Shorts/id_00006905/03_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Blouses_Shirts/id_00000637/01_3_back.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00007920/02_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/MEN/Shorts/id_00000638/01_3_back.jpg",
+      "gallery": "img/MEN/Shorts/id_00000638/02_3_back.jpg",
+      "hamming": 2,
+      "same_item": true
+    },
+    {
+      "query": "img/MEN/Shorts/id_00000638/01_6_flat.jpg",
+      "gallery": "img/MEN/Shorts/id_00000638/02_6_flat.jpg",
+      "hamming": 2,
+      "same_item": true
+    },
+    {
+      "query": "img/MEN/Shirts_Polos/id_00000649/01_4_full.jpg",
+      "gallery": "img/WOMEN/Sweatshirts_Hoodies/id_00001249/11_4_full.jpg",
+      "hamming": 2,
+      "same_item": false
+    },
+    {
+      "query": "img/MEN/Sweaters/id_00000650/01_3_back.jpg",
+      "gallery": "img/MEN/Tees_Tanks/id_00007563/01_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Graphic_Tees/id_00000659/02_1_front.jpg",
+      "gallery": "img/WOMEN/Sweaters/id_00002049/01_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Tees_Tanks/id_00000660/01_7_additional.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00007238/01_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Rompers_Jumpsuits/id_00000663/04_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00001277/03_4_full.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000674/02_4_full.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00002201/21_7_additional.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Shorts/id_00000681/03_4_full.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00004563/02_3_back.jpg",
+      "hamming": 2,
+      "same_item": false
+    },
+    {
+      "query": "img/MEN/Shirts_Polos/id_00000711/01_2_side.jpg",
+      "gallery": "img/MEN/Tees_Tanks/id_00005834/08_2_side.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/MEN/Shirts_Polos/id_00000712/02_3_back.jpg",
+      "gallery": "img/MEN/Sweatshirts_Hoodies/id_00005799/07_7_additional.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Pants/id_00000730/02_1_front.jpg",
+      "gallery": "img/WOMEN/Tees_Tanks/id_00003590/01_7_additional.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000731/03_1_front.jpg",
+      "gallery": "img/WOMEN/Pants/id_00000734/02_2_side.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000731/03_1_front.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00005768/04_2_side.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000731/03_4_full.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00000731/04_4_full.jpg",
+      "hamming": 4,
+      "same_item": true
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000731/03_4_full.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00002391/03_7_additional.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000731/03_4_full.jpg",
+      "gallery": "img/WOMEN/Skirts/id_00004895/02_1_front.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000731/03_4_full.jpg",
+      "gallery": "img/WOMEN/Skirts/id_00006810/02_3_back.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000731/03_4_full.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00007819/02_1_front.jpg",
+      "hamming": 2,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000731/10_4_full.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00000674/03_1_front.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000731/10_4_full.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00002391/03_7_additional.jpg",
+      "hamming": 4,
+      "same_item": false
+    },
+    {
+      "query": "img/WOMEN/Dresses/id_00000731/10_4_full.jpg",
+      "gallery": "img/WOMEN/Dresses/id_00007819/02_1_front.jpg",
+      "hamming": 4,
+      "same_item": false
+    }
+  ],
+  "note": "pHash pairs are candidates for manual review only; same-item pairs across query/gallery are intended positives unless pixel-identical."
+}

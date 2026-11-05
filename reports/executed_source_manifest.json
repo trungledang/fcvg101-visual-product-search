@@ -1,0 +1,77 @@
+{
+  "kernel_version": 3,
+  "notebook_source_sha256": "37b1d066dd1d76306d2501382a244cd2681607b7fda4d239e00c54c804e13c13",
+  "result_zip_sha256": "42ef52e3d257d582fa969624d21d6bbade4542b183c2750156fc07596803a602",
+  "source_files": [
+    {
+      "path": "vps/__init__.py",
+      "sha256": "3d18c9d53ecc453560b725360303f2a22d5918017ee4fb1c7b377b34bc81ae3a",
+      "matches_local": true
+    },
+    {
+      "path": "vps/annotations.py",
+      "sha256": "40268515f63175015064d4b95154030e21663309c42b54eaad08fb2019a7a1de",
+      "matches_local": true
+    },
+    {
+      "path": "vps/audit.py",
+      "sha256": "1d8be54573fcef877cb7cde68c104197dc21c505f810b971da2f409ae7c366fb",
+      "matches_local": true
+    },
+    {
+      "path": "vps/embed.py",
+      "sha256": "7c0f7859b55699314f8897121025fca1966b2ad5f35538159eb50c1dc29cf11f",
+      "matches_local": true
+    },
+    {
+      "path": "vps/env_info.py",
+      "sha256": "d06176177e36075e3cb5863adcd89bc4e0a3287147addb8069e8266d90a13a73",
+      "matches_local": true
+    },
+    {
+      "path": "vps/examples.py",
+      "sha256": "f145fb9e5834f5baf8a49ba5cd10afd12df29116b5e1a8806b470fc12667ce55",
+      "matches_local": true
+    },
+    {
+      "path": "vps/metrics.py",
+      "sha256": "bedf169c01cbd7c93ba3da69de52a25d9bd51b3811127542fb3253f0d2fd7056",
+      "matches_local": true
+    },
+    {
+      "path": "scripts/pilot.py",
+      "sha256": "262e5ea124586cf8688e9051dace88775483b80b4fcef81ad686508327a63b6d",
+      "matches_local": true
+    },
+    {
+      "path": "scripts/inspect_inputs.py",
+      "sha256": "b723f5347b3a3aad9db0998ace39ac8494f69676dee2598b492a583aa0c08cfe",
+      "matches_local": true
+    },
+    {
+      "path": "tests/conftest.py",
+      "sha256": "d8b2869aa8eac2206b490e4b76f49d6511a6da1c99506a96dc15caada93562a8",
+      "matches_local": true
+    },
+    {
+      "path": "tests/test_annotations.py",
+      "sha256": "06bbfc74262387b1db24d3219cbb390cbac3038782480e56a901ca6887d98ced",
+      "matches_local": true
+    },
+    {
+      "path": "tests/test_cache_and_sampling.py",
+      "sha256": "33ea1de0ec30b1a08963cf8d7005e7ef772479aa490eb95f0cbf5a8a6b20f142",
+      "matches_local": true
+    },
+    {
+      "path": "tests/test_metrics.py",
+      "sha256": "cc96d3fec360ad20b29017d0b66e5e0f38465b4bb4685b36c89366ea67b1b0aa",
+      "matches_local": true
+    },
+    {
+      "path": "tests/test_pipeline_smoke.py",
+      "sha256": "7a5c47efce546c09d5493622b7280d1cd8e5536d4eca61f22f3aaf2046b1ad26",
+      "matches_local": true
+    }
+  ]
+}

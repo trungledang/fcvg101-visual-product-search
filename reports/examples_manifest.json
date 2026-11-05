@@ -1,0 +1,1113 @@
+{
+  "selection_policy": "deterministic: outcome group, then round-robin over sorted categories, sha256(seed:path) order within category, one query per item id; diagnostic only, not prevalence",
+  "seed": "fcvg101",
+  "per_group_target": 10,
+  "groups": {
+    "success_top1": [
+      {
+        "file": "success_top1_01.png",
+        "path": "img/MEN/Denim/id_00007524/01_1_front.jpg",
+        "item_id": "id_00007524",
+        "category": "MEN/Denim",
+        "first_pos_rank": 1,
+        "top5": [
+          {
+            "path": "img/MEN/Denim/id_00007524/01_2_side.jpg",
+            "item_id": "id_00007524",
+            "score": 0.9614794254302979
+          },
+          {
+            "path": "img/MEN/Denim/id_00007524/01_3_back.jpg",
+            "item_id": "id_00007524",
+            "score": 0.9551626443862915
+          },
+          {
+            "path": "img/WOMEN/Pants/id_00003437/04_7_additional.jpg",
+            "item_id": "id_00003437",
+            "score": 0.9537124037742615
+          },
+          {
+            "path": "img/WOMEN/Denim/id_00005798/02_3_back.jpg",
+            "item_id": "id_00005798",
+            "score": 0.9517678022384644
+          },
+          {
+            "path": "img/WOMEN/Pants/id_00003437/06_2_side.jpg",
+            "item_id": "id_00003437",
+            "score": 0.9435206055641174
+          }
+        ]
+      },
+      {
+        "file": "success_top1_02.png",
+        "path": "img/MEN/Jackets_Vests/id_00007569/04_2_side.jpg",
+        "item_id": "id_00007569",
+        "category": "MEN/Jackets_Vests",
+        "first_pos_rank": 1,
+        "top5": [
+          {
+            "path": "img/MEN/Jackets_Vests/id_00007569/01_2_side.jpg",
+            "item_id": "id_00007569",
+            "score": 0.9285571575164795
+          },
+          {
+            "path": "img/MEN/Jackets_Vests/id_00007569/04_3_back.jpg",
+            "item_id": "id_00007569",
+            "score": 0.9176490902900696
+          },
+          {
+            "path": "img/MEN/Jackets_Vests/id_00007569/04_1_front.jpg",
+            "item_id": "id_00007569",
+            "score": 0.9157040119171143
+          },
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00007246/04_2_side.jpg",
+            "item_id": "id_00007246",
+            "score": 0.9151601195335388
+          },
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00007246/06_2_side.jpg",
+            "item_id": "id_00007246",
+            "score": 0.908519983291626
+          }
+        ]
+      },
+      {
+        "file": "success_top1_03.png",
+        "path": "img/MEN/Pants/id_00002565/04_7_additional.jpg",
+        "item_id": "id_00002565",
+        "category": "MEN/Pants",
+        "first_pos_rank": 1,
+        "top5": [
+          {
+            "path": "img/MEN/Pants/id_00002565/02_2_side.jpg",
+            "item_id": "id_00002565",
+            "score": 0.9410237073898315
+          },
+          {
+            "path": "img/MEN/Pants/id_00002565/04_2_side.jpg",
+            "item_id": "id_00002565",
+            "score": 0.9398965239524841
+          },
+          {
+            "path": "img/MEN/Pants/id_00000836/03_1_front.jpg",
+            "item_id": "id_00000836",
+            "score": 0.9340501427650452
+          },
+          {
+            "path": "img/MEN/Pants/id_00000470/01_2_side.jpg",
+            "item_id": "id_00000470",
+            "score": 0.9317259788513184
+          },
+          {
+            "path": "img/MEN/Suiting/id_00000802/01_2_side.jpg",
+            "item_id": "id_00000802",
+            "score": 0.9303832054138184
+          }
+        ]
+      },
+      {
+        "file": "success_top1_04.png",
+        "path": "img/MEN/Shirts_Polos/id_00001985/01_1_front.jpg",
+        "item_id": "id_00001985",
+        "category": "MEN/Shirts_Polos",
+        "first_pos_rank": 1,
+        "top5": [
+          {
+            "path": "img/MEN/Shirts_Polos/id_00001985/01_2_side.jpg",
+            "item_id": "id_00001985",
+            "score": 0.9151104688644409
+          },
+          {
+            "path": "img/MEN/Sweaters/id_00004076/03_1_front.jpg",
+            "item_id": "id_00004076",
+            "score": 0.9065127372741699
+          },
+          {
+            "path": "img/MEN/Shirts_Polos/id_00005986/03_3_back.jpg",
+            "item_id": "id_00005986",
+            "score": 0.8986644148826599
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00006477/05_1_front.jpg",
+            "item_id": "id_00006477",
+            "score": 0.8948686718940735
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00000390/16_1_front.jpg",
+            "item_id": "id_00000390",
+            "score": 0.8936339616775513
+          }
+        ]
+      },
+      {
+        "file": "success_top1_05.png",
+        "path": "img/MEN/Shorts/id_00004629/04_7_additional.jpg",
+        "item_id": "id_00004629",
+        "category": "MEN/Shorts",
+        "first_pos_rank": 1,
+        "top5": [
+          {
+            "path": "img/MEN/Shorts/id_00004629/04_3_back.jpg",
+            "item_id": "id_00004629",
+            "score": 0.9763262271881104
+          },
+          {
+            "path": "img/MEN/Shorts/id_00004249/14_3_back.jpg",
+            "item_id": "id_00004249",
+            "score": 0.9373414516448975
+          },
+          {
+            "path": "img/MEN/Shorts/id_00004298/03_1_front.jpg",
+            "item_id": "id_00004298",
+            "score": 0.9360760450363159
+          },
+          {
+            "path": "img/MEN/Shorts/id_00006420/10_7_additional.jpg",
+            "item_id": "id_00006420",
+            "score": 0.9343268871307373
+          },
+          {
+            "path": "img/MEN/Shorts/id_00004629/10_3_back.jpg",
+            "item_id": "id_00004629",
+            "score": 0.9299802184104919
+          }
+        ]
+      },
+      {
+        "file": "success_top1_06.png",
+        "path": "img/MEN/Suiting/id_00000932/01_2_side.jpg",
+        "item_id": "id_00000932",
+        "category": "MEN/Suiting",
+        "first_pos_rank": 1,
+        "top5": [
+          {
+            "path": "img/MEN/Suiting/id_00000932/01_3_back.jpg",
+            "item_id": "id_00000932",
+            "score": 0.9206702709197998
+          },
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00005144/02_2_side.jpg",
+            "item_id": "id_00005144",
+            "score": 0.9203242659568787
+          },
+          {
+            "path": "img/MEN/Jackets_Vests/id_00007272/01_2_side.jpg",
+            "item_id": "id_00007272",
+            "score": 0.9039933681488037
+          },
+          {
+            "path": "img/MEN/Sweaters/id_00001462/03_2_side.jpg",
+            "item_id": "id_00001462",
+            "score": 0.9019409418106079
+          },
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00007717/01_3_back.jpg",
+            "item_id": "id_00007717",
+            "score": 0.8999238014221191
+          }
+        ]
+      },
+      {
+        "file": "success_top1_07.png",
+        "path": "img/MEN/Sweaters/id_00003427/07_7_additional.jpg",
+        "item_id": "id_00003427",
+        "category": "MEN/Sweaters",
+        "first_pos_rank": 1,
+        "top5": [
+          {
+            "path": "img/MEN/Sweaters/id_00003427/08_4_full.jpg",
+            "item_id": "id_00003427",
+            "score": 0.9540926814079285
+          },
+          {
+            "path": "img/MEN/Shirts_Polos/id_00001366/05_1_front.jpg",
+            "item_id": "id_00001366",
+            "score": 0.9483007192611694
+          },
+          {
+            "path": "img/MEN/Sweaters/id_00001509/02_7_additional.jpg",
+            "item_id": "id_00001509",
+            "score": 0.9370272755622864
+          },
+          {
+            "path": "img/MEN/Sweaters/id_00003216/03_7_additional.jpg",
+            "item_id": "id_00003216",
+            "score": 0.9315388798713684
+          },
+          {
+            "path": "img/MEN/Sweaters/id_00004638/09_1_front.jpg",
+            "item_id": "id_00004638",
+            "score": 0.9310989379882812
+          }
+        ]
+      },
+      {
+        "file": "success_top1_08.png",
+        "path": "img/MEN/Sweatshirts_Hoodies/id_00000971/04_1_front.jpg",
+        "item_id": "id_00000971",
+        "category": "MEN/Sweatshirts_Hoodies",
+        "first_pos_rank": 1,
+        "top5": [
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00000971/03_1_front.jpg",
+            "item_id": "id_00000971",
+            "score": 0.9330093264579773
+          },
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00000971/07_1_front.jpg",
+            "item_id": "id_00000971",
+            "score": 0.9284602403640747
+          },
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00000971/04_4_full.jpg",
+            "item_id": "id_00000971",
+            "score": 0.90461266040802
+          },
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00000971/03_2_side.jpg",
+            "item_id": "id_00000971",
+            "score": 0.9017128944396973
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00003197/05_1_front.jpg",
+            "item_id": "id_00003197",
+            "score": 0.8989325165748596
+          }
+        ]
+      },
+      {
+        "file": "success_top1_09.png",
+        "path": "img/MEN/Tees_Tanks/id_00005160/02_4_full.jpg",
+        "item_id": "id_00005160",
+        "category": "MEN/Tees_Tanks",
+        "first_pos_rank": 1,
+        "top5": [
+          {
+            "path": "img/MEN/Tees_Tanks/id_00005160/02_1_front.jpg",
+            "item_id": "id_00005160",
+            "score": 0.9306461811065674
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00005160/01_1_front.jpg",
+            "item_id": "id_00005160",
+            "score": 0.9282522201538086
+          },
+          {
+            "path": "img/MEN/Shorts/id_00003537/01_1_front.jpg",
+            "item_id": "id_00003537",
+            "score": 0.9163545370101929
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00005055/01_2_side.jpg",
+            "item_id": "id_00005055",
+            "score": 0.9152843952178955
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00005160/09_3_back.jpg",
+            "item_id": "id_00005160",
+            "score": 0.9105925559997559
+          }
+        ]
+      },
+      {
+        "file": "success_top1_10.png",
+        "path": "img/WOMEN/Blouses_Shirts/id_00004823/03_2_side.jpg",
+        "item_id": "id_00004823",
+        "category": "WOMEN/Blouses_Shirts",
+        "first_pos_rank": 1,
+        "top5": [
+          {
+            "path": "img/WOMEN/Blouses_Shirts/id_00004823/03_1_front.jpg",
+            "item_id": "id_00004823",
+            "score": 0.9099842309951782
+          },
+          {
+            "path": "img/WOMEN/Jackets_Coats/id_00004065/02_3_back.jpg",
+            "item_id": "id_00004065",
+            "score": 0.9025466442108154
+          },
+          {
+            "path": "img/WOMEN/Graphic_Tees/id_00002891/01_2_side.jpg",
+            "item_id": "id_00002891",
+            "score": 0.9007439017295837
+          },
+          {
+            "path": "img/WOMEN/Tees_Tanks/id_00004273/03_2_side.jpg",
+            "item_id": "id_00004273",
+            "score": 0.8964825868606567
+          },
+          {
+            "path": "img/WOMEN/Blouses_Shirts/id_00003819/03_2_side.jpg",
+            "item_id": "id_00003819",
+            "score": 0.8963027596473694
+          }
+        ]
+      }
+    ],
+    "fail_top1_recovered_top5": [
+      {
+        "file": "fail_top1_recovered_top5_01.png",
+        "path": "img/MEN/Denim/id_00000353/02_1_front.jpg",
+        "item_id": "id_00000353",
+        "category": "MEN/Denim",
+        "first_pos_rank": 4,
+        "top5": [
+          {
+            "path": "img/MEN/Denim/id_00007216/01_1_front.jpg",
+            "item_id": "id_00007216",
+            "score": 0.9434630870819092
+          },
+          {
+            "path": "img/MEN/Pants/id_00006830/05_1_front.jpg",
+            "item_id": "id_00006830",
+            "score": 0.9382803440093994
+          },
+          {
+            "path": "img/MEN/Denim/id_00007216/01_2_side.jpg",
+            "item_id": "id_00007216",
+            "score": 0.9381985664367676
+          },
+          {
+            "path": "img/MEN/Denim/id_00000353/02_3_back.jpg",
+            "item_id": "id_00000353",
+            "score": 0.9339178800582886
+          },
+          {
+            "path": "img/MEN/Pants/id_00004045/10_1_front.jpg",
+            "item_id": "id_00004045",
+            "score": 0.9336040616035461
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Denim/id_00000353/02_3_back.jpg",
+          "score": 0.9339181184768677
+        }
+      },
+      {
+        "file": "fail_top1_recovered_top5_02.png",
+        "path": "img/MEN/Jackets_Vests/id_00002439/04_7_additional.jpg",
+        "item_id": "id_00002439",
+        "category": "MEN/Jackets_Vests",
+        "first_pos_rank": 2,
+        "top5": [
+          {
+            "path": "img/MEN/Jackets_Vests/id_00000094/04_3_back.jpg",
+            "item_id": "id_00000094",
+            "score": 0.9227715730667114
+          },
+          {
+            "path": "img/MEN/Jackets_Vests/id_00002439/02_7_additional.jpg",
+            "item_id": "id_00002439",
+            "score": 0.9192376136779785
+          },
+          {
+            "path": "img/MEN/Shirts_Polos/id_00004794/05_3_back.jpg",
+            "item_id": "id_00004794",
+            "score": 0.9020024538040161
+          },
+          {
+            "path": "img/MEN/Sweaters/id_00001783/02_3_back.jpg",
+            "item_id": "id_00001783",
+            "score": 0.898075520992279
+          },
+          {
+            "path": "img/MEN/Suiting/id_00000802/01_2_side.jpg",
+            "item_id": "id_00000802",
+            "score": 0.8954230546951294
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Jackets_Vests/id_00002439/02_7_additional.jpg",
+          "score": 0.9192373752593994
+        }
+      },
+      {
+        "file": "fail_top1_recovered_top5_03.png",
+        "path": "img/MEN/Pants/id_00001510/05_2_side.jpg",
+        "item_id": "id_00001510",
+        "category": "MEN/Pants",
+        "first_pos_rank": 3,
+        "top5": [
+          {
+            "path": "img/MEN/Pants/id_00004045/04_2_side.jpg",
+            "item_id": "id_00004045",
+            "score": 0.9592584371566772
+          },
+          {
+            "path": "img/MEN/Pants/id_00000836/04_3_back.jpg",
+            "item_id": "id_00000836",
+            "score": 0.9335667490959167
+          },
+          {
+            "path": "img/MEN/Pants/id_00001510/04_2_side.jpg",
+            "item_id": "id_00001510",
+            "score": 0.9260059595108032
+          },
+          {
+            "path": "img/MEN/Suiting/id_00000270/01_3_back.jpg",
+            "item_id": "id_00000270",
+            "score": 0.9257059693336487
+          },
+          {
+            "path": "img/MEN/Pants/id_00006039/06_1_front.jpg",
+            "item_id": "id_00006039",
+            "score": 0.9251006245613098
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Pants/id_00001510/04_2_side.jpg",
+          "score": 0.9260062575340271
+        }
+      },
+      {
+        "file": "fail_top1_recovered_top5_04.png",
+        "path": "img/MEN/Shirts_Polos/id_00004118/01_7_additional.jpg",
+        "item_id": "id_00004118",
+        "category": "MEN/Shirts_Polos",
+        "first_pos_rank": 2,
+        "top5": [
+          {
+            "path": "img/MEN/Sweaters/id_00001008/05_1_front.jpg",
+            "item_id": "id_00001008",
+            "score": 0.8941649198532104
+          },
+          {
+            "path": "img/MEN/Shirts_Polos/id_00004118/04_1_front.jpg",
+            "item_id": "id_00004118",
+            "score": 0.8928712606430054
+          },
+          {
+            "path": "img/MEN/Shirts_Polos/id_00004118/01_1_front.jpg",
+            "item_id": "id_00004118",
+            "score": 0.8899045586585999
+          },
+          {
+            "path": "img/MEN/Sweaters/id_00001783/02_1_front.jpg",
+            "item_id": "id_00001783",
+            "score": 0.8889682292938232
+          },
+          {
+            "path": "img/MEN/Sweaters/id_00001008/01_1_front.jpg",
+            "item_id": "id_00001008",
+            "score": 0.8866889476776123
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Shirts_Polos/id_00004118/04_1_front.jpg",
+          "score": 0.8928712606430054
+        }
+      },
+      {
+        "file": "fail_top1_recovered_top5_05.png",
+        "path": "img/MEN/Shorts/id_00006624/01_4_full.jpg",
+        "item_id": "id_00006624",
+        "category": "MEN/Shorts",
+        "first_pos_rank": 4,
+        "top5": [
+          {
+            "path": "img/MEN/Shorts/id_00003412/01_4_full.jpg",
+            "item_id": "id_00003412",
+            "score": 0.9273642301559448
+          },
+          {
+            "path": "img/MEN/Pants/id_00000256/02_4_full.jpg",
+            "item_id": "id_00000256",
+            "score": 0.9234920740127563
+          },
+          {
+            "path": "img/MEN/Shirts_Polos/id_00000898/04_4_full.jpg",
+            "item_id": "id_00000898",
+            "score": 0.9090235233306885
+          },
+          {
+            "path": "img/MEN/Shorts/id_00006624/01_2_side.jpg",
+            "item_id": "id_00006624",
+            "score": 0.9066503643989563
+          },
+          {
+            "path": "img/MEN/Shorts/id_00000597/01_2_side.jpg",
+            "item_id": "id_00000597",
+            "score": 0.9025615453720093
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Shorts/id_00006624/01_2_side.jpg",
+          "score": 0.9066504836082458
+        }
+      },
+      {
+        "file": "fail_top1_recovered_top5_06.png",
+        "path": "img/MEN/Suiting/id_00000802/03_1_front.jpg",
+        "item_id": "id_00000802",
+        "category": "MEN/Suiting",
+        "first_pos_rank": 2,
+        "top5": [
+          {
+            "path": "img/MEN/Pants/id_00000836/03_3_back.jpg",
+            "item_id": "id_00000836",
+            "score": 0.971633791923523
+          },
+          {
+            "path": "img/MEN/Suiting/id_00000802/03_3_back.jpg",
+            "item_id": "id_00000802",
+            "score": 0.9702204465866089
+          },
+          {
+            "path": "img/MEN/Suiting/id_00000802/03_2_side.jpg",
+            "item_id": "id_00000802",
+            "score": 0.9548141956329346
+          },
+          {
+            "path": "img/MEN/Pants/id_00002565/02_3_back.jpg",
+            "item_id": "id_00002565",
+            "score": 0.9472132921218872
+          },
+          {
+            "path": "img/MEN/Pants/id_00004045/10_3_back.jpg",
+            "item_id": "id_00004045",
+            "score": 0.9390100240707397
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Suiting/id_00000802/03_3_back.jpg",
+          "score": 0.970220685005188
+        }
+      },
+      {
+        "file": "fail_top1_recovered_top5_07.png",
+        "path": "img/MEN/Sweaters/id_00000396/01_2_side.jpg",
+        "item_id": "id_00000396",
+        "category": "MEN/Sweaters",
+        "first_pos_rank": 3,
+        "top5": [
+          {
+            "path": "img/MEN/Shirts_Polos/id_00004738/01_2_side.jpg",
+            "item_id": "id_00004738",
+            "score": 0.9073995351791382
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00000642/02_2_side.jpg",
+            "item_id": "id_00000642",
+            "score": 0.883872389793396
+          },
+          {
+            "path": "img/MEN/Sweaters/id_00000396/01_1_front.jpg",
+            "item_id": "id_00000396",
+            "score": 0.8799806833267212
+          },
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00006929/09_2_side.jpg",
+            "item_id": "id_00006929",
+            "score": 0.879921555519104
+          },
+          {
+            "path": "img/MEN/Sweaters/id_00002809/01_1_front.jpg",
+            "item_id": "id_00002809",
+            "score": 0.8759124279022217
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Sweaters/id_00000396/01_1_front.jpg",
+          "score": 0.8799805641174316
+        }
+      },
+      {
+        "file": "fail_top1_recovered_top5_08.png",
+        "path": "img/MEN/Sweatshirts_Hoodies/id_00005575/01_4_full.jpg",
+        "item_id": "id_00005575",
+        "category": "MEN/Sweatshirts_Hoodies",
+        "first_pos_rank": 2,
+        "top5": [
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00007421/01_4_full.jpg",
+            "item_id": "id_00007421",
+            "score": 0.9263705015182495
+          },
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00005575/01_3_back.jpg",
+            "item_id": "id_00005575",
+            "score": 0.9217702150344849
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00002249/02_4_full.jpg",
+            "item_id": "id_00002249",
+            "score": 0.9128735661506653
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00005141/01_2_side.jpg",
+            "item_id": "id_00005141",
+            "score": 0.9126440286636353
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00002249/10_1_front.jpg",
+            "item_id": "id_00002249",
+            "score": 0.9114425182342529
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Sweatshirts_Hoodies/id_00005575/01_3_back.jpg",
+          "score": 0.9217703342437744
+        }
+      },
+      {
+        "file": "fail_top1_recovered_top5_09.png",
+        "path": "img/MEN/Tees_Tanks/id_00003476/05_2_side.jpg",
+        "item_id": "id_00003476",
+        "category": "MEN/Tees_Tanks",
+        "first_pos_rank": 2,
+        "top5": [
+          {
+            "path": "img/MEN/Tees_Tanks/id_00004798/05_2_side.jpg",
+            "item_id": "id_00004798",
+            "score": 0.9414671659469604
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00003476/01_2_side.jpg",
+            "item_id": "id_00003476",
+            "score": 0.9329650402069092
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00003476/07_2_side.jpg",
+            "item_id": "id_00003476",
+            "score": 0.9306328296661377
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00003476/05_3_back.jpg",
+            "item_id": "id_00003476",
+            "score": 0.9227358102798462
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00005834/09_2_side.jpg",
+            "item_id": "id_00005834",
+            "score": 0.9226009845733643
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Tees_Tanks/id_00003476/01_2_side.jpg",
+          "score": 0.9329646825790405
+        }
+      },
+      {
+        "file": "fail_top1_recovered_top5_10.png",
+        "path": "img/WOMEN/Blouses_Shirts/id_00005500/02_1_front.jpg",
+        "item_id": "id_00005500",
+        "category": "WOMEN/Blouses_Shirts",
+        "first_pos_rank": 3,
+        "top5": [
+          {
+            "path": "img/WOMEN/Blouses_Shirts/id_00003364/03_1_front.jpg",
+            "item_id": "id_00003364",
+            "score": 0.9677531123161316
+          },
+          {
+            "path": "img/WOMEN/Blouses_Shirts/id_00001359/02_1_front.jpg",
+            "item_id": "id_00001359",
+            "score": 0.9632487297058105
+          },
+          {
+            "path": "img/WOMEN/Blouses_Shirts/id_00005500/02_2_side.jpg",
+            "item_id": "id_00005500",
+            "score": 0.945700466632843
+          },
+          {
+            "path": "img/WOMEN/Rompers_Jumpsuits/id_00006179/02_1_front.jpg",
+            "item_id": "id_00006179",
+            "score": 0.9448738098144531
+          },
+          {
+            "path": "img/WOMEN/Blouses_Shirts/id_00007773/02_1_front.jpg",
+            "item_id": "id_00007773",
+            "score": 0.9423677921295166
+          }
+        ],
+        "known_positive": {
+          "path": "img/WOMEN/Blouses_Shirts/id_00005500/02_2_side.jpg",
+          "score": 0.9457005262374878
+        }
+      }
+    ],
+    "fail_top5": [
+      {
+        "file": "fail_top5_01.png",
+        "path": "img/MEN/Denim/id_00007524/01_4_full.jpg",
+        "item_id": "id_00007524",
+        "category": "MEN/Denim",
+        "first_pos_rank": 186,
+        "top5": [
+          {
+            "path": "img/MEN/Pants/id_00000256/02_4_full.jpg",
+            "item_id": "id_00000256",
+            "score": 0.950129508972168
+          },
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00005910/04_4_full.jpg",
+            "item_id": "id_00005910",
+            "score": 0.9174633622169495
+          },
+          {
+            "path": "img/MEN/Denim/id_00002559/01_4_full.jpg",
+            "item_id": "id_00002559",
+            "score": 0.9085127711296082
+          },
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00005910/03_4_full.jpg",
+            "item_id": "id_00005910",
+            "score": 0.9063239097595215
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00005955/07_4_full.jpg",
+            "item_id": "id_00005955",
+            "score": 0.9028941988945007
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Denim/id_00007524/01_2_side.jpg",
+          "score": 0.8501401543617249
+        }
+      },
+      {
+        "file": "fail_top5_02.png",
+        "path": "img/MEN/Jackets_Vests/id_00000946/04_7_additional.jpg",
+        "item_id": "id_00000946",
+        "category": "MEN/Jackets_Vests",
+        "first_pos_rank": 42,
+        "top5": [
+          {
+            "path": "img/MEN/Jackets_Vests/id_00003311/01_2_side.jpg",
+            "item_id": "id_00003311",
+            "score": 0.932214081287384
+          },
+          {
+            "path": "img/MEN/Jackets_Vests/id_00004606/01_1_front.jpg",
+            "item_id": "id_00004606",
+            "score": 0.9158844947814941
+          },
+          {
+            "path": "img/MEN/Jackets_Vests/id_00004606/01_2_side.jpg",
+            "item_id": "id_00004606",
+            "score": 0.896213173866272
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00004117/05_4_full.jpg",
+            "item_id": "id_00004117",
+            "score": 0.8830446004867554
+          },
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00003853/03_7_additional.jpg",
+            "item_id": "id_00003853",
+            "score": 0.8824421167373657
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Jackets_Vests/id_00000946/04_2_side.jpg",
+          "score": 0.8458072543144226
+        }
+      },
+      {
+        "file": "fail_top5_03.png",
+        "path": "img/MEN/Pants/id_00003301/02_7_additional.jpg",
+        "item_id": "id_00003301",
+        "category": "MEN/Pants",
+        "first_pos_rank": 75,
+        "top5": [
+          {
+            "path": "img/MEN/Pants/id_00000256/03_2_side.jpg",
+            "item_id": "id_00000256",
+            "score": 0.9014425277709961
+          },
+          {
+            "path": "img/MEN/Pants/id_00001814/01_7_additional.jpg",
+            "item_id": "id_00001814",
+            "score": 0.8970324397087097
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00000755/04_4_full.jpg",
+            "item_id": "id_00000755",
+            "score": 0.8893176913261414
+          },
+          {
+            "path": "img/MEN/Sweaters/id_00005063/01_4_full.jpg",
+            "item_id": "id_00005063",
+            "score": 0.8890721201896667
+          },
+          {
+            "path": "img/MEN/Pants/id_00006856/03_7_additional.jpg",
+            "item_id": "id_00006856",
+            "score": 0.886881947517395
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Pants/id_00003301/01_3_back.jpg",
+          "score": 0.8491439819335938
+        }
+      },
+      {
+        "file": "fail_top5_04.png",
+        "path": "img/MEN/Shirts_Polos/id_00004917/03_4_full.jpg",
+        "item_id": "id_00004917",
+        "category": "MEN/Shirts_Polos",
+        "first_pos_rank": 16,
+        "top5": [
+          {
+            "path": "img/MEN/Sweaters/id_00003216/01_7_additional.jpg",
+            "item_id": "id_00003216",
+            "score": 0.9367287158966064
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00007224/12_7_additional.jpg",
+            "item_id": "id_00007224",
+            "score": 0.9295704364776611
+          },
+          {
+            "path": "img/MEN/Shirts_Polos/id_00004118/04_1_front.jpg",
+            "item_id": "id_00004118",
+            "score": 0.9277253746986389
+          },
+          {
+            "path": "img/MEN/Sweaters/id_00001315/02_4_full.jpg",
+            "item_id": "id_00001315",
+            "score": 0.9227833151817322
+          },
+          {
+            "path": "img/MEN/Shirts_Polos/id_00005548/05_7_additional.jpg",
+            "item_id": "id_00005548",
+            "score": 0.9187935590744019
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Shirts_Polos/id_00004917/03_2_side.jpg",
+          "score": 0.9024250507354736
+        }
+      },
+      {
+        "file": "fail_top5_05.png",
+        "path": "img/MEN/Shorts/id_00005086/02_1_front.jpg",
+        "item_id": "id_00005086",
+        "category": "MEN/Shorts",
+        "first_pos_rank": 103,
+        "top5": [
+          {
+            "path": "img/MEN/Shorts/id_00007309/09_1_front.jpg",
+            "item_id": "id_00007309",
+            "score": 0.9326167106628418
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00005955/07_4_full.jpg",
+            "item_id": "id_00005955",
+            "score": 0.9322453737258911
+          },
+          {
+            "path": "img/MEN/Shorts/id_00001221/01_1_front.jpg",
+            "item_id": "id_00001221",
+            "score": 0.9276071190834045
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00005955/06_1_front.jpg",
+            "item_id": "id_00005955",
+            "score": 0.9267631769180298
+          },
+          {
+            "path": "img/MEN/Shorts/id_00003104/06_1_front.jpg",
+            "item_id": "id_00003104",
+            "score": 0.9241151809692383
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Shorts/id_00005086/02_2_side.jpg",
+          "score": 0.8794430494308472
+        }
+      },
+      {
+        "file": "fail_top5_06.png",
+        "path": "img/MEN/Suiting/id_00000270/01_4_full.jpg",
+        "item_id": "id_00000270",
+        "category": "MEN/Suiting",
+        "first_pos_rank": 337,
+        "top5": [
+          {
+            "path": "img/MEN/Pants/id_00006957/01_4_full.jpg",
+            "item_id": "id_00006957",
+            "score": 0.8602089881896973
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00007301/01_4_full.jpg",
+            "item_id": "id_00007301",
+            "score": 0.846724271774292
+          },
+          {
+            "path": "img/MEN/Pants/id_00005193/01_4_full.jpg",
+            "item_id": "id_00005193",
+            "score": 0.8433424234390259
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00001571/03_4_full.jpg",
+            "item_id": "id_00001571",
+            "score": 0.8407202363014221
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00005055/01_4_full.jpg",
+            "item_id": "id_00005055",
+            "score": 0.8403083086013794
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Suiting/id_00000270/01_3_back.jpg",
+          "score": 0.7472330331802368
+        }
+      },
+      {
+        "file": "fail_top5_07.png",
+        "path": "img/MEN/Sweaters/id_00001008/06_4_full.jpg",
+        "item_id": "id_00001008",
+        "category": "MEN/Sweaters",
+        "first_pos_rank": 7,
+        "top5": [
+          {
+            "path": "img/MEN/Pants/id_00003612/14_1_front.jpg",
+            "item_id": "id_00003612",
+            "score": 0.8946949243545532
+          },
+          {
+            "path": "img/MEN/Shirts_Polos/id_00004118/04_7_additional.jpg",
+            "item_id": "id_00004118",
+            "score": 0.8941761255264282
+          },
+          {
+            "path": "img/MEN/Denim/id_00000353/01_7_additional.jpg",
+            "item_id": "id_00000353",
+            "score": 0.8937230110168457
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00002249/10_1_front.jpg",
+            "item_id": "id_00002249",
+            "score": 0.8908804655075073
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00001774/31_4_full.jpg",
+            "item_id": "id_00001774",
+            "score": 0.8893824219703674
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Sweaters/id_00001008/06_2_side.jpg",
+          "score": 0.8871928453445435
+        }
+      },
+      {
+        "file": "fail_top5_08.png",
+        "path": "img/MEN/Sweatshirts_Hoodies/id_00003060/01_7_additional.jpg",
+        "item_id": "id_00003060",
+        "category": "MEN/Sweatshirts_Hoodies",
+        "first_pos_rank": 23,
+        "top5": [
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00005603/02_7_additional.jpg",
+            "item_id": "id_00005603",
+            "score": 0.9405145645141602
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00007466/08_7_additional.jpg",
+            "item_id": "id_00007466",
+            "score": 0.9234349727630615
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00002638/08_3_back.jpg",
+            "item_id": "id_00002638",
+            "score": 0.9185956716537476
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00003197/05_7_additional.jpg",
+            "item_id": "id_00003197",
+            "score": 0.9138561487197876
+          },
+          {
+            "path": "img/MEN/Sweatshirts_Hoodies/id_00005799/02_3_back.jpg",
+            "item_id": "id_00005799",
+            "score": 0.9131883382797241
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Sweatshirts_Hoodies/id_00003060/05_3_back.jpg",
+          "score": 0.8940988779067993
+        }
+      },
+      {
+        "file": "fail_top5_09.png",
+        "path": "img/MEN/Tees_Tanks/id_00007224/09_2_side.jpg",
+        "item_id": "id_00007224",
+        "category": "MEN/Tees_Tanks",
+        "first_pos_rank": 7,
+        "top5": [
+          {
+            "path": "img/MEN/Tees_Tanks/id_00002866/03_2_side.jpg",
+            "item_id": "id_00002866",
+            "score": 0.9107644557952881
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00007301/11_2_side.jpg",
+            "item_id": "id_00007301",
+            "score": 0.9036410450935364
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00004117/05_2_side.jpg",
+            "item_id": "id_00004117",
+            "score": 0.9005392789840698
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00001774/32_2_side.jpg",
+            "item_id": "id_00001774",
+            "score": 0.9005349278450012
+          },
+          {
+            "path": "img/MEN/Tees_Tanks/id_00005152/05_2_side.jpg",
+            "item_id": "id_00005152",
+            "score": 0.897531270980835
+          }
+        ],
+        "known_positive": {
+          "path": "img/MEN/Tees_Tanks/id_00007224/09_4_full.jpg",
+          "score": 0.8968231678009033
+        }
+      },
+      {
+        "file": "fail_top5_10.png",
+        "path": "img/WOMEN/Blouses_Shirts/id_00000376/05_4_full.jpg",
+        "item_id": "id_00000376",
+        "category": "WOMEN/Blouses_Shirts",
+        "first_pos_rank": 8,
+        "top5": [
+          {
+            "path": "img/WOMEN/Tees_Tanks/id_00002813/04_7_additional.jpg",
+            "item_id": "id_00002813",
+            "score": 0.9568829536437988
+          },
+          {
+            "path": "img/WOMEN/Tees_Tanks/id_00006707/07_4_full.jpg",
+            "item_id": "id_00006707",
+            "score": 0.9490512609481812
+          },
+          {
+            "path": "img/WOMEN/Tees_Tanks/id_00007752/06_4_full.jpg",
+            "item_id": "id_00007752",
+            "score": 0.9465877413749695
+          },
+          {
+            "path": "img/WOMEN/Denim/id_00003098/02_1_front.jpg",
+            "item_id": "id_00003098",
+            "score": 0.945050835609436
+          },
+          {
+            "path": "img/WOMEN/Tees_Tanks/id_00004707/07_4_full.jpg",
+            "item_id": "id_00004707",
+            "score": 0.9448968768119812
+          }
+        ],
+        "known_positive": {
+          "path": "img/WOMEN/Blouses_Shirts/id_00000376/07_4_full.jpg",
+          "score": 0.9371455907821655
+        }
+      }
+    ]
+  }
+}

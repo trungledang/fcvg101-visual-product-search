@@ -1,0 +1,130 @@
+{
+  "split": "validation: 10% of official train item_ids (vps.preprocess.validation_split, seed fcvg101-val)",
+  "official_test_used": false,
+  "partition_sha256": "cfada103c44df866db5e2ee9ecc2301ca691a4d0cdb3c875fe4051b62570894c",
+  "bbox_sha256": "b1a67bf2b1bb22ce57b63238dfabfd987f21ef85e93448f01735148f5848f440",
+  "val_query_images": 1232,
+  "val_gallery_images": 1384,
+  "val_items": 400,
+  "model": "openai/CLIP ViT-B/32",
+  "checkpoint_sha256": "40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af",
+  "encoder_dtype": "torch.float16",
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "torch": "2.14.1+cu130",
+  "python": "3.12.14",
+  "configs": {
+    "C0_full": {
+      "crop": false,
+      "train_augment": false,
+      "representation": "clip"
+    },
+    "C1_bbox_pad": {
+      "crop": true,
+      "train_augment": false,
+      "representation": "clip"
+    },
+    "C3_hsv_hist": {
+      "crop": true,
+      "train_augment": false,
+      "representation": "hsv"
+    }
+  },
+  "results": {
+    "C0_full": {
+      "eligible_queries": 1232,
+      "excluded_no_positive": 0,
+      "R@1": 0.711038961038961,
+      "hits@1": 876,
+      "R@5": 0.872564935064935,
+      "hits@5": 1075,
+      "dim": 512,
+      "median_first_positive_rank": 1.0,
+      "mrr": 0.782907770825999,
+      "seconds": 29.94
+    },
+    "C1_bbox_pad": {
+      "eligible_queries": 1232,
+      "excluded_no_positive": 0,
+      "R@1": 0.5357142857142857,
+      "hits@1": 660,
+      "R@5": 0.6948051948051948,
+      "hits@5": 856,
+      "dim": 512,
+      "median_first_positive_rank": 1.0,
+      "mrr": 0.6114906194412106,
+      "seconds": 28.36
+    },
+    "C3_hsv_hist": {
+      "eligible_queries": 1232,
+      "excluded_no_positive": 0,
+      "R@1": 0.3336038961038961,
+      "hits@1": 411,
+      "R@5": 0.4878246753246753,
+      "hits@5": 601,
+      "dim": 128,
+      "median_first_positive_rank": 6.0,
+      "mrr": 0.4087599902575372,
+      "seconds": 28.84
+    }
+  },
+  "R@1_bootstrap95_by_item": {
+    "C0_full": [
+      0.6801048387096774,
+      0.7437042670046473
+    ],
+    "C1_bbox_pad": [
+      0.49783483387777866,
+      0.5725266336943237
+    ],
+    "C3_hsv_hist": [
+      0.30189607987228545,
+      0.36442084007374215
+    ]
+  },
+  "C1_minus_C0_R@1": {
+    "mean": -0.17596693984588155,
+    "ci95": [
+      -0.2108407012195122,
+      -0.14096344989732698
+    ]
+  },
+  "R@1_by_query_pose": {
+    "front": {
+      "queries": 298,
+      "C0_full": 0.8053691275167785,
+      "C1_bbox_pad": 0.6510067114093959,
+      "C3_hsv_hist": 0.4429530201342282
+    },
+    "side": {
+      "queries": 264,
+      "C0_full": 0.7613636363636364,
+      "C1_bbox_pad": 0.3787878787878788,
+      "C3_hsv_hist": 0.11742424242424243
+    },
+    "back": {
+      "queries": 236,
+      "C0_full": 0.652542372881356,
+      "C1_bbox_pad": 0.5720338983050848,
+      "C3_hsv_hist": 0.4661016949152542
+    },
+    "zoom-out": {
+      "queries": 140,
+      "C0_full": 0.6642857142857143,
+      "C1_bbox_pad": 0.5214285714285715,
+      "C3_hsv_hist": 0.4928571428571429
+    },
+    "zoom-in": {
+      "queries": 281,
+      "C0_full": 0.6370106761565836,
+      "C1_bbox_pad": 0.5302491103202847,
+      "C3_hsv_hist": 0.23843416370106763
+    },
+    "stand-alone": {
+      "queries": 13,
+      "C0_full": 0.6923076923076923,
+      "C1_bbox_pad": 0.6923076923076923,
+      "C3_hsv_hist": 0.15384615384615385
+    }
+  }
+}

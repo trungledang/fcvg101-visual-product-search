@@ -1,0 +1,56 @@
+{
+  "measured_at": "2026-10-23T14:38:28+0000",
+  "env": {
+    "python": "3.13.15",
+    "platform": "Linux-6.18.48+-x86_64-with-glibc2.39",
+    "cpu_model": "Intel(R) Xeon(R) CPU @ 2.00GHz",
+    "cpu_count": 4,
+    "ram_total_gb": 31.35,
+    "disk_free_gb": 18.58,
+    "cuda_available": true,
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu128",
+    "torch_threads": 2,
+    "torchvision": "0.26.0+cu128",
+    "numpy": "2.1.3",
+    "pillow": "13.0.0",
+    "nvidia_smi": "Tesla T4, 15360 MiB\nTesla T4, 15360 MiB"
+  },
+  "host_reachability": {
+    "official_project_page": {
+      "url": "https://mmlab.ie.cuhk.edu.hk/projects/DeepFashion/InShopRetrieval.html",
+      "status": 200
+    },
+    "google_drive (official In-shop files)": {
+      "url": "https://drive.google.com/",
+      "status": 200
+    },
+    "google_drive_download": {
+      "url": "https://drive.usercontent.google.com/",
+      "status": 404,
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    },
+    "openai_clip_checkpoint_cdn": {
+      "url": "https://openaipublic.azureedge.net/",
+      "status": 400,
+      "error": "HTTPError: HTTP Error 400: Value for one of the query parameters specified in the request URI is invalid."
+    },
+    "huggingface": {
+      "url": "https://huggingface.co/",
+      "status": 200
+    },
+    "pypi": {
+      "url": "https://pypi.org/simple/",
+      "status": 200
+    },
+    "github": {
+      "url": "https://github.com/",
+      "status": 200
+    }
+  },
+  "clip_checkpoint": {
+    "url": "https://openaipublic.azureedge.net/clip/models/40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af/ViT-B-32.pt",
+    "official_sha256": "40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af",
+    "present_locally": false
+  }
+}
