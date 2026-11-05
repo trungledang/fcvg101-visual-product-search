@@ -127,5 +127,6 @@ Số liệu trên là **official test**, frozen CLIP, **không training với De
 - `reports/audit.json`, `reports/metrics.json`, `reports/per_query_results.csv`: bằng chứng thực nghiệm.
 - `notebooks/learn_clip_retrieval.ipynb`: notebook minh họa đã có trên repo.
 - `docs/DATASET_AND_PIPELINE.md`: diễn giải dài hơn về data và pipeline.
+- `docs/HIEU_DU_AN.md`: biểu đồ thật về độ tương đồng, lỗi theo góc chụp/category, bẫy nhãn và đóng góp của dự án.
 
 **Tiêu chí hoàn thành phần nhập môn:** mỗi thành viên có thể dùng **một query thật** để tự giải thích cả chuỗi `ảnh → embedding → cosine → ranking → ID matching → Recall`, chỉ ra ít nhất một lỗi thực tế và phân biệt đâu là quan sát, đâu là suy đoán.

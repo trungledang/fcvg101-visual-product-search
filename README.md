@@ -2,7 +2,7 @@
 
 Visual Product Retrieval with Pretrained CLIP · Coursework Computer Vision · Dự án nhóm 2 người
 
-Mới tham gia dự án? Đọc [BẮT ĐẦU TỪ ĐÂY — hướng dẫn cho cả hai thành viên](docs/START_HERE.md) trước. Tài liệu giải thích từng bước bằng ví dụ và bài kiểm tra hiểu bài, không đòi hỏi kiến thức CLIP từ trước.
+Mới tham gia dự án? Đọc [BẮT ĐẦU TỪ ĐÂY — hướng dẫn cho cả hai thành viên](docs/START_HERE.md) trước. Tài liệu giải thích từng bước bằng ví dụ và bài kiểm tra hiểu bài, không đòi hỏi kiến thức CLIP từ trước. Sau đó đọc [Hiểu dự án qua số liệu thật](docs/HIEU_DU_AN.md): mục đích theo đề, nhãn và các bẫy nhãn, độ tương đồng cosine đo trên dữ liệu thật, và đóng góp của dự án.
 
 Trạng thái: Đã hoàn thành baseline không huấn luyện và một số thí nghiệm xử lý ảnh trên validation. Chưa có kết quả huấn luyện ArcFace hoặc fine-tuning CLIP được ghi nhận trong repository. Repo chưa phải bài coursework hoàn chỉnh.
 

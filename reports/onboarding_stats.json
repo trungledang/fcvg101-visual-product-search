@@ -1,0 +1,124 @@
+{
+  "dataset": {
+    "train": {
+      "images": 25882,
+      "items": 3997,
+      "images_per_item_median": 4.0,
+      "images_per_item_max": 162,
+      "views": {
+        "front": 6323,
+        "additional": 5368,
+        "side": 5338,
+        "back": 5224,
+        "full": 3300,
+        "flat": 329
+      }
+    },
+    "query": {
+      "images": 14218,
+      "items": 3985,
+      "images_per_item_median": 3.0,
+      "images_per_item_max": 66,
+      "views": {
+        "additional": 4456,
+        "front": 2865,
+        "back": 2490,
+        "side": 2466,
+        "full": 1729,
+        "flat": 212
+      }
+    },
+    "gallery": {
+      "images": 12612,
+      "items": 3985,
+      "images_per_item_median": 2.0,
+      "images_per_item_max": 65,
+      "views": {
+        "front": 3673,
+        "side": 3119,
+        "back": 2947,
+        "full": 1641,
+        "additional": 1090,
+        "flat": 142
+      }
+    },
+    "items_total": 7982,
+    "items_with_multiple_colour_variants": 2598,
+    "categories": 23
+  },
+  "similarity": {
+    "check_R@1_recomputed": 0.45505697003798,
+    "cosine_all_positive_pairs": {
+      "mean": 0.8640339458386936,
+      "p5_p50_p95": [
+        0.7564,
+        0.8721,
+        0.9458
+      ]
+    },
+    "cosine_random_negative": {
+      "mean": 0.7689736485481262,
+      "p5_p50_p95": [
+        0.6499,
+        0.7769,
+        0.8613
+      ]
+    },
+    "cosine_best_positive_per_query": {
+      "mean": 0.9188374876976013,
+      "p5_p50_p95": [
+        0.8493,
+        0.9266,
+        0.9658
+      ]
+    },
+    "cosine_hardest_negative_per_query": {
+      "mean": 0.9258726239204407,
+      "p5_p50_p95": [
+        0.8829,
+        0.9298,
+        0.9591
+      ]
+    },
+    "hardest_negative_same_category_share": 0.5834857223238149,
+    "queries_with_same_colour_positive_in_gallery": 13593,
+    "R@1_when_same_colour_positive_exists": 0.4593540793055249,
+    "queries_only_other_colour_positives": 625,
+    "R@1_when_only_other_colour_positives": 0.3616,
+    "R@1_by_query_view": {
+      "front": {
+        "queries": 2865,
+        "R@1": 0.5232
+      },
+      "side": {
+        "queries": 2466,
+        "R@1": 0.5227
+      },
+      "full": {
+        "queries": 1729,
+        "R@1": 0.4263
+      },
+      "additional": {
+        "queries": 4456,
+        "R@1": 0.4208
+      },
+      "back": {
+        "queries": 2490,
+        "R@1": 0.4092
+      },
+      "flat": {
+        "queries": 212,
+        "R@1": 0.2406
+      }
+    }
+  },
+  "recall_curve": {
+    "R@1": 0.4551,
+    "R@5": 0.6725,
+    "R@10": 0.7436,
+    "R@20": 0.8067,
+    "R@50": 0.8768,
+    "median_first_positive_rank": 2.0,
+    "max_first_positive_rank": 11984
+  }
+}
