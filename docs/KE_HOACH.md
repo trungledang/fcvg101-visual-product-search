@@ -18,7 +18,7 @@ Lý do và phản biện: [HIEU_VA_PHAN_BIEN.md](HIEU_VA_PHAN_BIEN.md). Đánh d
 
 ### Trung
 - [x] **T1 — Adapter E1** — xong 2026-11-14: val R@1 71,0% → 89,9% (1 seed), xem `docs/T1_ADAPTER_GIAI_THICH.md` mục 5. 3 seed (17/11): trung bình 90,0%, dao động ~1 điểm.
-- [x] **T2 — Cache ảnh augmented** — xong 17/11, 3 bản/ảnh, 256 s (`scripts/encode_augmented.py`). (~1 buổi + thời gian GPU). Mỗi ảnh train encode thêm 3–4 bản (lật ngang, crop ngẫu nhiên nhẹ, đổi màu nhẹ); lưu kèm seed.
+- [x] **T2 — Cache ảnh augmented** — xong 17/11, 3 bản/ảnh, 256 s (`scripts/encode_augmented.py`).
   - Xong khi: có file embedding augmented + lệnh tạo lại.
 - [ ] **T3 — Thử residual ratio** 0,2 / 0,5 trên val (chỉ val). Ghi số lần thử.
 
@@ -58,7 +58,7 @@ Fine-tune vài block cuối của CLIP; reranking. Không bắt đầu trước 
 
 | Rủi ro | Dấu hiệu | Ứng phó |
 |---|---|---|
-| Encode chậm → T2 (3–4 bản augmented) ước ~5–7 giờ | Đo 2026-11-14: 25.882 ảnh mất ~1 giờ 45 phút trên máy nhà | Bắt đầu T2 sớm; chạy qua đêm, dùng Kaggle T4, hoặc chép ảnh sang SSD |
+| ~~Encode chậm~~ — đã hết: lần 2 đạt ~95 ảnh/s (ảnh đã trong bộ nhớ đệm của Windows), T2 chỉ mất 256 s | — | — |
 | GPU/Kaggle không chạy được cho T2 | Lỗi môi trường quá 1 buổi | Bỏ E2 augmented, dùng E3 (crop chỉ cần encode lại 1 lần) hoặc giảm số bản augmented |
 | Deadline sớm hơn dự kiến | Thầy công bố < 2 tuần | Bỏ E3 và P5, giữ E0–E2 + Task 3 |
 | Phong kẹt Task 3 | Chưa có notebook ở M2 | Trung hỗ trợ 1 buổi; dùng ảnh mẫu có sẵn của OpenCV |
