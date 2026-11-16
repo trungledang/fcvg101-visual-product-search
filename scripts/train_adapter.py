@@ -167,7 +167,7 @@ def main():
     }
     out_path = a.out or ROOT / "reports" / f"adapter_{tag}_val_ratio{a.ratio}_seed{a.seed}.json"
     out_path.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
-    print(f"\nE0 R@1 {e0['R@1']:.2%} -> E1 R@1 {e1['R@1']:.2%} (best epoch {best['epoch']}); "
+    print(f"\nE0 R@1 {e0['R@1']:.2%} -> {tag.upper()} R@1 {e1['R@1']:.2%} (best epoch {best['epoch']}); "
           f"diff CI95 {out['E1_minus_E0_R@1']['ci95_by_item']}\nwrote {out_path}")
 
 

@@ -120,7 +120,27 @@ Kiểm tra đã qua:
 
 **Chi phí:** encode 25.882 ảnh mất **6.305 s (~1 giờ 45 phút)**, chậm hơn ước tính nhiều, có lẽ do đọc ảnh từ ổ E:. Train adapter chỉ mất vài giây mỗi epoch.
 
-## 6. Phong cần nắm gì từ file này
+## 5b. T2 + E2: thêm ảnh augmented — kết quả (2026-11-17)
+
+**Cách làm:** mỗi ảnh train được đọc một lần và tạo **3 bản augmented**: crop ngẫu nhiên 75–100%, lật ngang, đổi sáng/tương phản ±20%, xóa ngẫu nhiên một mảng nhỏ. Màu sắc giữ nguyên vì màu là đặc điểm nhận dạng mặt hàng. Đây đúng là augmentation đã định nghĩa ở Task 1 (`train_augment`), áp lên ảnh đầy đủ (cấu hình `C0_full_aug`). Mỗi epoch, mỗi ảnh lấy ngẫu nhiên 1 trong 4 bản (bản gốc + 3 augmented). Encode mất 256 giây (`scripts/encode_augmented.py`, có seed, chạy lại ra đúng từng số).
+
+**Kết quả trên val, 3 seed, cùng số epoch** [Đã chạy]:
+
+| | Epoch | R@1 TB [min–max] | R@5 TB [min–max] |
+|---|---|---|---|
+| E0 CLIP đóng băng | — | 71,02 | 87,34 |
+| E1 adapter | 20 | 90,02 [89,53–90,58] | 97,08 [96,67–97,32] |
+| E2 adapter + augmented | 20 | 90,15 [90,02–90,26] | 96,73 [96,51–97,08] |
+| E1 adapter | 40 | 90,94 [90,50–91,31] | 97,24 [96,75–97,48] |
+| E2 adapter + augmented | 40 | 90,99 [90,42–91,31] | 96,97 [96,59–97,40] |
+
+File: `reports/adapter_{e1,e2}_val_ratio0.2_seed{0,1,2}[_ep40].json`. Trong JSON của E2, kết quả vẫn nằm ở khóa `E1_adapter` (tên khóa cũ).
+
+**Đọc kết quả:**
+- **E2 ≈ E1:** chênh 0,05–0,13 điểm R@1, nhỏ hơn nhiều so với dao động giữa các seed (~1 điểm). Kết luận đúng là **hòa**, không nói "augmentation giúp".
+- **Vì sao augmentation không giúp ở đây** [Phán đoán, có một số đo ủng hộ]: CLIP đóng băng vốn ít bị ảnh hưởng bởi crop nhẹ, lật hay đổi sáng. Cosine giữa hai bản augmented của cùng một ảnh trung bình là **0,93** (đo trên 64 ảnh), nên adapter thấy gần như cùng một vector. Augmentation thường có tác dụng khi **chính encoder** được học (fine-tune); với encoder đóng băng thì tác dụng nhỏ.
+- **40 epoch nhỉnh hơn 20 epoch khoảng 0,9 điểm**, và epoch tốt nhất rơi vào 26–37. Số epoch được chọn trên val, đúng quy tắc.
+- Đây là một **kết quả âm có giải thích**, đáng viết vào báo cáo: nó nối Task 1 với Task 2 và cho thấy nhóm không chỉ báo những gì "thắng".
 
 - Đọc mục 1–2 là đủ để giải thích dự án; mục 3 khi bị hỏi "adapter là gì / sao ArcFace".
 - Việc của Phong không cần sửa code này. Phân tích lỗi (P3/P5) dùng cùng val query/gallery; danh sách query sai lấy từ thứ hạng trong script.
