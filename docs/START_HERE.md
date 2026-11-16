@@ -2,7 +2,7 @@
 
 **Dành cho cả hai thành viên FCVG101.** Không cần biết CLIP, embedding hay Recall trước khi đọc. Mục tiêu không phải thuộc lòng thuật ngữ mà là **tự kiểm tra được một truy vấn bằng ảnh và nhãn thật**.
 
-> Trạng thái: dự án có baseline frozen CLIP đã chạy trên official test; có thử nghiệm crop/padding/HSV trên validation; **chưa có bằng chứng trong repo về một model ArcFace/fine-tuned đã huấn luyện**. Các ví dụ tên ảnh/ID giả định dưới đây để dạy cách đọc; khi cần bằng chứng cho báo cáo phải sử dụng ảnh, dữ liệu và kết quả thật.
+> Hướng hiện tại: [visual adapter và phân công đề xuất](HUONG_DI_HIEN_TAI.md). Baseline frozen CLIP và thử nghiệm crop/padding/HSV đã chạy; chưa có adapter/head/fine-tuning được train trong repo. Các ví dụ tên ảnh/ID giả định dưới đây dùng để học; khi báo cáo phải dùng dữ liệu và kết quả thật.
 
 ## 1. Hãy quên CLIP đi: bài toán là gì?
 

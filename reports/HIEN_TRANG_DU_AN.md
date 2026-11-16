@@ -1,5 +1,7 @@
 # Hiện trạng dự án FCVG101 Visual Product Retrieval — báo cáo cho reviewer độc lập
 
+> **Báo cáo lịch sử:** trạng thái và kế hoạch bên dưới thuộc ngày viết 2026-10-30. Xem [hướng hiện tại](../docs/HUONG_DI_HIEN_TAI.md) và [kiểm tra baseline 2026-11-07](baseline_review.json). Các số từ paper chưa được xác minh lại toàn bộ trong lượt rà này; không coi là trần hiệu năng hoặc bằng chứng về tính mới.
+
 **Ngày 2026-10-30.** Tổng hợp từ source code, file kết quả JSON, notebook đã chạy và các báo cáo trong repo. Trong nhiệm vụ này không sửa code và không chạy thí nghiệm mới.
 
 Nhãn bằng chứng dùng trong báo cáo:

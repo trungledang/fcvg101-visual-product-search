@@ -1,5 +1,7 @@
 # Nghiên cứu hướng đi — visual product search: thế giới làm gì, ta nên làm gì
 
+> **Báo cáo lịch sử 2026-10-30:** xem [hướng hiện tại](../docs/HUONG_DI_HIEN_TAI.md). Kế hoạch và đánh giá phương pháp bên dưới không phải ràng buộc hiện hành; các số từ paper chưa được kiểm chứng lại toàn bộ trong lượt rà 2026-11-07.
+
 **2026-10-30.** Nguồn: hai lượt tra cứu song song (industry; học thuật/CLIP adaptation), một lượt phản biện độc lập bằng Codex,
 và các thí nghiệm validation của dự án. Nhãn: **[Đã chạy]** đo trong dự án · **[Nguồn nói]** có link · **[Suy luận]** lập luận từ bằng chứng.
 
@@ -8,10 +10,10 @@ và các thí nghiệm validation của dự án. Nhãn: **[Đã chạy]** đo t
 1. **Baseline đúng và không cao:** frozen CLIP ViT-B/32 đạt R@1 45,5% trên test [Đã chạy];
    paper Unicom (ICLR 2023, Bảng 2) báo **45,4%** cho cùng model trên In-shop — tái lập độc lập. [Nguồn nói](https://arxiv.org/abs/2304.05884)
    Fine-tune đưa ViT lên 86–95% R@1 → khoảng cách ~45 điểm là không gian thật cho Task 2.
-2. **Crop theo bbox tụt chủ yếu vì màu pad, không phải vì mất bối cảnh.** Pad màu trung bình CLIP: 53,6%; pad trắng: 65,8%; ảnh đầy đủ: 71,1%;
+2. **Màu padding ảnh hưởng lớn đến điểm crop; chưa tách được mọi nguyên nhân của phần chênh còn lại.** Pad màu trung bình CLIP: 53,6%; pad trắng: 65,8%; ảnh đầy đủ: 71,1%;
    chỉ giữ bối cảnh (che sản phẩm): 22,7% [Đã chạy, val, CI theo item]. Bối cảnh có tín hiệu nhưng không phải nguồn chính.
    Giả thuyết "đường tắt bối cảnh" ban đầu của chúng ta bị **bác bỏ một phần**; phần chênh còn lại (~5,5 điểm) chưa tách được nguyên nhân.
-3. **Industry crop khi query khác miền gallery** (ảnh điện thoại/cảnh nhiều vật thể → ảnh catalog), và luôn crop **cùng với embedding được train trên crop**;
+3. **Một số hệ thống industry crop khi query khác miền gallery** (ảnh điện thoại/cảnh nhiều vật thể → ảnh catalog), thường đi cùng embedding thích nghi với dữ liệu miền trong các ví dụ được dẫn; chưa đủ bằng chứng khẳng định mọi hệ thống đều làm vậy;
    không nơi nào trong các nguồn đã đọc đưa crop vào CLIP frozen rồi kỳ vọng tăng. In-shop là shop-to-shop cùng buổi chụp nên ảnh đầy đủ thắng là hợp lý. [Suy luận từ nguồn bên dưới]
 4. **Task 2 nên làm:** giữ ảnh đầy đủ (C0); (A) head tuyến tính/MLP + ArcFace hoặc Proxy Anchor trên embedding CLIP đã cache;
    (B) fine-tune vài block cuối CLIP theo LP-FT trên Kaggle T4; mốc backbone frozen mạnh hơn (CLIP B/16, Unicom) làm hàng tham chiếu.
@@ -42,10 +44,10 @@ Mẫu chung: dự đoán category → định vị vật thể → embedding h�
 | ViT-S frozen · Hyp-ViT fine-tune (batch 900, A100) | 43,2 · 92,5 | [Hyp-ViT, CVPR 2022](https://arxiv.org/abs/2203.10833) — lane báo cáo |
 | PEFT visual prompt, ViT-S batch 64, 1 GPU | 88,4–91,2 | [VPTSP, ICLR 2024](https://arxiv.org/abs/2402.02340) — lane báo cáo |
 
-- Trên CUB, linear probe gần bằng full fine-tune (84,9 vs 85,5) — chưa có số In-shop, nên kết quả của dự án sẽ lấp khoảng trống này. (VPTSP Bảng 1, lane báo cáo)
+- Trên CUB, linear probe gần bằng full fine-tune (84,9 vs 85,5) — nguồn từng đọc chưa có số In-shop cho thiết lập đó. Đây là gợi ý thí nghiệm, chưa chứng minh một khoảng trống nghiên cứu mới. (VPTSP Bảng 1, lane báo cáo)
 - LP-FT: train head trước rồi mới mở backbone, ít làm hỏng đặc trưng pretrain. [arXiv 2202.10054](https://arxiv.org/abs/2202.10054)
 - Background bias trong metric learning: SOP MAP@R 39,65 → 6,51 khi thay nền. [arXiv 2210.01615](https://arxiv.org/abs/2210.01615)
-- CLIP-Adapter/Tip-Adapter dựa trên prompt lớp — không hợp với item test chưa thấy; Marqo-FashionCLIP/SigLIP có thể đã dùng In-shop khi đánh giá và không công bố dữ liệu train → cẩn thận rò rỉ nếu dùng.
+- Pipeline classification gốc của CLIP-Adapter/Tip-Adapter không trực tiếp dự đoán ID test chưa thấy. Tuy nhiên residual visual adapter của CLIP-Adapter có thể học embedding phục vụ retrieval; không loại bỏ cơ chế adapter chỉ vì classifier gốc dùng prompt lớp. Tip-Adapter dạng cache classifier là thiết kế khác. Với checkpoint fashion khác, cần kiểm tra dữ liệu huấn luyện trước khi diễn giải so sánh.
 
 ## Thí nghiệm validation của dự án [Đã chạy]
 
