@@ -83,6 +83,9 @@ def main():
     p.add_argument("--s", type=float, default=30.0, help="ArcFace scale")
     p.add_argument("--m", type=float, default=0.3, help="ArcFace angular margin (radians)")
     p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--aug-cache", default=None,
+                   help="E2: name of a cache from encode_augmented.py, e.g. train_aug_C0_full_aug_v3_s0; "
+                        "training then samples the original or one augmented view per image per epoch")
     p.add_argument("--out", type=Path, default=None)
     a = p.parse_args()
 
@@ -96,6 +99,12 @@ def main():
 
     feats, clip_meta = encode_train(a, [r for r in records if r.split == "train"], device)
     X = np.stack([feats[r.path] for r in tr])
+    if a.aug_cache:
+        aug = np.load(a.cache_dir / f"{a.aug_cache}.npy")
+        aug_paths = (a.cache_dir / f"{a.aug_cache}.paths.txt").read_text().splitlines()
+        assert aug_paths == [r.path for r in tr], "augmented cache does not match adapter-train order"
+        X = np.concatenate([X[:, None], aug], axis=1)  # view 0 = original image
+        print(f"E2: {X.shape[1]} views per image (original + {aug.shape[1]} augmented)")
     classes = sorted({r.item_id for r in tr})
     class_index = {c: i for i, c in enumerate(classes)}
     y = np.array([class_index[r.item_id] for r in tr])
@@ -111,7 +120,7 @@ def main():
     torch.manual_seed(a.seed)
     with torch.no_grad():
         init_loss = ArcFace(512, len(classes), a.s, 0.0)(AdaptedEmbedder(512, a.reduction, a.ratio)(
-            torch.as_tensor(X[:2048])), torch.as_tensor(y[:2048])).item()
+            torch.as_tensor(X[:2048, 0] if X.ndim == 3 else X[:2048])), torch.as_tensor(y[:2048])).item()
     print(f"init loss {init_loss:.3f} (ln C = {np.log(len(classes)):.3f})")
 
     best = {"R@1": -1.0}
@@ -132,14 +141,16 @@ def main():
 
     model.load_state_dict(best["state"])
     a.ckpt_dir.mkdir(parents=True, exist_ok=True)
-    ckpt = a.ckpt_dir / f"e1_ratio{a.ratio}_seed{a.seed}.pt"
-    cfg = {k: getattr(a, k) for k in ("ratio", "reduction", "epochs", "lr", "head_lr", "s", "m", "seed")}
+    tag = "e2" if a.aug_cache else "e1"
+    ckpt = a.ckpt_dir / f"{tag}_ratio{a.ratio}_seed{a.seed}.pt"
+    cfg = {k: getattr(a, k) for k in ("ratio", "reduction", "epochs", "lr", "head_lr", "s", "m", "seed", "aug_cache")}
     torch.save({"state_dict": best["state"], "config": cfg, "best_epoch": best["epoch"]}, ckpt)
 
     _, e1 = evaluate(embed(model, Q0, device), embed(model, G0, device), q_ids, g_ids)
     d = (best["rank"] == 1).astype(float) - (rank0 == 1).astype(float)
     out = {
-        "experiment": "E1: frozen CLIP ViT-B/32 + residual adapter (CLIP-Adapter) + ArcFace, cached C0 features",
+        "experiment": ("E2: E1 + cached augmented views (C0_full_aug)" if a.aug_cache else
+                       "E1: frozen CLIP ViT-B/32 + residual adapter (CLIP-Adapter) + ArcFace, cached C0 features"),
         "official_test_used": False,
         "selection": "best epoch by val R@1 (val is the model-selection set)",
         "split": {"adapter_train_images": len(tr), "adapter_train_ids": len(classes),
@@ -152,9 +163,9 @@ def main():
         "adapter_params": sum(p.numel() for p in model.parameters()),
         "E0_frozen": e0, "E1_adapter": e1, "best_epoch": best["epoch"],
         "E1_minus_E0_R@1": {"mean": float(d.mean()), "ci95_by_item": item_bootstrap(d, q_ids)},
-        "log": log, "checkpoint": str(ckpt.relative_to(ROOT)),
+        "log": log, "checkpoint": str(ckpt.relative_to(ROOT)) if ckpt.is_relative_to(ROOT) else str(ckpt),
     }
-    out_path = a.out or ROOT / "reports" / f"adapter_e1_val_ratio{a.ratio}_seed{a.seed}.json"
+    out_path = a.out or ROOT / "reports" / f"adapter_{tag}_val_ratio{a.ratio}_seed{a.seed}.json"
     out_path.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
     print(f"\nE0 R@1 {e0['R@1']:.2%} -> E1 R@1 {e1['R@1']:.2%} (best epoch {best['epoch']}); "
           f"diff CI95 {out['E1_minus_E0_R@1']['ci95_by_item']}\nwrote {out_path}")

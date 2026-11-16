@@ -35,3 +35,12 @@ def test_training_reduces_loss_on_separable_data():
     x = (centres[y] + 0.3 * rng.normal(size=(200, 64))).astype(np.float32)
     _, log = train_adapter(x, y, ratio=0.5, epochs=15, batch_size=32, seed=0)
     assert log[-1]["train_loss"] < 0.5 * log[0]["train_loss"]
+
+
+def test_training_accepts_multiple_cached_views():
+    rng = np.random.default_rng(1)
+    centres = rng.normal(size=(10, 64))
+    y = np.repeat(np.arange(10), 8)
+    x = (centres[y][:, None] + 0.3 * rng.normal(size=(80, 3, 64))).astype(np.float32)
+    _, log = train_adapter(x, y, ratio=0.5, epochs=10, batch_size=16, seed=0)
+    assert log[-1]["train_loss"] < log[0]["train_loss"]

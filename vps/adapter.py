@@ -88,7 +88,9 @@ def train_adapter(feats: np.ndarray, labels: np.ndarray, *, ratio: float = 0.2, 
                   device: str = "cpu", on_epoch=None) -> tuple[AdaptedEmbedder, list[dict]]:
     """Train adapter + ArcFace on fixed (cached) CLIP features.
 
-    feats: (N, 512) frozen CLIP features; labels: (N,) int class index 0..C-1.
+    feats: (N, 512) frozen CLIP features, or (N, V, 512) with V cached views per image
+        (E2: original + augmented views); each step then uses one random view per image.
+    labels: (N,) int class index 0..C-1.
     on_epoch(epoch, model) -> dict of extra metrics (e.g. validation Recall@K), logged per epoch.
     Returns the model (classifier discarded) and the per-epoch log.
     """
@@ -97,8 +99,9 @@ def train_adapter(feats: np.ndarray, labels: np.ndarray, *, ratio: float = 0.2, 
     x = torch.as_tensor(feats, dtype=torch.float32)
     y = torch.as_tensor(labels, dtype=torch.long)
     n_classes = int(y.max()) + 1
-    model = AdaptedEmbedder(x.shape[1], reduction, ratio).to(device)
-    head = ArcFace(x.shape[1], n_classes, s, m).to(device)
+    dim = x.shape[-1]
+    model = AdaptedEmbedder(dim, reduction, ratio).to(device)
+    head = ArcFace(dim, n_classes, s, m).to(device)
     opt = torch.optim.AdamW([{"params": model.parameters(), "lr": lr},
                              {"params": head.parameters(), "lr": head_lr}], weight_decay=weight_decay)
     log = []
@@ -108,7 +111,10 @@ def train_adapter(feats: np.ndarray, labels: np.ndarray, *, ratio: float = 0.2, 
         total, seen = 0.0, 0
         for i in range(0, len(x), batch_size):
             idx = perm[i:i + batch_size]
-            xb, yb = x[idx].to(device), y[idx].to(device)
+            xb = x[idx]
+            if xb.ndim == 3:  # pick one cached view per image
+                xb = xb[torch.arange(len(idx)), torch.randint(xb.shape[1], (len(idx),), generator=g)]
+            xb, yb = xb.to(device), y[idx].to(device)
             loss = head(model(xb), yb)
             opt.zero_grad(set_to_none=True)
             loss.backward()
