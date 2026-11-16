@@ -114,7 +114,7 @@ Kiểm tra đã qua:
 Đọc kết quả một cách khách quan (tư duy ngược):
 - **Tăng lớn hơn dự kiến** (reviewer đoán adapter chỉ đạt khoảng 58–72% trên test). Kết quả tốt bất ngờ thì nghi lỗi trước: đã kiểm tra item_id train và val không trùng; val chỉ dùng để chọn epoch. Chưa thấy lỗi.
 - **Val dễ hơn test nhiều** (400 món so với 3.985 món). Không được nói "adapter đạt 90%". Chỉ nói được: **trên val, adapter hơn CLIP đóng băng khoảng 19 điểm**. Con số test sẽ thấp hơn, chỉ biết khi chạy T5.
-- **Mới chạy 1 seed.** Chênh 19 điểm lớn hơn nhiều so với độ dao động thường gặp giữa các seed, nhưng báo cáo nên có ≥ 3 seed.
+- **Đã chạy 3 seed** (2026-11-17): R@1 val 89,94 / 90,58 / 89,53% → trung bình **90,0%**, dao động ~1 điểm, nhỏ hơn rất nhiều so với mức tăng 19 điểm. R@5 97,24 / 97,32 / 96,67%. Epoch tốt nhất 18–19. File: `reports/adapter_e1_val_ratio0.2_seed{0,1,2}.json`.
 - **Epoch 20 vẫn còn tăng nhẹ** → có thể train thêm. Chọn số epoch trên val, không chọn trên test.
 - Theo quy tắc M2 trong kế hoạch (tăng ≥ 5 điểm trên val) → **làm tiếp E2**.
 

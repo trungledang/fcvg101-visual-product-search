@@ -17,7 +17,7 @@ Lý do và phản biện: [HIEU_VA_PHAN_BIEN.md](HIEU_VA_PHAN_BIEN.md). Đánh d
 ## Tuần 1 (15–23/11)
 
 ### Trung
-- [x] **T1 — Adapter E1** — xong 2026-11-14: val R@1 71,0% → 89,9% (1 seed), xem `docs/T1_ADAPTER_GIAI_THICH.md` mục 5. Còn: chạy thêm seed 1, 2.
+- [x] **T1 — Adapter E1** — xong 2026-11-14: val R@1 71,0% → 89,9% (1 seed), xem `docs/T1_ADAPTER_GIAI_THICH.md` mục 5. 3 seed (17/11): trung bình 90,0%, dao động ~1 điểm.
 - [ ] **T2 — Cache ảnh augmented** (~1 buổi + thời gian GPU). Mỗi ảnh train encode thêm 3–4 bản (lật ngang, crop ngẫu nhiên nhẹ, đổi màu nhẹ); lưu kèm seed.
   - Xong khi: có file embedding augmented + lệnh tạo lại.
 - [ ] **T3 — Thử residual ratio** 0,2 / 0,5 trên val (chỉ val). Ghi số lần thử.

@@ -16,6 +16,8 @@ CLIP_MEAN_RGB = (123, 117, 104)
 # always uses the deterministic transform of the same configuration.
 CONFIGS = {
     "C0_full": {"crop": False, "train_augment": False, "representation": "clip"},
+    # E2: full image (C0 won the Task 1 study) with training-time augmentation.
+    "C0_full_aug": {"crop": False, "train_augment": True, "representation": "clip"},
     "C1_bbox_pad": {"crop": True, "train_augment": False, "representation": "clip"},
     "C2_bbox_pad_aug": {"crop": True, "train_augment": True, "representation": "clip"},
     "C3_hsv_hist": {"crop": True, "train_augment": False, "representation": "hsv"},
