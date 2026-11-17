@@ -142,6 +142,25 @@ File: `reports/adapter_{e1,e2}_val_ratio0.2_seed{0,1,2}[_ep40].json`. Trong JSON
 - **40 epoch nhỉnh hơn 20 epoch khoảng 0,9 điểm**, và epoch tốt nhất rơi vào 26–37. Số epoch được chọn trên val, đúng quy tắc.
 - Đây là một **kết quả âm có giải thích**, đáng viết vào báo cáo: nó nối Task 1 với Task 2 và cho thấy nhóm không chỉ báo những gì "thắng".
 
+## 5c. T3 (tỉ lệ residual) và E3 (ảnh crop + pad trắng) — kết quả (2026-11-17)
+
+Cả hai đều chạy 40 epoch, 3 seed, chỉ trên val [Đã chạy].
+- **E3:** encode lại ảnh train và val theo cấu hình A1 của Task 1 (crop theo bbox, lề 10%, pad vuông màu trắng), mất 96 giây (`scripts/encode_variant.py`). Sau đó train adapter giống hệt E1 (`--base-cache train_A1_white_pad`).
+
+| Cấu hình | Ảnh đầu vào | CLIP đóng băng R@1 | + adapter R@1 TB [min–max] | R@5 TB |
+|---|---|---|---|---|
+| E1, ratio 0,2 | đầy đủ | 71,02 | 90,94 [90,50–91,31] | 97,24 |
+| E1, ratio 0,5 (T3) | đầy đủ | 71,02 | 91,34 [91,15–91,56] | 97,38 |
+| E2, ratio 0,2 | đầy đủ + augmented | 71,02 | 90,99 [90,42–91,31] | 96,97 |
+| **E3, ratio 0,2** | **crop + pad trắng** | **65,75** | **91,69 [91,40–92,05]** | **98,00** |
+
+**Đọc kết quả:**
+- **Phát hiện đáng kể nhất là kết quả bị đảo chiều.** Với CLIP đóng băng, crop + pad trắng **kém** ảnh đầy đủ 5,3 điểm (đúng như Task 1). Sau khi có adapter, crop lại **nhỉnh hơn** khoảng 0,75 điểm R@1 và 0,8 điểm R@5. Một cách giải thích [Phán đoán, chưa kiểm chứng riêng]: crop bỏ bớt người mẫu và nền, nên vector tập trung vào món đồ hơn. CLIP gốc không quen ảnh có viền trắng nên bị giảm điểm; adapter được train trên đúng loại ảnh đó nên "học quen" được viền trắng và tận dụng được phần tập trung vào món đồ.
+- **Mức chênh nhỏ, cần nói thận trọng.** Khoảng min–max của E3 và E1 (ratio 0,2) không chồng nhau, nhưng chỉ cách nhau dưới 1 điểm, trên val 400 món, và nhóm đã so khá nhiều cấu hình trên cùng tập val. Chỉ nên nói: *"trên val, E3 nhỉnh hơn một chút và ổn định qua 3 seed"*.
+- **Ratio 0,5 nhỉnh hơn 0,2 khoảng 0,4 điểm**, và hai khoảng gần như chạm nhau, nên coi là **gần hòa**. Ratio 0,5 hội tụ sớm hơn (epoch tốt nhất 26–29, so với 34–37 của ratio 0,2). Chưa thử E3 với ratio 0,5. Dừng tinh chỉnh ở đây để tránh "chọn đi chọn lại" trên cùng tập val.
+
+## 6. Phong cần nắm gì từ file này
+
 - Đọc mục 1–2 là đủ để giải thích dự án; mục 3 khi bị hỏi "adapter là gì / sao ArcFace".
 - Việc của Phong không cần sửa code này. Phân tích lỗi (P3/P5) dùng cùng val query/gallery; danh sách query sai lấy từ thứ hạng trong script.
 - Câu hỏi vặn nên tự trả lời được: *"Vì sao không dùng ArcFace để đoán món ở test?"* · *"Ratio 0 thì sao?"* · *"Sao không cho augmentation vào E1?"*
