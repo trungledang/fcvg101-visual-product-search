@@ -3,7 +3,8 @@ variant, deterministically (no augmentation), for E3-style adapter experiments.
 
 Variants (same definitions as scripts/ablate_crop_val.py):
   A1_white_pad : bbox crop (margin 0.1) + pad to square with white   (Task 1 A1)
-The official test split is not encoded here.
+--split train encodes official train (adapter-train + validation); --split query/gallery
+encodes the official test side, used only for the single final evaluation (scripts/eval_test.py).
 
 Usage: python scripts/encode_variant.py --variant A1_white_pad [--device cuda]
 """
@@ -46,6 +47,7 @@ class _Images:
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--variant", choices=sorted(VARIANTS), default="A1_white_pad")
+    p.add_argument("--split", choices=("train", "query", "gallery"), default="train")
     p.add_argument("--data-root", type=Path, default=ROOT.parent)
     p.add_argument("--weights-dir", type=Path, default=ROOT / ".cache" / "clip")
     p.add_argument("--cache-dir", type=Path, default=ROOT / "cache" / "embeddings")
@@ -57,7 +59,7 @@ def main():
     from vps.embed import load_model
     device = a.device or ("cuda" if torch.cuda.is_available() else "cpu")
     records = parse_partition((a.data_root / "Eval/list_eval_partition.txt").read_text())
-    paths = [r.path for r in records if r.split == "train"]
+    paths = [r.path for r in records if r.split == a.split]
     boxes = parse_bbox((a.data_root / "list_bbox_inshop.txt").read_text())
     config, kwargs = VARIANTS[a.variant]
     model, pre, meta = load_model(a.weights_dir, device)
@@ -69,7 +71,7 @@ def main():
             e = model.encode_image(x.to(device)).float()
             out.append((e / e.norm(dim=-1, keepdim=True)).cpu().numpy())
     emb = np.concatenate(out).astype(np.float32)
-    name = f"train_{a.variant}"
+    name = f"{a.split}_{a.variant}"
     np.save(a.cache_dir / f"{name}.npy", emb)
     (a.cache_dir / f"{name}.paths.txt").write_text("\n".join(paths) + "\n")
     (a.cache_dir / f"{name}.meta.json").write_text(json.dumps({

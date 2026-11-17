@@ -34,7 +34,7 @@ Lý do và phản biện: [HIEU_VA_PHAN_BIEN.md](HIEU_VA_PHAN_BIEN.md). Đánh d
 ### Trung
 - [x] **T4a — E2** — xong 17/11: hòa với E1 (val R@1 ~91,0% ở 40 epoch, 3 seed); xem `T1_ADAPTER_GIAI_THICH.md` mục 5b.
 - [x] **T4b — E3** — xong 17/11: crop + pad trắng + adapter 91,7% val, nhỉnh nhất (đảo chiều so với CLIP đóng băng). Mục 5c.
-- [ ] **T5 — Chốt cấu hình trên val, chạy test 1 lần** cho E0–E2(E3). Bảng kết quả + R@1 theo category.
+- [x] **T5 — Test 1 lần** — xong 17/11: E0 45,5% → E1 71,4% → E3 72,2% R@1 (`reports/test_results.json`, mục 5d).
 - [ ] **T6 — Notebook demo**: 1 ảnh chưa thấy → Top-5, so E0 và adapter cạnh nhau.
 - [ ] **T7 — Lưu checkpoint adapter** lên Drive/Kaggle, lấy link (ZIP nộp giới hạn 5 MB).
 

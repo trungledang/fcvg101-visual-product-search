@@ -159,6 +159,25 @@ Cả hai đều chạy 40 epoch, 3 seed, chỉ trên val [Đã chạy].
 - **Mức chênh nhỏ, cần nói thận trọng.** Khoảng min–max của E3 và E1 (ratio 0,2) không chồng nhau, nhưng chỉ cách nhau dưới 1 điểm, trên val 400 món, và nhóm đã so khá nhiều cấu hình trên cùng tập val. Chỉ nên nói: *"trên val, E3 nhỉnh hơn một chút và ổn định qua 3 seed"*.
 - **Ratio 0,5 nhỉnh hơn 0,2 khoảng 0,4 điểm**, và hai khoảng gần như chạm nhau, nên coi là **gần hòa**. Ratio 0,5 hội tụ sớm hơn (epoch tốt nhất 26–29, so với 34–37 của ratio 0,2). Chưa thử E3 với ratio 0,5. Dừng tinh chỉnh ở đây để tránh "chọn đi chọn lại" trên cùng tập val.
 
+## 5d. T5 — kết quả TEST chính thức, chạy một lần (2026-11-17)
+
+Năm cấu hình được chốt trên val **trước** khi mở test: tỉ lệ residual 0,2, checkpoint 40 epoch của 3 seed. Test gồm 14.218 query và toàn bộ 12.612 ảnh gallery (3.985 món chưa từng thấy khi train). Không tham số nào được chọn dựa trên test. Script: `scripts/eval_test.py`. File kết quả: `reports/test_results.json` [Đã chạy].
+
+| Cấu hình | R@1 TB [min–max] | R@5 | R@10 |
+|---|---|---|---|
+| E0 CLIP đóng băng, ảnh đầy đủ | 45,51 | 67,25 | 74,36 |
+| E0 CLIP đóng băng, crop + pad trắng | 39,58 | 60,85 | 68,54 |
+| E1 + adapter, ảnh đầy đủ | 71,42 [71,25–71,56] | 88,93 | 92,72 |
+| E2 + adapter + augmented | 71,06 [70,24–71,77] | 88,59 | 92,54 |
+| **E3 + adapter, crop + pad trắng** | **72,20 [72,04–72,51]** | **89,29** | **93,25** |
+
+**Đọc kết quả:**
+- **E0 trên test ra 45,51%**, khớp đúng baseline cũ. Đây là dấu hiệu pipeline chấm điểm không bị thay đổi.
+- **Adapter tăng khoảng 26 điểm R@1 trên test** (45,5 → 71,4), lớn hơn mức tăng trên val (~20 điểm). Trên test, tất cả 23 nhóm sản phẩm đều tăng, ít nhất 8 điểm (MEN/Sweatshirts) và nhiều nhất 33 điểm (MEN/Shirts_Polos). Nhóm khó nhất vẫn là WOMEN/Graphic_Tees: 18,9 → 46,0%.
+- **Thứ tự các cấu hình trên test giống trên val:** E3 > E1 ≈ E2, và crop kém đi khi CLIP đóng băng. Vì vậy các kết luận chọn trên val vẫn đứng được trên test.
+- **So với tài liệu** [Nguồn, `reports/NGHIEN_CUU_HUONG_DI.md`]: CLIP B/32 đóng băng 45,4%; Unicom B/32 đóng băng 72,8%; các phương pháp fine-tune toàn bộ mạng đạt 86–95%. Adapter của nhóm chỉ thêm 131 nghìn tham số và train vài chục giây, đưa CLIP B/32 lên ngang mức Unicom đóng băng, nhưng **vẫn kém fine-tune khoảng 15–20 điểm**. Đây là giới hạn đúng như phần tư duy ngược đã dự đoán: adapter chỉ sắp xếp lại thông tin mà CLIP đã nhìn thấy.
+- **Không nói:** "vượt state-of-the-art" hay "phương pháp mới". **Nên nói:** "tái sử dụng CLIP-Adapter cho bài toán retrieval, rẻ, tăng 26 điểm; muốn tiến xa hơn thì phải fine-tune encoder".
+
 ## 6. Phong cần nắm gì từ file này
 
 - Đọc mục 1–2 là đủ để giải thích dự án; mục 3 khi bị hỏi "adapter là gì / sao ArcFace".
