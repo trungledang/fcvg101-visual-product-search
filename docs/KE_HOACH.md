@@ -20,7 +20,7 @@ Lý do và phản biện: [HIEU_VA_PHAN_BIEN.md](HIEU_VA_PHAN_BIEN.md). Đánh d
 - [x] **T1 — Adapter E1** — xong 2026-11-14: val R@1 71,0% → 89,9% (1 seed), xem `docs/T1_ADAPTER_GIAI_THICH.md` mục 5. 3 seed (17/11): trung bình 90,0%, dao động ~1 điểm.
 - [x] **T2 — Cache ảnh augmented** — xong 17/11, 3 bản/ảnh, 256 s (`scripts/encode_augmented.py`).
   - Xong khi: có file embedding augmented + lệnh tạo lại.
-- [ ] **T3 — Thử residual ratio** 0,2 / 0,5 trên val (chỉ val). Ghi số lần thử.
+- [x] **T3 — Thử residual ratio** — xong 17/11: 0,5 ≈ 0,2 (91,3 vs 90,9, gần hòa). Mục 5c.
 
 ### Phong
 - [ ] **P1 — Hiểu đề tài** (~1 buổi). Đọc `HIEU_VA_PHAN_BIEN.md`, chạy `notebooks/learn_clip_retrieval.ipynb`; tự giải thích được pipeline và Recall@K cho Trung.
@@ -33,7 +33,7 @@ Lý do và phản biện: [HIEU_VA_PHAN_BIEN.md](HIEU_VA_PHAN_BIEN.md). Đánh d
 
 ### Trung
 - [x] **T4a — E2** — xong 17/11: hòa với E1 (val R@1 ~91,0% ở 40 epoch, 3 seed); xem `T1_ADAPTER_GIAI_THICH.md` mục 5b.
-- [ ] **T4b — E3 nếu kịp** (adapter trên ảnh crop + pad trắng).
+- [x] **T4b — E3** — xong 17/11: crop + pad trắng + adapter 91,7% val, nhỉnh nhất (đảo chiều so với CLIP đóng băng). Mục 5c.
 - [ ] **T5 — Chốt cấu hình trên val, chạy test 1 lần** cho E0–E2(E3). Bảng kết quả + R@1 theo category.
 - [ ] **T6 — Notebook demo**: 1 ảnh chưa thấy → Top-5, so E0 và adapter cạnh nhau.
 - [ ] **T7 — Lưu checkpoint adapter** lên Drive/Kaggle, lấy link (ZIP nộp giới hạn 5 MB).

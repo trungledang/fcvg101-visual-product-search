@@ -86,6 +86,9 @@ def main():
     p.add_argument("--aug-cache", default=None,
                    help="E2: name of a cache from encode_augmented.py, e.g. train_aug_C0_full_aug_v3_s0; "
                         "training then samples the original or one augmented view per image per epoch")
+    p.add_argument("--base-cache", default=None,
+                   help="E3: name of a cache from encode_variant.py (e.g. train_A1_white_pad); its features "
+                        "replace the full-image ones for adapter-train AND validation (E0 then = frozen CLIP on that variant)")
     p.add_argument("--out", type=Path, default=None)
     a = p.parse_args()
 
@@ -98,6 +101,11 @@ def main():
     assert not {r.item_id for r in tr} & {r.item_id for r in vq + vg}, "train/val item_id overlap"
 
     feats, clip_meta = encode_train(a, [r for r in records if r.split == "train"], device)
+    if a.base_cache:
+        base_paths = (a.cache_dir / f"{a.base_cache}.paths.txt").read_text().splitlines()
+        assert base_paths == [r.path for r in records if r.split == "train"], "base cache order mismatch"
+        feats = dict(zip(base_paths, np.load(a.cache_dir / f"{a.base_cache}.npy")))
+        print(f"E3: using {a.base_cache} features for train and validation")
     X = np.stack([feats[r.path] for r in tr])
     if a.aug_cache:
         aug = np.load(a.cache_dir / f"{a.aug_cache}.npy")
@@ -141,15 +149,16 @@ def main():
 
     model.load_state_dict(best["state"])
     a.ckpt_dir.mkdir(parents=True, exist_ok=True)
-    tag = "e2" if a.aug_cache else "e1"
+    tag = "e3" if a.base_cache else "e2" if a.aug_cache else "e1"
     ckpt = a.ckpt_dir / f"{tag}_ratio{a.ratio}_seed{a.seed}.pt"
-    cfg = {k: getattr(a, k) for k in ("ratio", "reduction", "epochs", "lr", "head_lr", "s", "m", "seed", "aug_cache")}
+    cfg = {k: getattr(a, k) for k in ("ratio", "reduction", "epochs", "lr", "head_lr", "s", "m", "seed", "aug_cache", "base_cache")}
     torch.save({"state_dict": best["state"], "config": cfg, "best_epoch": best["epoch"]}, ckpt)
 
     _, e1 = evaluate(embed(model, Q0, device), embed(model, G0, device), q_ids, g_ids)
     d = (best["rank"] == 1).astype(float) - (rank0 == 1).astype(float)
     out = {
-        "experiment": ("E2: E1 + cached augmented views (C0_full_aug)" if a.aug_cache else
+        "experiment": (f"E3: E1 on {a.base_cache} features" if a.base_cache else
+                       "E2: E1 + cached augmented views (C0_full_aug)" if a.aug_cache else
                        "E1: frozen CLIP ViT-B/32 + residual adapter (CLIP-Adapter) + ArcFace, cached C0 features"),
         "official_test_used": False,
         "selection": "best epoch by val R@1 (val is the model-selection set)",
