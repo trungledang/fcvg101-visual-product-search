@@ -1,7 +1,7 @@
 # Kế hoạch nộp bài FCVG101
 
 Lập 2026-11-14 (thứ Bảy). Deadline ước tính 2–3 tuần (khoảng 28/11 – 05/12, **chưa chính thức**). Kế hoạch tính theo 2 tuần làm + 1 tuần dự phòng.
-Lý do và phản biện: [HIEU_VA_PHAN_BIEN.md](HIEU_VA_PHAN_BIEN.md). Đánh dấu `[x]` khi xong và ghi đường dẫn đầu ra.
+Lý do và phản biện: [HIEU_VA_PHAN_BIEN.md](HIEU_VA_PHAN_BIEN.md). Sơ đồ từng bước: [PIPELINE_TUNG_BUOC.md](PIPELINE_TUNG_BUOC.md). Đánh dấu `[x]` khi xong và ghi đường dẫn đầu ra.
 
 ## Mốc
 

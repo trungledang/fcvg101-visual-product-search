@@ -1,6 +1,6 @@
 # T1 — Adapter E1: dự án tổng thể và giải thích từng phần
 
-Viết 2026-11-14 cho Trung và Phong. Đọc trước: [HIEU_VA_PHAN_BIEN.md](HIEU_VA_PHAN_BIEN.md) (tư duy ngược), [KE_HOACH.md](KE_HOACH.md) (task).
+Viết 2026-11-14, cập nhật 2026-11-19 (đã có kết quả test). Cho Trung và Phong. **Muốn xem từng bước bằng sơ đồ: [PIPELINE_TUNG_BUOC.md](PIPELINE_TUNG_BUOC.md).** Đọc trước: [HIEU_VA_PHAN_BIEN.md](HIEU_VA_PHAN_BIEN.md) (tư duy ngược), [KE_HOACH.md](KE_HOACH.md) (task).
 
 ---
 
@@ -17,15 +17,15 @@ Viết 2026-11-14 cho Trung và Phong. Đọc trước: [HIEU_VA_PHAN_BIEN.md](H
    val 400 món (query/gallery)
                 │
 ┌───────────────▼──── TASK 1: XỬ LÝ ẢNH (xong) ───────────────┐
-│ C0 ảnh đầy đủ ✔ chọn │ C1 crop+pad ✘ │ C3 HSV ✘ │ augment   │
+│ C0 ảnh đầy đủ │ C1/A1 crop+pad │ C3 HSV │ augmentation (xong)│
 └───────────────┬─────────────────────────────────────────────┘
                 ▼
 ┌──────────────── TASK 2: MÔ HÌNH ────────────────────────────┐
 │ E0 CLIP đóng băng → vector 512 → cosine     ✔ xong          │
-│ E1 CLIP đóng băng → ADAPTER → vector 512    ◀── T1 (file này)│
-│ E2 như E1 + ảnh augmented cache sẵn          tuần 2          │
-│ E3 như E1 trên ảnh crop + pad trắng          nếu kịp         │
-│ → chọn trên val → chạy test 1 lần → demo + phân tích lỗi     │
+│ E1 CLIP đóng băng → ADAPTER → vector 512    ✔ xong (file này)│
+│ E2 như E1 + ảnh augmented cache sẵn          ✔ xong (hòa E1) │
+│ E3 như E1 trên ảnh crop + pad trắng          ✔ xong (nhỉnh)  │
+│ → chọn trên val ✔ → test 1 lần ✔ → demo ✔ → lỗi: Phong ghi  │
 └─────────────────────────────────────────────────────────────┘
 ┌──────────────── TASK 3 (Phong, độc lập) ────────────────────┐
 │ 3A hiệu chỉnh camera + lọc/FFT/gradient/keypoint            │
@@ -62,7 +62,7 @@ Viết 2026-11-14 cho Trung và Phong. Đọc trước: [HIEU_VA_PHAN_BIEN.md](H
 
 ### 3.1 Vì sao lưu sẵn vector (cache)?
 CLIP đóng băng nên cùng một ảnh luôn ra cùng vector. Tính một lần (~2–3 phút trên RTX 3050 Ti) rồi train adapter trên 23.266 vector chỉ mất vài giây mỗi epoch, chạy được cả trên CPU.
-**Đánh đổi:** mỗi ảnh chỉ có một vector cố định → augmentation không có tác dụng. E2 sẽ sửa bằng cách cache thêm vài bản augmented.
+**Đánh đổi:** mỗi ảnh chỉ có một vector cố định → augmentation không có tác dụng. E2 đã thử cách sửa: cache thêm 3 bản augmented mỗi ảnh (mục 5b) — kết quả là hòa với E1.
 
 ### 3.2 Adapter (`vps/adapter.py`, lớp `Adapter`, `AdaptedEmbedder`)
 - **Nút cổ chai 512→128→512:** ép thông tin qua 128 chiều nên adapter chỉ học được những thay đổi "đơn giản", khó học thuộc lòng. Tham số: 512×128 + 128×512 = **131.072**, so với ~88 triệu của bộ mã hóa ảnh CLIP.
@@ -98,7 +98,7 @@ Kết quả: `reports/adapter_e1_val_ratio<r>_seed<s>.json`. Checkpoint: `cache/
 
 ## 5. Kết quả
 
-Chạy 2026-11-14 trên RTX 3050 Ti Laptop (4 GB), seed 0, ratio 0,2, 20 epoch. File: `reports/adapter_e1_val_ratio0.2_seed0.json`. **[Đã chạy, chỉ trên val — test chưa mở.]**
+Chạy 2026-11-14 trên RTX 3050 Ti Laptop (4 GB), seed 0, ratio 0,2, 20 epoch. File: `reports/adapter_e1_val_ratio0.2_seed0.json`. **[Đã chạy, chỉ trên val; lúc đó test chưa mở, test đã chạy một lần ở mục 5d.]**
 
 | | R@1 val | R@5 val |
 |---|---|---|
@@ -113,7 +113,7 @@ Kiểm tra đã qua:
 
 Đọc kết quả một cách khách quan (tư duy ngược):
 - **Tăng lớn hơn dự kiến** (reviewer đoán adapter chỉ đạt khoảng 58–72% trên test). Kết quả tốt bất ngờ thì nghi lỗi trước: đã kiểm tra item_id train và val không trùng; val chỉ dùng để chọn epoch. Chưa thấy lỗi.
-- **Val dễ hơn test nhiều** (400 món so với 3.985 món). Không được nói "adapter đạt 90%". Chỉ nói được: **trên val, adapter hơn CLIP đóng băng khoảng 19 điểm**. Con số test sẽ thấp hơn, chỉ biết khi chạy T5.
+- **Val dễ hơn test nhiều** (400 món so với 3.985 món). Không được nói "adapter đạt 90%". Chỉ nói được: **trên val, adapter hơn CLIP đóng băng khoảng 19 điểm**. Con số test thấp hơn thật: E1 đạt 71,4% trên test (mục 5d).
 - **Đã chạy 3 seed** (2026-11-17): R@1 val 89,94 / 90,58 / 89,53% → trung bình **90,0%**, dao động ~1 điểm, nhỏ hơn rất nhiều so với mức tăng 19 điểm. R@5 97,24 / 97,32 / 96,67%. Epoch tốt nhất 18–19. File: `reports/adapter_e1_val_ratio0.2_seed{0,1,2}.json`.
 - **Epoch 20 vẫn còn tăng nhẹ** → có thể train thêm. Chọn số epoch trên val, không chọn trên test.
 - Theo quy tắc M2 trong kế hoạch (tăng ≥ 5 điểm trên val) → **làm tiếp E2**.

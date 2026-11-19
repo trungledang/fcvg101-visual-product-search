@@ -1,6 +1,6 @@
 # Hiểu và phản biện đề tài — bản đọc trước khi trình bày hoặc giao việc
 
-Viết 2026-11-14. Mục đích: đọc một lần là nhớ lại được đề tài, giải thích được pipeline cho thầy, giao việc cho Phong và trả lời được khi bị hỏi vặn. Môn tự chọn nên mục tiêu là **hiểu và làm đủ, trung thực**, không phải đạt kết quả cao nhất.
+Viết 2026-11-14, cập nhật trạng thái 2026-11-19 (đã có kết quả test; các mục dự đoán giữ nguyên để đối chiếu với kết quả thật). Mục đích: đọc một lần là nhớ lại được đề tài, giải thích được pipeline cho thầy, giao việc cho Phong và trả lời được khi bị hỏi vặn. Môn tự chọn nên mục tiêu là **hiểu và làm đủ, trung thực**, không phải đạt kết quả cao nhất.
 
 Nhãn: **[Đã chạy]** có số đo trong repo · **[Nguồn]** từ paper, đã ghi trong `reports/NGHIEN_CUU_HUONG_DI.md` · **[Phán đoán]** lập luận, chưa đo.
 
@@ -61,9 +61,9 @@ Mỗi lựa chọn: vì sao chọn, nếu sai thì sao, và làm sao biết.
 | Mã | Cấu hình | Nối với Task 1 | Trạng thái |
 |---|---|---|---|
 | E0 | CLIP đóng băng, ảnh đầy đủ | C0 | **Xong** — R@1 45,5% |
-| E1 | + adapter, ảnh đầy đủ, không augmentation | C0 | Chưa làm |
-| E2 | + adapter, **thêm vài bản augmented** mỗi ảnh train (lật, crop ngẫu nhiên, đổi màu) được encode sẵn | augmentation Task 1 | Chưa làm |
-| E3 | + adapter, train trên ảnh **crop + pad trắng** (A1) | crop Task 1 | Chưa làm, tùy thời gian |
+| E1 | + adapter, ảnh đầy đủ, không augmentation | C0 | **Xong** — test R@1 71,4% |
+| E2 | + adapter, **thêm vài bản augmented** mỗi ảnh train (lật, crop ngẫu nhiên, đổi màu) được encode sẵn | augmentation Task 1 | **Xong** — hòa với E1 (71,1%) |
+| E3 | + adapter, train trên ảnh **crop + pad trắng** (A1) | crop Task 1 | **Xong** — nhỉnh nhất, test R@1 72,2% |
 
 - **Loss đề xuất: ArcFace** — coi mỗi item_id train là một lớp, học xong thì bỏ lớp phân loại, chỉ giữ vector. Dễ viết, không cần sampler đặc biệt; hạng 5 cuộc thi Google Universal Image Embedding 2022 dùng đúng CLIP đóng băng + head + ArcFace [Nguồn]. Đổi sang SupCon nếu ArcFace không hội tụ.
 - **Adapter 512→128→512, tỉ lệ residual 0,2** — lấy từ CLIP-Adapter, chưa tối ưu cho bài này; thử thêm 1–2 giá trị tỉ lệ trên val là đủ.
@@ -112,6 +112,6 @@ Train và test khác item_id; không có ảnh trùng byte/pixel giữa các t�
 
 ## 7. Chưa biết
 
-- Deadline nộp bài (ô "Due date" trong đề để trống).
-- GPU máy nhà có bao nhiêu VRAM — chỉ quan trọng nếu làm fine-tune.
-- Adapter tăng bao nhiêu — chỉ biết sau khi chạy E1.
+- Deadline nộp bài (ô "Due date" trong đề để trống; kế hoạch giả định 2–3 tuần kể từ 14/11).
+- ~~GPU máy nhà~~ — đã biết: RTX 3050 Ti Laptop 4 GB; đủ cho adapter, chật nếu fine-tune toàn bộ.
+- ~~Adapter tăng bao nhiêu~~ — đã biết: +26 điểm R@1 trên test (45,5 → 71,4), xem [T1_ADAPTER_GIAI_THICH.md](T1_ADAPTER_GIAI_THICH.md) mục 5d.

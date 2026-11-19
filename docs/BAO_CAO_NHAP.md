@@ -1,6 +1,6 @@
 # Báo cáo FCVG101 — Tìm sản phẩm thời trang bằng ảnh (bản nháp)
 
-> Nháp 2026-11-19, theo đúng thứ tự yêu cầu của đề. Ô **[Phong]** là phần Phong viết; ô **[TODO]** là việc còn thiếu.
+> Sơ đồ từng bước giúp đọc nhanh: [PIPELINE_TUNG_BUOC.md](PIPELINE_TUNG_BUOC.md). Nháp 2026-11-19, theo đúng thứ tự yêu cầu của đề. Ô **[Phong]** là phần Phong viết; ô **[TODO]** là việc còn thiếu.
 > Mọi số liệu lấy từ file trong `reports/` (đã chạy thật); mỗi bảng ghi nguồn. Khi xuất PDF: thay ảnh demo trong
 > `artifacts/task2/` (ảnh DeepFashion, không đưa lên repo public) vào chỗ đánh dấu.
 
