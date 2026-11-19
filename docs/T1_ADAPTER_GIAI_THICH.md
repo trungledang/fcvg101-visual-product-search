@@ -94,7 +94,7 @@ cd visual-product-search-pilot
 .venv/Scripts/python.exe scripts/train_adapter.py --device cuda            # ratio 0,2
 .venv/Scripts/python.exe scripts/train_adapter.py --device cuda --ratio 0.5 # T3
 ```
-Kết quả: `reports/adapter_e1_val_ratio<r>_seed<s>.json`. Checkpoint: `cache/adapter/` (không commit); bản 40 epoch dùng ở test có trên Google Drive, link trong `MODEL_LINKS.md`. Demo và phân tích lỗi: `notebooks/task2_demo.ipynb`.
+Kết quả: `reports/adapter_e1_val_ratio<r>_seed<s>.json`. Checkpoint: `cache/adapter/` (không commit); bản 40 epoch dùng ở test có trên Google Drive, link trong `MODEL_LINKS.md`. Demo và phân tích lỗi: `notebooks/FCVG101_main.ipynb`.
 
 ## 5. Kết quả
 

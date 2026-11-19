@@ -26,7 +26,7 @@
 - Món ở test **không xuất hiện ở train** → mô hình phải học *cách biểu diễn ảnh*, không học thuộc nhãn. Đây đúng nội dung LO3 (representation learning).
 - Vừa sức máy cá nhân (RTX 3050 Ti 4 GB): dùng encoder có sẵn rồi thích nghi, không cần train mô hình lớn.
 
-**Vấn đề chất lượng dữ liệu** (chi tiết, hình: `notebooks/task1_data_pipeline.ipynb`, ô 3–4):
+**Vấn đề chất lượng dữ liệu** (chi tiết, hình: `notebooks/FCVG101_main.ipynb`, Phần A, ô `# 3`–`# 4`):
 - Nhóm sản phẩm rất mất cân bằng (WOMEN/Tees_Tanks 2.955 query, MEN/Suiting 14 query); mỗi món chỉ có vài ảnh.
 - Query thường chụp cận cảnh, gallery thường toàn thân → lệch phân bố hai phía.
 - Một phần bbox ở ảnh chụp nghiêng chỉ là một dải hẹp, không bao trọn món đồ (6,3% query val có bbox hẹp).
@@ -60,7 +60,7 @@
 | Resize, center crop, normalize | đúng đầu vào CLIP đã được train | preprocess gốc của `openai/CLIP` |
 | Batch | `DataLoader`, 64 ảnh/batch, 6 worker | `vps/embed.py` |
 
-**Augmentation (chỉ train):** RandomResizedCrop 75–100%, lật ngang, độ sáng/tương phản ±20%, RandomErasing p = 0,25. **Không** đổi hue/saturation vì màu là đặc điểm nhận dạng món. Hình minh hoạ: notebook Task 1, ô 8.
+**Augmentation (chỉ train):** RandomResizedCrop 75–100%, lật ngang, độ sáng/tương phản ±20%, RandomErasing p = 0,25. **Không** đổi hue/saturation vì màu là đặc điểm nhận dạng món. Hình minh hoạ: notebook chính, Phần A, ô `# 8`.
 
 **Biểu diễn ảnh đã so sánh (trên val, CLIP đóng băng)** — nguồn: `reports/val_results.json`, `reports/val_crop_ablation.json`.
 
@@ -134,13 +134,13 @@ khi train: z ─► ArcFace (s = 30, m = 0,3) trên 3.597 món train;   lớp Ar
 
 ## 6. Demo suy luận
 
-`notebooks/task2_demo.ipynb` (ô 3–4), lõi ở `vps/search.py`. Mô hình nhận một ảnh, mã hoá bằng CLIP + adapter, so với 12.612 ảnh gallery, rồi trả về Top-5 kèm cosine; E0 và E3 hiển thị cạnh nhau. Ảnh dùng để demo là query test, thuộc món chưa từng có ở train (notebook `assert` điều này). Ô 4 nhận **bất kỳ ảnh nào** qua `MY_IMAGE`; ảnh ngoài dataset không có bbox nên chỉ được pad trắng, không crop. Kiểm tra: mã hoá lại từ file cho ra vector trùng cache (cosine 1,0000) và cùng hạng như lúc đánh giá.
+`notebooks/FCVG101_main.ipynb` (Phần B, ô `# T2-3` và `# T2-4`), lõi ở `vps/search.py`. Mô hình nhận một ảnh, mã hoá bằng CLIP + adapter, so với 12.612 ảnh gallery, rồi trả về Top-5 kèm cosine; E0 và E3 hiển thị cạnh nhau. Ảnh dùng để demo là query test, thuộc món chưa từng có ở train (notebook `assert` điều này). Ô 4 nhận **bất kỳ ảnh nào** qua `MY_IMAGE`; ảnh ngoài dataset không có bbox nên chỉ được pad trắng, không crop. Kiểm tra: mã hoá lại từ file cho ra vector trùng cache (cosine 1,0000) và cùng hạng như lúc đánh giá.
 
 **[TODO khi xuất PDF]** Chèn `artifacts/task2/demo_example_dress.png`. Trong ví dụ này E0 xếp 5 chiếc váy trắng khác lên đầu, còn E3 đưa đúng món lên #1 và #2.
 
 ## 7. Phân tích lỗi
 
-Nguồn: `notebooks/task2_demo.ipynb` ô 5–6, seed 0, toàn bộ 14.218 query.
+Nguồn: `notebooks/FCVG101_main.ipynb` Phần B, ô `# T2-5` và `# T2-6`, seed 0, toàn bộ 14.218 query.
 
 | E0 \ E3 | E3 đúng ở #1 | E3 sai |
 |---|---|---|
@@ -153,7 +153,7 @@ Nguồn: `notebooks/task2_demo.ipynb` ô 5–6, seed 0, toàn bộ 14.218 query.
 - Khi E3 sai ở #1, món đúng vẫn nằm trong #2–5 ở 61% trường hợp. Nghĩa là phần lớn lỗi là xếp hạng sát nút giữa các món rất giống nhau, không phải tìm lạc hẳn.
 - Nhóm khó nhất là WOMEN/Graphic_Tees (18,9 → 46,0%). Giả thuyết: hình in nhỏ khó nhìn ở độ phân giải 224×224, mà màu và dáng áo thì gần như giống hệt nhau.
 
-**[Phong]** Bảng nhóm lỗi (P3/P5): xem 6 lỗi ngẫu nhiên ở ô 6 cùng các ví dụ khác, rồi xếp vào các nhóm: gần trùng màu/dáng, cận cảnh so với toàn thân, hình in nhỏ, bbox nghiêng hẹp… Ghi số query và một ảnh ví dụ cho mỗi nhóm.
+**[Phong]** Bảng nhóm lỗi (P3/P5): xem 6 lỗi ngẫu nhiên ở ô `# T2-6` cùng các ví dụ khác, rồi xếp vào các nhóm: gần trùng màu/dáng, cận cảnh so với toàn thân, hình in nhỏ, bbox nghiêng hẹp… Ghi số query và một ảnh ví dụ cho mỗi nhóm.
 
 ## 8. Task 3 — Thực nghiệm nhỏ về hình học và chuyển động  **[Phong]**
 
@@ -184,7 +184,7 @@ Xem `MODEL_LINKS.md` (link checkpoint, CLIP, dataset; thứ tự lệnh). Tóm t
 pip install -r requirements.txt            # cần dataset ở thư mục cha của repo
 python -m pytest -q                        # 37 test, không cần dataset
 python scripts/eval_test.py                # tái lập bảng test (cần cache embedding + checkpoint)
-notebooks/task2_demo.ipynb                 # demo + phân tích lỗi (chạy được trên CPU)
+notebooks/FCVG101_main.ipynb               # notebook chính: Task 1 + Task 2 (Colab hoặc máy cá nhân)
 ```
 Checkpoint: hai adapter dùng cho demo có sẵn trong ZIP; đủ 9 checkpoint ở Google Drive (link trong `MODEL_LINKS.md`).
 

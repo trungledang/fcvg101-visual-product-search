@@ -1,14 +1,13 @@
-"""Tạo notebooks/task2_demo.ipynb: kết quả test, demo suy luận (T6) và phân tích lỗi.
+"""Các ô của phần Task 2 trong notebooks/FCVG101_main.ipynb: kết quả test, demo suy luận, phân tích lỗi.
 
-Notebook chỉ ĐỌC số đã chốt (reports/test_results.json, cache/test_first_pos_ranks.npz);
-không chọn cấu hình nào dựa trên test. Chạy: python scripts/build_task2_notebook.py
+Chỉ ĐỌC số đã chốt (reports/test_results.json, cache/test_first_pos_ranks.npz);
+không chọn cấu hình nào dựa trên test. Ghép bởi scripts/build_main_notebook.py.
 """
 import hashlib
 import json
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[1]
-path = root / "notebooks/task2_demo.ipynb"
 
 
 def cell(kind, text):
@@ -22,45 +21,35 @@ def cell(kind, text):
 
 cells = [
     cell("markdown", """
-# Task 2 — Kết quả, demo suy luận và phân tích lỗi
+# Phần B — Task 2: kết quả, demo suy luận và phân tích lỗi
 
 **Hệ thống:** ảnh → CLIP ViT-B/32 (đóng băng) → adapter 512→128→512 (residual, ratio 0.2, học bằng ArcFace) → so cosine với 12.612 ảnh gallery → Top-K.
 
 | Yêu cầu Task 2 | Ô |
 |---|---|
-| Bảng so sánh trên test + hình | 2 |
-| Demo suy luận trên mẫu chưa thấy | 3–4 |
-| Phân tích lỗi ngắn | 5–6 |
+| Bảng so sánh trên test + hình | T2-2 |
+| Demo suy luận trên mẫu chưa thấy | T2-3, T2-4 |
+| Phân tích lỗi ngắn | T2-5, T2-6 |
 
 **Nguyên tắc:** cấu hình đã chốt trên validation trước khi chạy test (`docs/T1_ADAPTER_GIAI_THICH.md`, mục 5c).
 Notebook này chỉ đọc lại số test (`reports/test_results.json`), không chọn gì dựa trên test.
 Mọi query test thuộc 3.985 sản phẩm **không có trong tập train** → mỗi query là một mẫu chưa thấy.
 
-**Cần có trước khi chạy:** dataset ở thư mục cha, `.cache/clip/ViT-B-32.pt`, `cache/embeddings/` (gallery) và
-`cache/adapter/ep40/*.pt` (hoặc tải checkpoint theo `MODEL_LINKS.md`). Chạy được trên CPU.
+**Dữ liệu cần có:** cấu hình ở ô 0 (đầu notebook). Chạy được trên CPU, nhanh hơn trên GPU.
 """),
     cell("code", """
-# 1. Nạp CLIP một lần, dựng 2 bộ tìm kiếm: E0 (CLIP gốc) và E3 (adapter, crop + pad trắng)
+# T2-1. Dựng 2 bộ tìm kiếm: E0 (CLIP gốc) và E3 (adapter, crop + pad trắng)
+# Lần đầu nếu chưa có vector gallery thì tự mã hóa 12.612 ảnh (vài phút trên GPU) và lưu vào cache/embeddings/.
 %matplotlib inline
-import json, sys
-from pathlib import Path
+import json
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
 from PIL import Image
-
-ROOT = Path.cwd().resolve()
-if not (ROOT / "vps").is_dir():
-    ROOT = ROOT.parent
-sys.path.insert(0, str(ROOT))
-from vps.embed import load_model
 from vps.search import ProductSearch
 from vps.annotations import parse_partition
 
-DATA = ROOT.parent
-device = "cuda" if torch.cuda.is_available() else "cpu"
-clip_model, clip_pre, _ = load_model(ROOT / ".cache/clip", device)
-search = {name: ProductSearch(ROOT, name, clip_model, clip_pre, seed=0, device=device)
+search = {name: ProductSearch(ROOT, name, clip_model, clip_pre, seed=0, data_root=DATA, device=device)
           for name in ("E0_full", "E3")}
 records = parse_partition((DATA / "Eval/list_eval_partition.txt").read_text())
 queries = [r for r in records if r.split == "query"]
@@ -68,7 +57,7 @@ train_ids = {r.item_id for r in records if r.split == "train"}
 print(device, "| gallery:", len(search["E3"].gallery), "ảnh | query test:", len(queries))
 """),
     cell("code", """
-# 2. Kết quả test (một lần duy nhất) + R@1 theo nhóm sản phẩm
+# T2-2. Kết quả test (một lần duy nhất) + R@1 theo nhóm sản phẩm
 res = json.loads((ROOT / "reports/test_results.json").read_text(encoding="utf-8"))
 names = {"E0_full": "E0 CLIP gốc, toàn ảnh", "E0_crop": "E0 CLIP gốc, crop+pad trắng",
          "E1": "E1 + adapter", "E2": "E2 + adapter + augmentation", "E3": "E3 + adapter, crop+pad trắng"}
@@ -94,7 +83,7 @@ nhưng lại nhỉnh nhất khi có adapter (E3). E2 (thêm augmentation) không
 embedding của CLIP đóng băng (cosine giữa các bản ≈ 0,93), nên adapter không học thêm được gì.
 """),
     cell("code", """
-# 3. Demo suy luận: query test (sản phẩm chưa từng thấy khi train) → Top-5, E0 và E3 cạnh nhau
+# T2-3. Demo suy luận: query test (sản phẩm chưa từng thấy khi train) → Top-5, E0 và E3 cạnh nhau
 def show_row(axes, img, title, hits, true_id):
     axes[0].imshow(img); axes[0].set_title(title, fontsize=8)
     for ax, h in zip(axes[1:], hits):
@@ -127,7 +116,7 @@ Các mẫu ở trên được chọn ngẫu nhiên có seed — có thể cả h
 không phải ví dụ được chọn cho đẹp. Muốn xem ví dụ khác: đổi seed `2026`.
 """),
     cell("code", """
-# 4. Ảnh bất kỳ (ví dụ ảnh tự chụp): đặt đường dẫn vào MY_IMAGE.
+# T2-4. Ảnh bất kỳ (ví dụ ảnh tự chụp): đặt đường dẫn vào MY_IMAGE.
 # Ảnh ngoài dataset không có bbox → E3 chỉ pad trắng, không crop (đầu ra ghi rõ điều này).
 MY_IMAGE = None   # ví dụ: r"E:\\Downloads\\ao_cua_toi.jpg"
 path = Path(MY_IMAGE) if MY_IMAGE else DATA / queries[0].path   # mặc định: 1 ảnh query, coi như ảnh lạ
@@ -142,8 +131,8 @@ with Image.open(path) as im:
 plt.tight_layout(); plt.show()
 """),
     cell("code", """
-# 5. Phân tích lỗi: query nào adapter sửa được, query nào làm hỏng (seed 0, toàn bộ 14.218 query)
-ranks = np.load(ROOT / "cache/test_first_pos_ranks.npz")
+# T2-5. Phân tích lỗi: query nào adapter sửa được, query nào làm hỏng (seed 0, toàn bộ 14.218 query)
+ranks = np.load(ROOT / "reports/test_first_pos_ranks_E0_E3.npz")  # hạng đã lưu từ scripts/eval_test.py
 r0, r3 = ranks["E0_full_seedNone"], ranks["E3_seed0"]
 ok0, ok3 = r0 == 1, r3 == 1
 print(f"Cả hai đúng     : {np.sum(ok0 & ok3):6d}")
@@ -163,7 +152,7 @@ ax.set_ylabel("% query"); ax.set_xlabel("hạng của ảnh đúng đầu tiên"
 plt.tight_layout(); plt.show()
 """),
     cell("code", """
-# 6. Sáu lỗi của E3 (chọn ngẫu nhiên có seed) để xếp nhóm lỗi — Phong điền bảng ở ô dưới
+# T2-6. Sáu lỗi của E3 (chọn ngẫu nhiên có seed) để xếp nhóm lỗi — Phong điền bảng ở ô dưới
 fail_idx = np.flatnonzero(~ok3)
 for i in np.random.default_rng(7).choice(fail_idx, 6, replace=False):
     print(f"query #{i}: E0 hạng {r0[i]}, E3 hạng {r3[i]}")
@@ -183,9 +172,3 @@ for i in np.random.default_rng(7).choice(fail_idx, 6, replace=False):
 Gợi ý: nhóm khó nhất trên test là WOMEN/Graphic_Tees (E0 18,9% → E3 46,0%) — CLIP ở 224×224 khó đọc hình in nhỏ.
 """),
 ]
-
-nb = {"cells": cells, "metadata": {"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
-                                   "language_info": {"name": "python"}},
-      "nbformat": 4, "nbformat_minor": 5}
-path.write_text(json.dumps(nb, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-print("wrote", path)

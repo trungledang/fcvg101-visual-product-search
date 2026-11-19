@@ -20,7 +20,9 @@ OUT = ROOT / "artifacts" / "submission"
 CKPT = ROOT / "cache" / "adapter" / "ep40"
 LIMIT = 5 * 1024 * 1024
 SKIP = ("docs/images/", "reports/per_query_results.csv", "reports/history/", "reports/sources/",
-        "CLAUDE.md", "CONTRIBUTING.md", "notebooks/kernel-metadata.json")
+        "CLAUDE.md", "CONTRIBUTING.md", "notebooks/kernel-metadata.json",
+        "notebooks/learn_clip_retrieval.ipynb", "notebooks/deepfashion_clip_baseline.ipynb",  # học / pilot cũ
+        "scripts/build_cloud_notebook.py")
 DEMO_CKPTS = ("e1_ratio0.2_seed0.pt", "e3_ratio0.2_seed0.pt")
 
 

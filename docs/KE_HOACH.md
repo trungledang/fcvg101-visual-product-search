@@ -23,7 +23,7 @@ Lý do và phản biện: [HIEU_VA_PHAN_BIEN.md](HIEU_VA_PHAN_BIEN.md). Sơ đ�
 - [x] **T3 — Thử residual ratio** — xong 17/11: 0,5 ≈ 0,2 (91,3 vs 90,9, gần hòa). Mục 5c.
 
 ### Phong
-- [ ] **P1 — Hiểu đề tài** (~1 buổi). Đọc `HIEU_VA_PHAN_BIEN.md`, chạy `notebooks/learn_clip_retrieval.ipynb`; tự giải thích được pipeline và Recall@K cho Trung.
+- [ ] **P1 — Hiểu đề tài** (~1 buổi). Đọc `HIEU_VA_PHAN_BIEN.md`, đọc `docs/PIPELINE_TUNG_BUOC.md` và chạy phần A của `notebooks/FCVG101_main.ipynb`; tự giải thích được pipeline và Recall@K cho Trung.
 - [ ] **P2 — Task 3A** (~2 buổi). Hiệu chỉnh camera bằng ảnh bàn cờ (tự chụp 10–15 ảnh hoặc ảnh mẫu OpenCV); lọc tuyến tính, FFT, gradient (Sobel), điểm đặc trưng (Harris/ORB/SIFT).
   - Xong khi: notebook chạy từ đầu tới cuối, mỗi kỹ thuật có hình + 2–3 câu giải thích.
 - [ ] **P3 — Phân tích lỗi baseline** (~1 buổi). Lấy ~20 query val sai của E0, xếp nhóm (cùng màu khác món, góc nghiêng, họa tiết nhỏ, …).
@@ -35,7 +35,7 @@ Lý do và phản biện: [HIEU_VA_PHAN_BIEN.md](HIEU_VA_PHAN_BIEN.md). Sơ đ�
 - [x] **T4a — E2** — xong 17/11: hòa với E1 (val R@1 ~91,0% ở 40 epoch, 3 seed); xem `T1_ADAPTER_GIAI_THICH.md` mục 5b.
 - [x] **T4b — E3** — xong 17/11: crop + pad trắng + adapter 91,7% val, nhỉnh nhất (đảo chiều so với CLIP đóng băng). Mục 5c.
 - [x] **T5 — Test 1 lần** — xong 17/11: E0 45,5% → E1 71,4% → E3 72,2% R@1 (`reports/test_results.json`, mục 5d).
-- [x] **T6 — Notebook demo** — xong 19/11: `notebooks/task2_demo.ipynb` (bảng test, Top-5 E0 vs E3, ảnh bất kỳ qua `MY_IMAGE`, phân tích lỗi ô 5–6); lõi `vps/search.py`. Bản đã chạy có hình: `artifacts/task2/` (không lên repo vì chứa ảnh dataset).
+- [x] **T6 — Notebook demo** — xong 19/11: `notebooks/FCVG101_main.ipynb` Phần B (đã gộp với Task 1 thành MỘT notebook chính; bảng test, Top-5 E0 vs E3, ảnh bất kỳ qua `MY_IMAGE`, phân tích lỗi); lõi `vps/search.py`. Bản đã chạy có hình: `artifacts/main/FCVG101_main.executed.ipynb` (không lên repo vì chứa ảnh dataset).
 - [x] **T7 — Lưu checkpoint adapter** — xong 19/11: 9 checkpoint lên Google Drive (link chia sẻ, chỉ xem) ghi trong `MODEL_LINKS.md`; 2 checkpoint demo nằm luôn trong ZIP.
 
 ### Phong

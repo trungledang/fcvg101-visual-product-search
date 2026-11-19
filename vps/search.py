@@ -1,6 +1,6 @@
 """Inference: one image -> top-k gallery products, with frozen CLIP and an optional trained adapter.
 
-Used by notebooks/task2_demo.ipynb (Task 2 inference demonstration). The gallery side is read
+Used by notebooks/FCVG101_main.ipynb (Task 2 inference demonstration). The gallery side is read
 from the cached CLIP embeddings (scripts/pilot.py, scripts/encode_variant.py); only the new image
 is encoded here, so a search costs one CLIP forward pass plus a 512 x 12,612 dot product.
 
@@ -32,6 +32,38 @@ CONFIGS = {  # name: (gallery cache suffix, crop?, checkpoint prefix or None)
 }
 
 
+class _GalleryImages:
+    """Picklable dataset for DataLoader workers: optional bbox crop + white pad, then CLIP preprocess."""
+
+    def __init__(self, data_root, paths, boxes, preprocess):
+        self.data_root, self.paths, self.boxes, self.preprocess = data_root, paths, boxes, preprocess
+        self.crop = BBoxCropPad(boxes, fill=WHITE) if boxes else None
+
+    def __len__(self):
+        return len(self.paths)
+
+    def __getitem__(self, i):
+        from PIL import Image
+        with Image.open(self.data_root / self.paths[i]) as im:
+            im = im.convert("RGB")
+            if self.crop is not None:
+                im = self.crop(im, self.paths[i])
+            return self.preprocess(im)
+
+
+def encode_gallery(model, preprocess, data_root: Path, paths: list[str], boxes, device: str,
+                   batch_size: int = 64, workers: int = 4) -> np.ndarray:
+    """L2-normalised CLIP embeddings of gallery images (same recipe as scripts/encode_variant.py)."""
+    dl = torch.utils.data.DataLoader(_GalleryImages(data_root, paths, boxes, preprocess),
+                                     batch_size=batch_size, num_workers=workers)
+    out = []
+    with torch.inference_mode():
+        for x in dl:
+            e = model.encode_image(x.to(device)).float()
+            out.append((e / e.norm(dim=-1, keepdim=True)).cpu().numpy())
+    return np.concatenate(out).astype(np.float32)
+
+
 @dataclass
 class Hit:
     rank: int
@@ -52,6 +84,14 @@ class ProductSearch:
         records = parse_partition((self.data_root / "Eval/list_eval_partition.txt").read_text())
         self.gallery = [r for r in records if r.split == "gallery"]
         cache = root / "cache" / "embeddings"
+        if not (cache / f"gallery{suffix}.npy").exists():  # first run on a fresh machine: build the cache
+            print(f"gallery{suffix}: no cache found, encoding {len(self.gallery)} images (a few minutes on GPU)...")
+            all_boxes = parse_bbox((self.data_root / "list_bbox_inshop.txt").read_text()) if self.crop else None
+            emb = encode_gallery(clip_model, clip_preprocess, self.data_root, [r.path for r in self.gallery],
+                                 all_boxes, device)
+            cache.mkdir(parents=True, exist_ok=True)
+            np.save(cache / f"gallery{suffix}.npy", emb)
+            (cache / f"gallery{suffix}.paths.txt").write_text("\n".join(r.path for r in self.gallery) + "\n")
         paths = (cache / f"gallery{suffix}.paths.txt").read_text().splitlines()
         assert paths == [r.path for r in self.gallery], "gallery cache order differs from the partition"
         feats = np.load(cache / f"gallery{suffix}.npy")

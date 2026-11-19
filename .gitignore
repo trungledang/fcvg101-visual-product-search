@@ -22,3 +22,6 @@ artifacts/
 
 # DeepFashion-derived doc figures (regenerate: scripts/generate_docs_images.py)
 docs/images/dataset/
+
+# small aggregate rank arrays used by the notebook error analysis
+!reports/*.npz
