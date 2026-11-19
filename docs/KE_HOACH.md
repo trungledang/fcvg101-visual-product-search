@@ -35,8 +35,8 @@ Lý do và phản biện: [HIEU_VA_PHAN_BIEN.md](HIEU_VA_PHAN_BIEN.md). Đánh d
 - [x] **T4a — E2** — xong 17/11: hòa với E1 (val R@1 ~91,0% ở 40 epoch, 3 seed); xem `T1_ADAPTER_GIAI_THICH.md` mục 5b.
 - [x] **T4b — E3** — xong 17/11: crop + pad trắng + adapter 91,7% val, nhỉnh nhất (đảo chiều so với CLIP đóng băng). Mục 5c.
 - [x] **T5 — Test 1 lần** — xong 17/11: E0 45,5% → E1 71,4% → E3 72,2% R@1 (`reports/test_results.json`, mục 5d).
-- [ ] **T6 — Notebook demo**: 1 ảnh chưa thấy → Top-5, so E0 và adapter cạnh nhau.
-- [ ] **T7 — Lưu checkpoint adapter** lên Drive/Kaggle, lấy link (ZIP nộp giới hạn 5 MB).
+- [x] **T6 — Notebook demo** — xong 19/11: `notebooks/task2_demo.ipynb` (bảng test, Top-5 E0 vs E3, ảnh bất kỳ qua `MY_IMAGE`, phân tích lỗi ô 5–6); lõi `vps/search.py`. Bản đã chạy có hình: `artifacts/task2/` (không lên repo vì chứa ảnh dataset).
+- [x] **T7 — Lưu checkpoint adapter** — xong 19/11: 9 checkpoint lên Google Drive (link chia sẻ, chỉ xem) ghi trong `MODEL_LINKS.md`; 2 checkpoint demo nằm luôn trong ZIP.
 
 ### Phong
 - [ ] **P4 — Task 3B** (~1 buổi). Optical flow (Farneback) giữa 2 khung hình video tự quay; hình mũi tên/màu + giải thích.
@@ -45,9 +45,9 @@ Lý do và phản biện: [HIEU_VA_PHAN_BIEN.md](HIEU_VA_PHAN_BIEN.md). Đánh d
 
 ## Tuần 3 (dự phòng + hoàn thiện)
 
-- [ ] **Báo cáo PDF** theo đúng thứ tự đề: dataset → pipeline → Task 1 → mô hình + siêu tham số → kết quả + bảng + lỗi → Task 3 → thảo luận/giới hạn → hướng dẫn chạy → tài liệu tham khảo.
+- [ ] **Báo cáo PDF** — bản nháp phần Trung xong 19/11: `docs/BAO_CAO_NHAP.md` (ô **[Phong]** chờ điền) — theo đúng thứ tự đề: dataset → pipeline → Task 1 → mô hình + siêu tham số → kết quả + bảng + lỗi → Task 3 → thảo luận/giới hạn → hướng dẫn chạy → tài liệu tham khảo.
   - Trung: mô hình, kết quả, thảo luận. Phong: Task 3, phân tích lỗi, kiểm tra Task 1. Đọc chéo phần của nhau.
-- [ ] **ZIP code** ≤ 5 MB: `.py`/`.ipynb`, config, `requirements.txt`, link checkpoint; không kèm ảnh dataset hay `.venv`.
+- [x] **ZIP code** — script xong 19/11: `python scripts/build_submission.py` → `artifacts/submission/FCVG101_code.zip` (1,25 MB, đã giải nén thử, 37 test pass). Chạy lại sau khi Phong thêm notebook Task 3. Yêu cầu: `.py`/`.ipynb`, config, `requirements.txt`, link checkpoint; không kèm ảnh dataset hay `.venv`.
 - [ ] **Tập trình bày**: mỗi người giải thích được phần của người kia; luyện 8 câu hỏi ở mục 6 của `HIEU_VA_PHAN_BIEN.md`.
 
 ## Ngoài kế hoạch (chỉ khi xong hết mà còn thời gian)
