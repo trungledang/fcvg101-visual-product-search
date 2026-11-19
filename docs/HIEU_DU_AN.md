@@ -1,5 +1,7 @@
 # Hiểu dự án qua số liệu thật: mục đích, dữ liệu, nhãn, độ tương đồng và đóng góp
 
+> Hướng hiện tại và phân công: [HUONG_DI_HIEN_TAI.md](HUONG_DI_HIEN_TAI.md). Biểu đồ dưới đây phân tích baseline/pilot; kế hoạch head + ArcFace phía sau là đề xuất cũ. Adapter/head/fine-tuning chưa có kết quả huấn luyện trong repo.
+
 Tài liệu này dành cho thành viên mới. Đọc sau [START_HERE.md](START_HERE.md) hoặc đọc trước cũng được. Mọi con số và biểu đồ ở đây được tính từ dữ liệu và kết quả thật của dự án bằng [`scripts/make_onboarding_figures.py`](../scripts/make_onboarding_figures.py). Số liệu đầy đủ ở [`reports/onboarding_stats.json`](../reports/onboarding_stats.json). Biểu đồ chỉ chứa số tổng hợp, không chứa ảnh DeepFashion.
 
 ## Đọc trong 5 phút
@@ -192,7 +194,7 @@ Ghi rõ ba mức: **đã đo**, **đang đề xuất**, **còn thiếu**.
 
 1. **Baseline tái lập được:** CLIP ViT-B/32 frozen đạt R@1 45,5% trên toàn bộ query chính thức, khớp số 45,4% mà paper Unicom (ICLR 2023) báo cáo cho cùng mô hình. Đây là mốc đáng tin để so sánh.
 2. **Giao thức đánh giá sạch:** kiểm tra không có ảnh trùng byte/pixel giữa query và gallery; validation tách theo sản phẩm từ train; không chọn tham số trên test.
-3. **Phát hiện từ Task 1:** crop + đệm viền làm giảm điểm chủ yếu do màu viền, không phải vì mất bối cảnh. Kết luận có khoảng tin cậy bootstrap theo sản phẩm.
+3. **Phát hiện từ Task 1:** màu padding ảnh hưởng đáng kể đến điểm crop. Đổi sang trắng thu hẹp mức giảm, nhưng chưa tách được nguyên nhân của phần chênh còn lại. Kết quả có khoảng tin cậy bootstrap theo sản phẩm.
 4. **Phân tích độ tương đồng (tài liệu này):** định lượng được vì sao R@1 thấp (ảnh sai khó nhất 0,926 vs ảnh đúng tốt nhất 0,919), lỗi theo góc chụp/category, và bẫy nhãn đa màu.
 
 ### Đóng góp dự kiến ở Task 2
@@ -204,7 +206,7 @@ Ghi rõ ba mức: **đã đo**, **đang đề xuất**, **còn thiếu**.
 | T2 | T1 + mở vài block cuối CLIP (LP-FT) | Có đáng tốn GPU để sửa cả backbone không? |
 | T2 + aug | Thêm augmentation của Task 1 | Augmentation có giúp khi đã fine-tune không? |
 
-Paper cho thấy fine-tune có thể đưa R@1 lên 86–95%. Chưa có số công bố cho trường hợp "chỉ học head nhẹ trên In-shop", nên kết quả T1 của nhóm có giá trị riêng. Chi tiết và nguồn ở [`reports/NGHIEN_CUU_HUONG_DI.md`](../reports/NGHIEN_CUU_HUONG_DI.md).
+Các paper được dẫn có kết quả fine-tune 86–95% trong điều kiện riêng. Trong các nguồn từng đọc chưa thấy số cho thiết lập head cụ thể này; điều đó chưa chứng minh chưa ai làm hay có đóng góp thuật toán mới. Giá trị coursework nằm ở hiểu, triển khai và phân tích thí nghiệm. Chi tiết và nguồn ở [`reports/NGHIEN_CUU_HUONG_DI.md`](../reports/NGHIEN_CUU_HUONG_DI.md).
 
 ### Còn thiếu so với đề
 

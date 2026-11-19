@@ -1,5 +1,7 @@
 # Run the Visual Product Search feasibility pilot
 
+> Historical scope: this file records the completed frozen-CLIP pilot. See [current coursework direction](docs/HUONG_DI_HIEN_TAI.md). The pilot-only no-training/no-interface restrictions below do not prohibit later authorized adaptation, redesign or demos.
+
 ## User objective
 
 Run a feasibility pilot for **Visual Product Search** using the DeepFashion In-shop dataset and frozen pretrained CLIP ViT-B/32.

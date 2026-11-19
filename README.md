@@ -1,10 +1,10 @@
 # FCVG101 — Tìm kiếm sản phẩm thời trang bằng hình ảnh
 
-Visual Product Retrieval with Pretrained CLIP · Coursework Computer Vision · Dự án nhóm 2 người
+Fashion Product Retrieval Across Views Using CLIP Adaptation · Coursework Computer Vision · Dự án nhóm 2 người
 
 Mới tham gia dự án? Đọc [BẮT ĐẦU TỪ ĐÂY — hướng dẫn cho cả hai thành viên](docs/START_HERE.md) trước. Tài liệu giải thích từng bước bằng ví dụ và bài kiểm tra hiểu bài, không đòi hỏi kiến thức CLIP từ trước. Sau đó đọc [Hiểu dự án qua số liệu thật](docs/HIEU_DU_AN.md): mục đích theo đề, nhãn và các bẫy nhãn, độ tương đồng cosine đo trên dữ liệu thật, và đóng góp của dự án.
 
-Trạng thái: Đã hoàn thành baseline không huấn luyện và một số thí nghiệm xử lý ảnh trên validation. Chưa có kết quả huấn luyện ArcFace hoặc fine-tuning CLIP được ghi nhận trong repository. Repo chưa phải bài coursework hoàn chỉnh.
+Trạng thái: Đã hoàn thành baseline không huấn luyện và các thí nghiệm xử lý ảnh trên validation. Chưa có training loop/checkpoint/kết quả cho adapter, retrieval head hoặc fine-tuning CLIP. Hướng chính là visual adapter sau encoder CLIP đóng băng; xem [hướng hiện tại và phân công đề xuất](docs/HUONG_DI_HIEN_TAI.md). Báo cáo pilot cũ là lịch sử, không giới hạn phạm vi dự án.
 
 ## 1. Dự án giải quyết vấn đề gì?
 
@@ -98,13 +98,15 @@ Nguồn: [`reports/val_results.json`](reports/val_results.json), [`reports/val_c
 
 ## 5. Câu hỏi nghiên cứu và công việc tiếp theo
 
-**Câu hỏi:** Khi một pretrained encoder chưa tối ưu cho việc phân biệt từng sản phẩm thời trang, các phương pháp xử lý ảnh và adaptation nhẹ có giúp cải thiện Retrieval Recall@K trên những product IDs chưa thấy trong training không?
+**Câu hỏi:** Thích nghi biểu diễn CLIP như thế nào để tìm đúng từng mặt hàng qua các góc chụp, với chi phí phù hợp? Visual adapter là hướng chính để bắt đầu, chưa phải kết luận rằng nó tốt nhất.
 
 **Đã có bằng chứng:** Baseline frozen, crop/padding ablations, phân tích lỗi ban đầu, audit nhãn và split.
 
-**Chưa có bằng chứng cải thiện từ training:** Linear projection head, ArcFace và partial fine-tuning mới là phương án đề xuất, chưa phải kết quả đã chạy trong repo hiện tại.
+**Kiểm tra lại 2026-11-07:** Tính lại retrieval trên cache đầy đủ khớp **R@1 45,51%, R@5 67,25%**. Checksum cache, thứ tự ảnh, annotation và source manifest khớp; chưa mã hóa lại ảnh hoặc hash lại toàn bộ pixel. Xem [`reports/baseline_review.json`](reports/baseline_review.json).
 
-**Hướng triển khai dự kiến:** (1) hiểu dataset và lỗi thật; (2) chốt validation/protocol; (3) so sánh frozen CLIP vs linear head vs ArcFace trên cùng validation; (4) cân nhắc partial fine-tuning nếu đủ thời gian/compute; (5) đánh giá cuối trên official query/gallery. Tránh điều chỉnh liên tục theo official test đã quan sát.
+**Hướng triển khai:** E0 frozen CLIP và E1 frozen CLIP + residual visual adapter cho retrieval. Chọn loss/sampler từ nghiên cứu và code phù hợp; mục tiêu metric learning hoặc classifier theo train IDs rồi lấy embedding đều có thể dùng. Linear head là đối chứng có thể thêm; partial fine-tuning, local features và reranking là các nhánh đào sâu để chọn, không bắt buộc làm đủ. Chọn cấu hình bằng validation, không dò theo official test đã xem.
+
+Có thể sửa protocol, đổi backbone, đo lại baseline hoặc thay code khi có lý do. Giữ cấu hình và kết quả cũ để đối chiếu; chạy baseline tương ứng khi đổi điều kiện so sánh. Dùng nguồn mạnh và kinh nghiệm để quyết định cách thử; số đo xác nhận hiệu quả thực tế của nhóm.
 
 **Giới hạn:** benchmark dùng ảnh in-shop/studio; kết quả không tự động áp dụng cho ảnh điện thoại hoặc ảnh người dùng chụp ngoài đời. Công việc Task 3 OpenCV theo đề coursework cần được bổ sung riêng.
 
@@ -114,10 +116,11 @@ Nếu lần đầu mở repo, xem theo thứ tự:
 
 1. [`docs/START_HERE.md`](docs/START_HERE.md) — Bắt đầu từ con số 0: bài toán, ảnh thật cần xem, cách đọc nhãn, cách tự chấm một query, các câu hỏi tự kiểm tra.
 2. [`docs/DATASET_AND_PIPELINE.md`](docs/DATASET_AND_PIPELINE.md) — ảnh, nhãn, query/gallery và ví dụ đúng/sai.
-3. [`notebooks/learn_clip_retrieval.ipynb`](notebooks/learn_clip_retrieval.ipynb) — notebook học bằng tiếng Việt (cần data + cache local).
-4. [`reports/BAO_CAO_PILOT.md`](reports/BAO_CAO_PILOT.md) — kết quả thí nghiệm thực tế.
-5. [`notebooks/task1_data_pipeline.ipynb`](notebooks/task1_data_pipeline.ipynb) — tiền xử lý, crop, handcrafted HSV.
-6. [`vps/`](vps/) — các module đọc annotation, embedding, retrieval, metrics.
+3. [`docs/PIPELINE_TUNG_BUOC.md`](docs/PIPELINE_TUNG_BUOC.md) — 8 sơ đồ đường ống: bài toán, chia dữ liệu, tiền xử lý, mô hình, suy luận, thí nghiệm, đánh giá, bản đồ file.
+4. [`notebooks/FCVG101_main.ipynb`](notebooks/FCVG101_main.ipynb) — **notebook chính** (Task 1 + Task 2: dữ liệu, tiền xử lý, kết quả test, demo, phân tích lỗi). Chạy được trên Colab hoặc máy cá nhân; xem [`MODEL_LINKS.md`](MODEL_LINKS.md).
+5. [`reports/BAO_CAO_PILOT.md`](reports/BAO_CAO_PILOT.md) — kết quả pilot ban đầu (baseline CLIP đóng băng).
+6. [`notebooks/learn_clip_retrieval.ipynb`](notebooks/learn_clip_retrieval.ipynb) — notebook học bằng tiếng Việt, tùy chọn (cần data + cache local; không nằm trong ZIP nộp).
+7. [`vps/`](vps/) — các module đọc annotation, embedding, retrieval, metrics, adapter, tìm kiếm.
 
 Repo không chứa ảnh DeepFashion, weights hoặc cache embeddings do dung lượng và điều kiện dữ liệu. Nếu chỉ clone repo mới thì chưa chạy ngay được notebook phụ thuộc dữ liệu. Trên workspace Windows ban đầu, project nằm cùng cấp với `img/`, `Eval/` và `list_bbox_inshop.txt` (chi tiết ở mục sau).
 
@@ -145,6 +148,6 @@ Dự án có 2 thành viên; phân chia việc chính thức do nhóm thống nh
 ## 8. Tài liệu tham khảo
 
 - [DeepFashion / In-shop benchmark (CUHK)](https://mmlab.ie.cuhk.edu.hk/projects/DeepFashion/InShopRetrieval.html)
-- [DeepFashion, CVPR 2016](https://openaccess.thecvf.com/content_cvpr_2016/papers/Liu_DeepFashion_Powering_Robust_Properties_CVPR_2016_paper.pdf)
+- [DeepFashion, CVPR 2016](https://openaccess.thecvf.com/content_cvpr_2016/papers/Liu_DeepFashion_Powering_Robust_CVPR_2016_paper.pdf)
 - [OpenAI CLIP](https://openai.com/research/clip)
 - UniCom paper (đối chiếu baseline, cần kiểm tra khác biệt giao thức)

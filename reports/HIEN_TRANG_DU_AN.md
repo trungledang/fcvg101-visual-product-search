@@ -1,5 +1,7 @@
 # Hiện trạng dự án FCVG101 Visual Product Retrieval — báo cáo cho reviewer độc lập
 
+> **Báo cáo lịch sử:** trạng thái và kế hoạch bên dưới thuộc ngày viết 2026-10-30. Xem [hướng hiện tại](../docs/HUONG_DI_HIEN_TAI.md) và [kiểm tra baseline 2026-11-07](baseline_review.json). Các số từ paper chưa được xác minh lại toàn bộ trong lượt rà này; không coi là trần hiệu năng hoặc bằng chứng về tính mới.
+
 **Ngày 2026-10-30.** Tổng hợp từ source code, file kết quả JSON, notebook đã chạy và các báo cáo trong repo. Trong nhiệm vụ này không sửa code và không chạy thí nghiệm mới.
 
 Nhãn bằng chứng dùng trong báo cáo:
@@ -38,7 +40,7 @@ Dataset: DeepFashion In-shop. Gồm 52.712 ảnh, 7.982 item_id, 23 category, t�
 | official query | 14.218 | 3.985 | **Chỉ để đánh giá cuối** |
 | official gallery | 12.612 | 3.985 | Distractor đầy đủ, không lọc |
 
-Nguồn: `reports/audit.json`, notebook `artifacts/task1/task1_data_pipeline.executed.ipynb` (gitignored; bản không output là `notebooks/task1_data_pipeline.ipynb`).
+Nguồn: `reports/audit.json`, notebook (bản cũ, nay gộp vào `notebooks/FCVG101_main.ipynb`) (gitignored; bản không output là `notebooks/FCVG101_main.ipynb` (Phần A)).
 
 Các kiểm tra leakage [Đã chạy]:
 - Query/gallery không trùng đường dẫn.
@@ -302,7 +304,7 @@ SOTA In-shop đã bão hoà ở mức khoảng 92–97%, nên không có đóng 
 | Audit dữ liệu và leakage | `reports/audit.json`, `reports/input_inspection.json`, `reports/sources/` |
 | Val C0/C1/C3 | `reports/val_results.json`, `scripts/eval_val.py` |
 | Ablation crop | `reports/val_crop_ablation.json`, `scripts/ablate_crop_val.py` |
-| Pipeline Task 1 | `vps/preprocess.py`, `tests/test_preprocess.py`, `notebooks/task1_data_pipeline.ipynb`, `artifacts/task1/task1_data_pipeline.executed.ipynb` (local) |
+| Pipeline Task 1 | `vps/preprocess.py`, `tests/test_preprocess.py`, `notebooks/FCVG101_main.ipynb` (Phần A), `artifacts/task1/task1_data_pipeline.executed.ipynb` (local) |
 | Retrieval và metric | `vps/metrics.py`, `vps/embed.py` |
 | Báo cáo feasibility | `reports/BAO_CAO_PILOT.md` |
 | Nghiên cứu và phản biện Codex | `reports/NGHIEN_CUU_HUONG_DI.md` |

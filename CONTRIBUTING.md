@@ -1,16 +1,18 @@
 # Làm việc nhóm — FCVG101 Visual Product Retrieval
 
+Hướng hiện tại và phân công đề xuất ở [HUONG_DI_HIEN_TAI.md](docs/HUONG_DI_HIEN_TAI.md). Có thể điều chỉnh cách phối hợp theo thực tế; nghiên cứu và kinh nghiệm là cơ sở để chọn cấu hình khởi đầu, số đo xác nhận mức cải thiện của nhóm.
+
 Dự án do **hai thành viên** cùng thực hiện. Mục tiêu là để cả hai hiểu được dataset, phương pháp và có thể giải thích thí nghiệm; không chỉ ghép code do agent tạo.
 
 ## Trước khi sửa code
 
-Cả hai thành viên đọc [`docs/START_HERE.md`](docs/START_HERE.md), cùng mở một `item_id` thật và tự giải thích một kết quả Top-5. Khi không có dữ liệu local thì ghi rõ chưa hoàn thành bước này. Không giao training cho người chưa hiểu query/gallery, nhãn và metric.
+Cả hai thành viên đọc [`docs/START_HERE.md`](docs/START_HERE.md), cùng mở một `item_id` thật và tự giải thích một kết quả Top-5. Khi không có dữ liệu local thì ghi rõ chưa hoàn thành bước này. Học query/gallery, nhãn và metric trong lúc làm; không cần thuộc hết lý thuyết trước khi bắt đầu phần việc có hướng dẫn.
 
 ## Cách phối hợp
 
 1. Trước mỗi thay đổi, mô tả mục tiêu ngắn gọn: giả thuyết nào, thay đổi biến nào, phép đo nào, dự kiến ảnh hưởng đến đâu.
 2. Tạo branch theo công việc, ví dụ `docs/readme-team`, `experiment/linear-head`, `analysis/pose-errors`.
-3. Không sửa trực tiếp `main` trong lúc thí nghiệm. Tạo pull request; người còn lại đọc và chạy kiểm thử phù hợp trước khi merge.
+3. Dùng branch/PR khi giúp phối hợp và tránh ghi đè; thay đổi nhỏ có thể xử lý theo cách nhóm thống nhất. Kiểm tra phù hợp với thay đổi, không cần chạy lại mọi thí nghiệm khi sửa tài liệu.
 4. Khi review, kiểm tra **dữ liệu và nhãn đúng**, code không dùng test để chọn hyperparameters, kết quả chạy thật có artifact/log và tài liệu khớp code.
 5. Ghi đóng góp trong lịch sử commits/PR hoặc bảng phân công nhóm; không tự gán công việc cho một thành viên khi chưa thống nhất.
 

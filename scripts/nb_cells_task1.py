@@ -1,10 +1,9 @@
-"""Tạo notebooks/task1_data_pipeline.ipynb (Task 1 coursework); không chạy benchmark."""
+"""Các ô của phần Task 1 trong notebooks/FCVG101_main.ipynb (ghép bởi scripts/build_main_notebook.py)."""
 import hashlib
 import json
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[1]
-path = root / "notebooks/task1_data_pipeline.ipynb"
 
 
 def cell(kind, text):
@@ -46,11 +45,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw
 
-ROOT = Path.cwd().resolve()
-if not (ROOT / "vps").is_dir():
-    ROOT = ROOT.parent if ROOT.name == "notebooks" else ROOT / "visual-product-search-pilot"
-DATA = ROOT.parent  # thư mục môn học chứa img/, Eval/, list_bbox_inshop.txt
-sys.path.insert(0, str(ROOT))
+# ROOT, DATA, device, clip_model, clip_pre do ô cấu hình (ô 0) đã tạo
 from vps.annotations import parse_partition, split_summary, validate_splits
 from vps.preprocess import (CLOTHES_TYPES, CONFIGS, POSE_TYPES, BBoxCropPad, crop_box, hsv_histogram,
                             make_transform, pad_to_square, validation_split)
@@ -192,7 +187,7 @@ Chống leakage: (1) chia theo *item_id*, không chia theo ảnh — ảnh cùng
 # 6. Pipeline từng bước trên ảnh train đại diện cho mỗi pose
 import torch, clip
 from torchvision import transforms as T
-_, preprocess = clip.load(str(ROOT / ".cache/clip/ViT-B-32.pt"), device="cpu", jit=False)
+preprocess = clip_pre
 print("CLIP preprocess:", preprocess)
 MEAN = torch.tensor(preprocess.transforms[-1].mean).view(3, 1, 1)
 STD = torch.tensor(preprocess.transforms[-1].std).view(3, 1, 1)
@@ -273,9 +268,7 @@ với model frozen ở baseline, C2 khi đánh giá bằng đúng C1.
 """),
     cell("code", """
 # 9. Biểu diễn ảnh: HSV histogram (handcrafted) so với CLIP embedding (deep), trên val
-device = "cuda" if torch.cuda.is_available() else "cpu"
-model, _ = clip.load(str(ROOT / ".cache/clip/ViT-B-32.pt"), device=device, jit=False)
-model.eval()
+model = clip_model  # đã nạp ở ô 0, đóng băng, chế độ eval
 crop = BBoxCropPad(boxes)
 
 vq = sorted(val["val_query"], key=lambda r: hashlib.sha256(r.path.encode()).hexdigest())[:5]
@@ -325,6 +318,7 @@ desc = {
     "C1_bbox_pad": "Crop bbox (+10%, cạnh ≥ 64px) → pad vuông → CLIP",
     "C2_bbox_pad_aug": "C1 + augmentation khi train (crop/flip/sáng-tương phản/erasing)",
     "C3_hsv_hist": "Handcrafted: HSV histogram 128 chiều trên ảnh crop+pad",
+    "C0_full_aug": "Ảnh đầy đủ + augmentation khi train (dùng cho E2 ở Phần B)",
 }
 print(f"{'Cấu hình':16s} {'crop':5s} {'aug':5s} {'biểu diễn':9s} mô tả")
 for k, v in CONFIGS.items():
@@ -340,9 +334,3 @@ for k, v in CONFIGS.items():
 Chọn tham số (margin, cạnh tối thiểu, số epoch, learning rate) bằng **val**; official test chỉ chạy một lần cho mỗi cấu hình đã chốt.
 """),
 ]
-
-notebook = {"cells": cells, "metadata": {
-    "kernelspec": {"display_name": "Python 3 (ipykernel)", "language": "python", "name": "python3"},
-    "language_info": {"name": "python"}}, "nbformat": 4, "nbformat_minor": 5}
-path.write_text(json.dumps(notebook, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-print("wrote", path)
