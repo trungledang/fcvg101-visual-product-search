@@ -117,7 +117,7 @@ Nếu lần đầu mở repo, xem theo thứ tự:
 1. [`docs/START_HERE.md`](docs/START_HERE.md) — Bắt đầu từ con số 0: bài toán, ảnh thật cần xem, cách đọc nhãn, cách tự chấm một query, các câu hỏi tự kiểm tra.
 2. [`docs/DATASET_AND_PIPELINE.md`](docs/DATASET_AND_PIPELINE.md) — ảnh, nhãn, query/gallery và ví dụ đúng/sai.
 3. [`docs/PIPELINE_TUNG_BUOC.md`](docs/PIPELINE_TUNG_BUOC.md) — 8 sơ đồ đường ống: bài toán, chia dữ liệu, tiền xử lý, mô hình, suy luận, thí nghiệm, đánh giá, bản đồ file.
-4. [`notebooks/FCVG101_main.ipynb`](notebooks/FCVG101_main.ipynb) — **notebook chính** (Task 1 + Task 2: dữ liệu, tiền xử lý, kết quả test, demo, phân tích lỗi). Chạy được trên Colab hoặc máy cá nhân; xem [`MODEL_LINKS.md`](MODEL_LINKS.md).
+4. [`FCVG101.ipynb`](FCVG101.ipynb) — **notebook chính**, chạy từ trên xuống: dữ liệu, tiền xử lý, baseline, adapter, so sánh cấu hình, test, demo, phân tích lỗi. Chạy trên máy cá nhân hoặc Colab; xem [`MODEL_LINKS.md`](MODEL_LINKS.md).
 5. [`reports/BAO_CAO_PILOT.md`](reports/BAO_CAO_PILOT.md) — kết quả pilot ban đầu (baseline CLIP đóng băng).
 6. [`notebooks/learn_clip_retrieval.ipynb`](notebooks/learn_clip_retrieval.ipynb) — notebook học bằng tiếng Việt, tùy chọn (cần data + cache local; không nằm trong ZIP nộp).
 7. [`vps/`](vps/) — các module đọc annotation, embedding, retrieval, metrics, adapter, tìm kiếm.

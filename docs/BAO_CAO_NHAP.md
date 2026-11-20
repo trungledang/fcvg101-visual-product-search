@@ -26,7 +26,7 @@
 - Món ở test **không xuất hiện ở train** → mô hình phải học *cách biểu diễn ảnh*, không học thuộc nhãn. Đây đúng nội dung LO3 (representation learning).
 - Vừa sức máy cá nhân (RTX 3050 Ti 4 GB): dùng encoder có sẵn rồi thích nghi, không cần train mô hình lớn.
 
-**Vấn đề chất lượng dữ liệu** (chi tiết, hình: `notebooks/FCVG101_main.ipynb`, Phần A, ô `# 3`–`# 4`):
+**Vấn đề chất lượng dữ liệu** (chi tiết, hình: `FCVG101.ipynb`, phần 1):
 - Nhóm sản phẩm rất mất cân bằng (WOMEN/Tees_Tanks 2.955 query, MEN/Suiting 14 query); mỗi món chỉ có vài ảnh.
 - Query thường chụp cận cảnh, gallery thường toàn thân → lệch phân bố hai phía.
 - Một phần bbox ở ảnh chụp nghiêng chỉ là một dải hẹp, không bao trọn món đồ (6,3% query val có bbox hẹp).
@@ -60,7 +60,7 @@
 | Resize, center crop, normalize | đúng đầu vào CLIP đã được train | preprocess gốc của `openai/CLIP` |
 | Batch | `DataLoader`, 64 ảnh/batch, 6 worker | `vps/embed.py` |
 
-**Augmentation (chỉ train):** RandomResizedCrop 75–100%, lật ngang, độ sáng/tương phản ±20%, RandomErasing p = 0,25. **Không** đổi hue/saturation vì màu là đặc điểm nhận dạng món. Hình minh hoạ: notebook chính, Phần A, ô `# 8`.
+**Augmentation (chỉ train):** RandomResizedCrop 75–100%, lật ngang, độ sáng/tương phản ±20%, RandomErasing p = 0,25. **Không** đổi hue/saturation vì màu là đặc điểm nhận dạng món. Hình minh hoạ: notebook, phần 2 (ô augmentation).
 
 **Biểu diễn ảnh đã so sánh (trên val, CLIP đóng băng)** — nguồn: `reports/val_results.json`, `reports/val_crop_ablation.json`.
 
@@ -114,19 +114,19 @@ khi train: z ─► ArcFace (s = 30, m = 0,3) trên 3.597 món train;   lớp Ar
 | Cấu hình | R@1 val TB [min–max] | R@5 val |
 |---|---|---|
 | E0 CLIP đóng băng | 71,02 | 87,34 |
-| E1 adapter | 90,94 [90,50–91,31] | 97,24 |
-| E2 adapter + augmented | 90,99 [90,42–91,31] | 96,97 |
-| E3 adapter, crop + pad trắng | 91,69 [91,40–92,05] | 98,00 |
+| E1 adapter | 91,53 [91,40–91,64] | 97,35 |
+| E2 adapter + augmented | 90,85 [90,42–91,23] | 97,00 |
+| E3 adapter, crop + pad trắng | 91,45 [91,07–91,88] | 98,00 |
 
 **Test, chạy một lần** (nguồn: `reports/test_results.json`, `scripts/eval_test.py`; 14.218 query, đủ 12.612 ảnh gallery):
 
 | Cấu hình | R@1 TB [min–max 3 seed] | R@5 | R@10 | MRR |
 |---|---|---|---|---|
-| E0 CLIP đóng băng, ảnh đầy đủ | 45,51 | 67,25 | 74,36 | 55,51 |
-| E0 CLIP đóng băng, crop + pad trắng | 39,58 | 60,85 | 68,54 | 49,41 |
-| E1 + adapter | 71,42 [71,25–71,56] | 88,93 | 92,72 | 79,16 |
-| E2 + adapter + augmented | 71,06 [70,24–71,77] | 88,59 | 92,54 | 78,83 |
-| **E3 + adapter, crop + pad trắng** | **72,20 [72,04–72,51]** | **89,29** | **93,25** | **79,81** |
+| E0 CLIP đóng băng, ảnh đầy đủ | 45,51 | 67,25 | 74,35 | 55,5 |
+| E0 CLIP đóng băng, crop + pad trắng | 39,58 | 60,86 | 68,54 | 49,4 |
+| E1 + adapter | 71,57 [71,38–71,83] | 88,99 | 92,72 | 79,3 |
+| E2 + adapter + augmented | 71,43 [70,78–72,14] | 88,77 | 92,64 | 79,1 |
+| **E3 + adapter, crop + pad trắng** | **72,24 [71,81–72,56]** | **89,20** | **93,24** | **79,8** |
 
 ![R@1 theo nhóm sản phẩm](images/report/test_r1_by_category.png)
 
@@ -134,26 +134,48 @@ khi train: z ─► ArcFace (s = 30, m = 0,3) trên 3.597 món train;   lớp Ar
 
 ## 6. Demo suy luận
 
-`notebooks/FCVG101_main.ipynb` (Phần B, ô `# T2-3` và `# T2-4`), lõi ở `vps/search.py`. Mô hình nhận một ảnh, mã hoá bằng CLIP + adapter, so với 12.612 ảnh gallery, rồi trả về Top-5 kèm cosine; E0 và E3 hiển thị cạnh nhau. Ảnh dùng để demo là query test, thuộc món chưa từng có ở train (notebook `assert` điều này). Ô 4 nhận **bất kỳ ảnh nào** qua `MY_IMAGE`; ảnh ngoài dataset không có bbox nên chỉ được pad trắng, không crop. Kiểm tra: mã hoá lại từ file cho ra vector trùng cache (cosine 1,0000) và cùng hạng như lúc đánh giá.
+`FCVG101.ipynb` (phần 7, hai ô Demo). Mô hình nhận một ảnh, mã hoá bằng CLIP + adapter, so với 12.612 ảnh gallery, rồi trả về Top-5 kèm cosine; E0 và E3 hiển thị cạnh nhau. Ảnh dùng để demo là query test, thuộc món chưa từng có ở train (notebook `assert` điều này). Ô 4 nhận **bất kỳ ảnh nào** qua `MY_IMAGE`; ảnh ngoài dataset không có bbox nên chỉ được pad trắng, không crop. Kiểm tra: mã hoá lại từ file cho ra vector trùng cache (cosine 1,0000) và cùng hạng như lúc đánh giá.
 
 **[TODO khi xuất PDF]** Chèn `artifacts/task2/demo_example_dress.png`. Trong ví dụ này E0 xếp 5 chiếc váy trắng khác lên đầu, còn E3 đưa đúng món lên #1 và #2.
 
 ## 7. Phân tích lỗi
 
-Nguồn: `notebooks/FCVG101_main.ipynb` Phần B, ô `# T2-5` và `# T2-6`, seed 0, toàn bộ 14.218 query.
+Nguồn: `FCVG101.ipynb` phần 7 (ô Phân tích lỗi), seed 0, toàn bộ 14.218 query.
 
 | E0 \ E3 | E3 đúng ở #1 | E3 sai |
 |---|---|---|
-| E0 đúng | 5.672 | 798 (adapter làm hỏng) |
-| E0 sai | 4.573 (adapter sửa được) | 3.175 |
+| E0 đúng | 5.679 | 791 (adapter làm hỏng) |
+| E0 sai | 4.531 (adapter sửa được) | 3.217 |
 
 ![Hạng của ảnh đúng đầu tiên](images/report/test_first_positive_rank.png)
 
-- Adapter sửa được gần 6 query cho mỗi query nó làm hỏng (4.573 so với 798). Mức tăng không phải "miễn phí": vẫn có 798 query trước đúng nay sai.
+- Adapter sửa được gần 6 query cho mỗi query nó làm hỏng (4.531 so với 791). Mức tăng không phải "miễn phí": vẫn có 791 query trước đúng nay sai.
 - Khi E3 sai ở #1, món đúng vẫn nằm trong #2–5 ở 61% trường hợp. Nghĩa là phần lớn lỗi là xếp hạng sát nút giữa các món rất giống nhau, không phải tìm lạc hẳn.
 - Nhóm khó nhất là WOMEN/Graphic_Tees (18,9 → 46,0%). Giả thuyết: hình in nhỏ khó nhìn ở độ phân giải 224×224, mà màu và dáng áo thì gần như giống hệt nhau.
 
-**[Phong]** Bảng nhóm lỗi (P3/P5): xem 6 lỗi ngẫu nhiên ở ô `# T2-6` cùng các ví dụ khác, rồi xếp vào các nhóm: gần trùng màu/dáng, cận cảnh so với toàn thân, hình in nhỏ, bbox nghiêng hẹp… Ghi số query và một ảnh ví dụ cho mỗi nhóm.
+*(Mục phân nhóm dưới đây tính từ các hạng của lần chạy script trước nên lệch vài chục query so với bảng ở trên: 798 so với 791 query bị làm hỏng.)*
+
+**Chia nhóm 3.973 query E3 sai ở #1** (mỗi query chỉ vào một nhóm, cộng lại đúng bằng 3.973; số liệu: `scripts/analyze_error_groups.py` → `reports/error_groups.json`):
+
+| Nhóm lỗi | Định nghĩa đo được | Số query | % lỗi |
+|---|---|---:|---:|
+| Adapter làm hỏng | E0 đúng ở #1, E3 sai | 798 | 20,1% |
+| Gần trùng, sát nút | cả hai sai; top-1 **cùng nhóm hàng**; món đúng ở #2–5 | 1.206 | 30,4% |
+| Sát nút, khác nhóm hàng | cả hai sai; top-1 **khác nhóm hàng**; món đúng ở #2–5 | 594 | 15,0% |
+| Cùng nhóm hàng, hạng xa | cả hai sai; top-1 cùng nhóm hàng; món đúng ngoài #5 | 762 | 19,2% |
+| Lạc hẳn | cả hai sai; top-1 khác nhóm hàng; món đúng ngoài #5 | 613 | 15,4% |
+
+![Nhóm lỗi và R@1 theo kiểu ảnh, độ phóng của món](images/report/test_error_analysis.png)
+
+- **63,4% lỗi có top-1 cùng nhóm hàng:** hệ thống nhầm giữa các món rất giống nhau (cùng màu, cùng dáng), không phải nhầm loại hàng. Trong 12 lỗi đem ra xem ảnh (chọn theo từng nhóm), dạng này chiếm phần lớn: áo cùng màu khác hình in, quần cùng hoạ tiết, váy cùng kiểu.
+- **Lỗi sát nút là gần như hoà:** chênh cosine giữa top-1 sai và món đúng có trung vị 0,028 khi món đúng ở #2–5, 0,072 ở #6–10 và 0,135 khi ngoài #10. Vì vậy đọc R@1 là "đúng ngay #1", đừng đọc là "tìm được hay không" — R@5 đã là 89,3%.
+- **798 query adapter làm hỏng chủ yếu là đảo thứ tự:** 79% vẫn còn món đúng ở #2–5 và 69% có top-1 cùng nhóm hàng. Tức là adapter đổi thứ tự giữa các món gần giống, ít khi đẩy món đúng ra xa.
+- **Độ phóng của món trong ảnh quan trọng hơn nhóm hàng:** query toàn thân (bbox <15% diện tích ảnh) R@1 72,9%; cận cảnh (bbox ≥55%) chỉ 58,8%; ảnh phẳng không người mẫu thấp nhất theo kiểu ảnh (42,5%). Adapter vẫn giúp ở mọi nhóm (+18 đến +29 điểm) nhưng không xoá được khoảng cách này.
+- **Một phần lỗi đến từ nhãn, không phải mô hình:** ví dụ item `id_00001989` có 8 ảnh nhưng gồm 2 màu (trắng và navy); query màu navy, còn món đúng chỉ có ảnh trắng. Những ca này đo bằng `item_id` là sai nhưng nhìn ảnh thì không phân biệt được.
+
+Ảnh ví dụ cho từng nhóm (query / top-1 sai / món đúng): `docs/images/dataset/error-groups.png`, sinh bởi cùng script; hình dùng ảnh DeepFashion nên **không commit** (chỉ để cục bộ hoặc chèn vào PDF).
+
+**[Phong]** Bảng trên đã tính sẵn từ toàn bộ 14.218 query; việc còn lại là xem ô phân tích lỗi trong notebook và ảnh ví dụ, rồi thêm 1–2 nhận xét cá nhân (ví dụ nhóm nào em thấy thuyết phục nhất) trước khi xuất PDF.
 
 ## 8. Task 3 — Thực nghiệm nhỏ về hình học và chuyển động  **[Phong]**
 
@@ -165,7 +187,7 @@ Nguồn: `notebooks/FCVG101_main.ipynb` Phần B, ô `# T2-5` và `# T2-6`, seed
 - **Điều gì tốt hơn dự kiến:** adapter tăng 26 điểm R@1 trên test với 131 nghìn tham số, đưa CLIP B/32 lên ngang Unicom đóng băng. Vì kết quả tốt bất ngờ nên nhóm kiểm tra lỗi trước khi tin: không trùng món giữa train/val/test, E0 tái lập đúng 45,51%, hạng tính lại từ file ảnh khớp với cache.
 - **Điều gì không như kỳ vọng:**
   - **Augmentation (E2) không giúp.** CLIP đóng băng gần như không đổi vector giữa các bản augmented (cosine giữa hai bản ≈ 0,93), nên adapter không có thêm thông tin để học. Augmentation có ích khi chính encoder được học.
-  - **Crop có tác động đảo chiều.** Crop làm CLIP gốc kém đi 6 điểm trên test, nhưng khi có adapter lại nhỉnh nhất (+0,8 điểm). Mức chênh nhỏ, chỉ nên coi là "nhỉnh hơn và ổn định qua 3 seed", không phải "tốt hơn rõ rệt".
+  - **Crop có tác động đảo chiều.** Crop làm CLIP gốc kém đi 6 điểm trên test, nhưng khi có adapter thì E3 nhỉnh nhất trên test (+0,7 điểm so với E1) trong khi trên validation E1 và E3 gần như bằng nhau (91,5 và 91,5). Khoảng min–max 3 seed của E1 và E3 trên test gần chạm nhau (71,83 và 71,81), nên chỉ nên nói "crop không còn gây hại khi có adapter và nhỉnh hơn một chút trên test", không nói "tốt hơn rõ rệt".
 - **Giới hạn:**
   - Vẫn kém fine-tune 15–20 điểm. Adapter chỉ sắp xếp lại thông tin CLIP đã nhìn thấy, không thể "nhìn" chi tiết mới như hình in nhỏ.
   - Val dễ hơn test nhiều: 90% trên val chỉ còn 71% trên test.
@@ -184,7 +206,7 @@ Xem `MODEL_LINKS.md` (link checkpoint, CLIP, dataset; thứ tự lệnh). Tóm t
 pip install -r requirements.txt            # cần dataset ở thư mục cha của repo
 python -m pytest -q                        # 37 test, không cần dataset
 python scripts/eval_test.py                # tái lập bảng test (cần cache embedding + checkpoint)
-notebooks/FCVG101_main.ipynb               # notebook chính: Task 1 + Task 2 (Colab hoặc máy cá nhân)
+FCVG101.ipynb               # notebook chính: Task 1 + Task 2 (Colab hoặc máy cá nhân)
 ```
 Checkpoint: hai adapter dùng cho demo có sẵn trong ZIP; đủ 9 checkpoint ở Google Drive (link trong `MODEL_LINKS.md`).
 

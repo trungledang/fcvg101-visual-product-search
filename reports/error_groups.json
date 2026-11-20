@@ -1,0 +1,319 @@
+{
+  "what": "error analysis of the single final test run (E3 seed 0), DeepFashion In-shop",
+  "config": "E3: CLIP ViT-B/32 frozen + adapter ratio 0.2 (40 epochs, seed 0), crop + white pad",
+  "queries": 14218,
+  "gallery": 12612,
+  "e0_r1": 0.45505697003798,
+  "e3_r1": 0.7205654803769869,
+  "failures": 3973,
+  "adapter_fixes": 4573,
+  "adapter_breaks": 798,
+  "fail_same_category_top1": 0.6342813994462623,
+  "fail_rank_in_top5": 0.6116284923231815,
+  "fail_gap_median_by_rank": [
+    {
+      "band": "2–5",
+      "queries": 2430,
+      "median_gap": 0.027865290641784668
+    },
+    {
+      "band": "6–10",
+      "queries": 598,
+      "median_gap": 0.07183140516281128
+    },
+    {
+      "band": "ngoài #10",
+      "queries": 945,
+      "median_gap": 0.13548660278320312
+    }
+  ],
+  "buckets": [
+    {
+      "key": "adapter_broke",
+      "label": "Adapter làm hỏng",
+      "short": "Adapter\nlàm hỏng",
+      "definition": "E0 đúng ở #1, E3 sai",
+      "queries": 798,
+      "share_of_failures": 0.2008557764913164
+    },
+    {
+      "key": "close_same_cat",
+      "label": "Gần trùng, sát nút",
+      "short": "Gần trùng\nsát nút",
+      "definition": "cả hai sai, top-1 cùng nhóm hàng, món đúng ở #2–5",
+      "queries": 1206,
+      "share_of_failures": 0.3035489554492827
+    },
+    {
+      "key": "close_other_cat",
+      "label": "Sát nút nhưng khác nhóm hàng",
+      "short": "Sát nút\nkhác nhóm",
+      "definition": "cả hai sai, top-1 khác nhóm hàng, món đúng ở #2–5",
+      "queries": 594,
+      "share_of_failures": 0.14950918701233326
+    },
+    {
+      "key": "far_same_cat",
+      "label": "Cùng nhóm hàng nhưng xếp hạng xa",
+      "short": "Cùng nhóm\nhạng xa",
+      "definition": "cả hai sai, top-1 cùng nhóm hàng, món đúng ngoài #5",
+      "queries": 762,
+      "share_of_failures": 0.19179461364208406
+    },
+    {
+      "key": "far_other_cat",
+      "label": "Lạc hẳn (khác nhóm, hạng xa)",
+      "short": "Lạc hẳn",
+      "definition": "cả hai sai, top-1 khác nhóm hàng, món đúng ngoài #5",
+      "queries": 613,
+      "share_of_failures": 0.15429146740498365
+    }
+  ],
+  "query_groups": [
+    {
+      "key": "all",
+      "label": "Toàn bộ test",
+      "definition": "14.218 query",
+      "queries": 14218,
+      "e0_r1": 0.45505697003798,
+      "e3_r1": 0.7205654803769869
+    },
+    {
+      "key": "close_up",
+      "label": "Cận cảnh",
+      "definition": "bbox chiếm ≥ 55% diện tích ảnh",
+      "queries": 1707,
+      "e0_r1": 0.3509080257762156,
+      "e3_r1": 0.5875805506736965
+    },
+    {
+      "key": "full_body",
+      "label": "Toàn thân",
+      "definition": "bbox chiếm < 15% diện tích ảnh",
+      "queries": 4424,
+      "e0_r1": 0.4355786618444846,
+      "e3_r1": 0.7289783001808319
+    },
+    {
+      "key": "flat",
+      "label": "Ảnh phẳng (không người mẫu)",
+      "definition": "view = flat",
+      "queries": 212,
+      "e0_r1": 0.24056603773584906,
+      "e3_r1": 0.42452830188679247
+    },
+    {
+      "key": "side",
+      "label": "Chụp nghiêng",
+      "definition": "view = side",
+      "queries": 2466,
+      "e0_r1": 0.5227088402270884,
+      "e3_r1": 0.7214111922141119
+    },
+    {
+      "key": "additional",
+      "label": "Ảnh chi tiết bổ sung",
+      "definition": "view = additional",
+      "queries": 4456,
+      "e0_r1": 0.4207809694793537,
+      "e3_r1": 0.6916517055655296
+    },
+    {
+      "key": "narrow_bbox",
+      "label": "Bbox hẹp",
+      "definition": "bbox rộng/cao < 0,45",
+      "queries": 3300,
+      "e0_r1": 0.5163636363636364,
+      "e3_r1": 0.7103030303030303
+    },
+    {
+      "key": "graphic_tees",
+      "label": "WOMEN/Graphic_Tees",
+      "definition": "nhóm hàng khó nhất",
+      "queries": 365,
+      "e0_r1": 0.18904109589041096,
+      "e3_r1": 0.4602739726027397
+    }
+  ],
+  "by_view": [
+    {
+      "view": "front",
+      "queries": 2865,
+      "e0_r1": 0.5232111692844678,
+      "e3_r1": 0.7762652705061082
+    },
+    {
+      "view": "side",
+      "queries": 2466,
+      "e0_r1": 0.5227088402270884,
+      "e3_r1": 0.7214111922141119
+    },
+    {
+      "view": "back",
+      "queries": 2490,
+      "e0_r1": 0.40923694779116465,
+      "e3_r1": 0.6879518072289157
+    },
+    {
+      "view": "full",
+      "queries": 1729,
+      "e0_r1": 0.42625795257374205,
+      "e3_r1": 0.7848467322151532
+    },
+    {
+      "view": "flat",
+      "queries": 212,
+      "e0_r1": 0.24056603773584906,
+      "e3_r1": 0.42452830188679247
+    },
+    {
+      "view": "additional",
+      "queries": 4456,
+      "e0_r1": 0.4207809694793537,
+      "e3_r1": 0.6916517055655296
+    }
+  ],
+  "by_bbox_area": [
+    {
+      "from": 0,
+      "to": 0.1,
+      "queries": 2158,
+      "e0_r1": 0.422613531047266,
+      "e3_r1": 0.7177942539388322
+    },
+    {
+      "from": 0.1,
+      "to": 0.2,
+      "queries": 3746,
+      "e0_r1": 0.46823278163374266,
+      "e3_r1": 0.7426588360918313
+    },
+    {
+      "from": 0.2,
+      "to": 0.35,
+      "queries": 3452,
+      "e0_r1": 0.518539976825029,
+      "e3_r1": 0.7621668597914253
+    },
+    {
+      "from": 0.35,
+      "to": 0.55,
+      "queries": 3155,
+      "e0_r1": 0.44849445324881143,
+      "e3_r1": 0.722662440570523
+    },
+    {
+      "from": 0.55,
+      "to": 1.01,
+      "queries": 1707,
+      "e0_r1": 0.3509080257762156,
+      "e3_r1": 0.5875805506736965
+    }
+  ],
+  "top_failing_categories": [
+    {
+      "category": "WOMEN/Tees_Tanks",
+      "failures": 861
+    },
+    {
+      "category": "WOMEN/Blouses_Shirts",
+      "failures": 549
+    },
+    {
+      "category": "WOMEN/Dresses",
+      "failures": 399
+    },
+    {
+      "category": "WOMEN/Shorts",
+      "failures": 283
+    },
+    {
+      "category": "MEN/Tees_Tanks",
+      "failures": 281
+    },
+    {
+      "category": "WOMEN/Sweaters",
+      "failures": 222
+    },
+    {
+      "category": "WOMEN/Graphic_Tees",
+      "failures": 197
+    },
+    {
+      "category": "WOMEN/Jackets_Coats",
+      "failures": 160
+    }
+  ],
+  "examples": [
+    {
+      "bucket": "adapter_broke",
+      "query": "img/WOMEN/Tees_Tanks/id_00002905/10_3_back.jpg",
+      "query_item": "id_00002905",
+      "category": "WOMEN/Tees_Tanks",
+      "top1": "img/WOMEN/Tees_Tanks/id_00005840/09_3_back.jpg",
+      "top1_item": "id_00005840",
+      "top1_score": 0.7909390926361084,
+      "true": "img/WOMEN/Tees_Tanks/id_00002905/11_3_back.jpg",
+      "true_item": "id_00002905",
+      "score_gap": 0.03111785650253296,
+      "rank_e0": 1,
+      "rank_e3": 2
+    },
+    {
+      "bucket": "close_same_cat",
+      "query": "img/WOMEN/Tees_Tanks/id_00002162/62_2_side.jpg",
+      "query_item": "id_00002162",
+      "category": "WOMEN/Tees_Tanks",
+      "top1": "img/WOMEN/Tees_Tanks/id_00001801/10_3_back.jpg",
+      "top1_item": "id_00001801",
+      "top1_score": 0.8417782783508301,
+      "true": "img/WOMEN/Tees_Tanks/id_00002162/65_2_side.jpg",
+      "true_item": "id_00002162",
+      "score_gap": 0.03032529354095459,
+      "rank_e0": 4,
+      "rank_e3": 3
+    },
+    {
+      "bucket": "close_other_cat",
+      "query": "img/WOMEN/Tees_Tanks/id_00006171/02_7_additional.jpg",
+      "query_item": "id_00006171",
+      "category": "WOMEN/Tees_Tanks",
+      "top1": "img/WOMEN/Blouses_Shirts/id_00000751/03_4_full.jpg",
+      "top1_item": "id_00000751",
+      "top1_score": 0.6621047854423523,
+      "true": "img/WOMEN/Tees_Tanks/id_00006171/02_3_back.jpg",
+      "true_item": "id_00006171",
+      "score_gap": 0.028604984283447266,
+      "rank_e0": 2,
+      "rank_e3": 4
+    },
+    {
+      "bucket": "far_same_cat",
+      "query": "img/WOMEN/Dresses/id_00001989/04_3_back.jpg",
+      "query_item": "id_00001989",
+      "category": "WOMEN/Dresses",
+      "top1": "img/WOMEN/Dresses/id_00005087/02_1_front.jpg",
+      "top1_item": "id_00005087",
+      "top1_score": 0.718633770942688,
+      "true": "img/WOMEN/Dresses/id_00001989/03_1_front.jpg",
+      "true_item": "id_00001989",
+      "score_gap": 0.10628646612167358,
+      "rank_e0": 116,
+      "rank_e3": 24
+    },
+    {
+      "bucket": "far_other_cat",
+      "query": "img/MEN/Shirts_Polos/id_00005077/01_7_additional.jpg",
+      "query_item": "id_00005077",
+      "category": "MEN/Shirts_Polos",
+      "top1": "img/MEN/Sweaters/id_00002921/03_2_side.jpg",
+      "top1_item": "id_00002921",
+      "top1_score": 0.6686352491378784,
+      "true": "img/MEN/Shirts_Polos/id_00005077/01_3_back.jpg",
+      "true_item": "id_00005077",
+      "score_gap": 0.11267328262329102,
+      "rank_e0": 31,
+      "rank_e3": 11
+    }
+  ]
+}

@@ -40,7 +40,7 @@ Dataset: DeepFashion In-shop. Gồm 52.712 ảnh, 7.982 item_id, 23 category, t�
 | official query | 14.218 | 3.985 | **Chỉ để đánh giá cuối** |
 | official gallery | 12.612 | 3.985 | Distractor đầy đủ, không lọc |
 
-Nguồn: `reports/audit.json`, notebook (bản cũ, nay gộp vào `notebooks/FCVG101_main.ipynb`) (gitignored; bản không output là `notebooks/FCVG101_main.ipynb` (Phần A)).
+Nguồn: `reports/audit.json`, notebook (bản cũ, nay gộp vào `FCVG101.ipynb`) (gitignored; bản không output là `FCVG101.ipynb` (Phần A)).
 
 Các kiểm tra leakage [Đã chạy]:
 - Query/gallery không trùng đường dẫn.
@@ -304,7 +304,7 @@ SOTA In-shop đã bão hoà ở mức khoảng 92–97%, nên không có đóng 
 | Audit dữ liệu và leakage | `reports/audit.json`, `reports/input_inspection.json`, `reports/sources/` |
 | Val C0/C1/C3 | `reports/val_results.json`, `scripts/eval_val.py` |
 | Ablation crop | `reports/val_crop_ablation.json`, `scripts/ablate_crop_val.py` |
-| Pipeline Task 1 | `vps/preprocess.py`, `tests/test_preprocess.py`, `notebooks/FCVG101_main.ipynb` (Phần A), `artifacts/task1/task1_data_pipeline.executed.ipynb` (local) |
+| Pipeline Task 1 | `vps/preprocess.py`, `tests/test_preprocess.py`, `FCVG101.ipynb` (Phần A), `artifacts/task1/task1_data_pipeline.executed.ipynb` (local) |
 | Retrieval và metric | `vps/metrics.py`, `vps/embed.py` |
 | Báo cáo feasibility | `reports/BAO_CAO_PILOT.md` |
 | Nghiên cứu và phản biện Codex | `reports/NGHIEN_CUU_HUONG_DI.md` |

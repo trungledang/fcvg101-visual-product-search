@@ -113,7 +113,7 @@ Ba điều cần nhớ: (1) **không đổi màu sắc** khi augment vì màu l�
                                             hiển thị: ảnh, item_id, điểm; xanh = đúng món, đỏ = sai
 ```
 
-Chi phí mỗi lần hỏi: 1 lần chạy CLIP + 1 phép nhân ma trận 12.612×512. Code: `vps/search.py`; notebook: `notebooks/FCVG101_main.ipynb` (Phần B).
+Chi phí mỗi lần hỏi: 1 lần chạy CLIP + 1 phép nhân ma trận 12.612×512. Code: `vps/search.py`; notebook: `FCVG101.ipynb` (Phần B).
 Kiểm tra đã làm: mã hóa lại từ file ra vector trùng cache (cosine 1,0000) và cùng hạng như lúc chấm test.
 
 ## 6. Bản đồ thí nghiệm E0–E3 (mỗi bước đổi **một** yếu tố)
@@ -166,7 +166,7 @@ Khi bị hỏi "có gian lận không?": test chỉ mở một lần; không tha
  BIỂU DIỄN        vps/embed.py         nạp CLIP, mã hóa, lưu cache      scripts/encode_variant.py, encode_augmented.py
  MÔ HÌNH          vps/adapter.py       Adapter, ArcFace, vòng train     scripts/train_adapter.py   (E1/E2/E3)
  ĐÁNH GIÁ         vps/metrics.py       cosine, Recall@K                 scripts/eval_val.py, eval_test.py
- SUY LUẬN / DEMO  vps/search.py        1 ảnh → Top-K                    notebooks/FCVG101_main.ipynb (NOTEBOOK CHÍNH: Task 1 + 2)
+ SUY LUẬN / DEMO  vps/search.py        1 ảnh → Top-K                    FCVG101.ipynb (NOTEBOOK CHÍNH: Task 1 + 2)
  TÀI LIỆU         docs/BAO_CAO_NHAP.md  báo cáo nháp       MODEL_LINKS.md  link checkpoint + lệnh chạy lại
  NỘP BÀI          scripts/build_submission.py  → artifacts/submission/FCVG101_code.zip (≤ 5 MB)
 ```

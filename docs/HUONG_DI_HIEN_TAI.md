@@ -2,7 +2,7 @@
 
 Cập nhật 2026-11-07 sau khi rà Git, source và tính lại retrieval từ cache. Đây là nơi ghi hướng hiện hành; báo cáo pilot và bài học cũ được giữ làm lịch sử. Thiết kế có thể thay khi nghiên cứu hoặc thực nghiệm cho thấy cách phù hợp hơn.
 
-Mục tiêu người dùng nêu 2026-11-14: môn tự chọn, cần hiểu pipeline, trình bày và phản biện được với thầy/Phong, không cầu toàn. Bản giải thích + tư duy ngược + phân công: [HIEU_VA_PHAN_BIEN.md](HIEU_VA_PHAN_BIEN.md). Kế hoạch task theo tuần (deadline ước 2–3 tuần): [KE_HOACH.md](KE_HOACH.md). Bản nháp báo cáo: [BAO_CAO_NHAP.md](BAO_CAO_NHAP.md); demo: `notebooks/FCVG101_main.ipynb`; link model: [MODEL_LINKS.md](../MODEL_LINKS.md). Đọc từng bước bằng sơ đồ: [PIPELINE_TUNG_BUOC.md](PIPELINE_TUNG_BUOC.md).
+Mục tiêu người dùng nêu 2026-11-14: môn tự chọn, cần hiểu pipeline, trình bày và phản biện được với thầy/Phong, không cầu toàn. Bản giải thích + tư duy ngược + phân công: [HIEU_VA_PHAN_BIEN.md](HIEU_VA_PHAN_BIEN.md). Kế hoạch task theo tuần (deadline ước 2–3 tuần): [KE_HOACH.md](KE_HOACH.md). Bản nháp báo cáo: [BAO_CAO_NHAP.md](BAO_CAO_NHAP.md); demo: `FCVG101.ipynb`; link model: [MODEL_LINKS.md](../MODEL_LINKS.md). Đọc từng bước bằng sơ đồ: [PIPELINE_TUNG_BUOC.md](PIPELINE_TUNG_BUOC.md).
 
 ## Bài toán
 
